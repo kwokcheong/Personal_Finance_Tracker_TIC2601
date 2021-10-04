@@ -7,7 +7,7 @@ const ejs = require('ejs');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mysql = require('mysql2');
-const session = require('express-session')
+const sessions = require('express-session')
 require('dotenv').config()
 
 //Set up routers
@@ -28,15 +28,26 @@ connection.connect(function(error) {
   error ? console.log(error) : console.log('Database connected!');
 });
 
+// creating 24 hours from milliseconds
+const oneDay = 1000 * 60 * 60 * 24;
+
+//session middleware
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
