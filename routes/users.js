@@ -6,8 +6,7 @@ const myusername = 'user1'
 const mypassword = 'mypassword'
 
 /* GET users listing. */
-router.post('/user',(req,res) => {
-    
+router.post('/',(req,res) => {
   console.log(req.session)
   if(req.body.username == myusername && req.body.password == mypassword){
       session=req.session;
