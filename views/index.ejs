@@ -1,12 +1,38 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <a href='/login'>login</a>
-  </body>
+<html lang="en">
+<head>
+  <title>Personal Finance Tracking Login Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <nav class="menu">
+        <!-- Home -->
+        <a href="./" class="menu__item" data-tooltip="Home">
+            <i class="material-icons">home</i>
+        </a>
+        <!-- Transactions -->
+        <a href="./" class="menu__item" data-tooltip="Transactions">
+            <i class="material-icons">receipt_long</i>
+        </a>
+        <!-- Money Insights -->
+        <a href="./" class="menu__item" data-tooltip="Money Insights">
+            <i class="material-icons">insights</i>
+        </a>
+        <!-- Settings -->
+        <a href="./" class="menu__item" data-tooltip="Settings">
+            <i class="material-icons">tune</i>
+        </a>
+    </nav>
+    <section>
+        <div class="search">
+            <div class="icon"></div>
+            <div class="input"></div>
+        </div>
+    </section>
+</body>
 </html>

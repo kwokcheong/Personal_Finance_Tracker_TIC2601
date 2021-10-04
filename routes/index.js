@@ -7,7 +7,7 @@ var session;
 /* GET home page. */
 router.get('/', function(req, res) {
   session=req.session;
-  console.log(session.userid)
+  // console.log(session.userid)
   if(session.userid){
       res.send("Welcome User <a href=\'/logout'>click to logout</a>");
   }else

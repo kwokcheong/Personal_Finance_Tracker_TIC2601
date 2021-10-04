@@ -1,0 +1,66 @@
+/* Vertical navigation bar */
+html{
+	margin-left: 75px;
+}
+
+.menu{
+	position: fixed;
+	top: 0; 
+	left: 0;
+	width: 60px; 
+	height: 100%; 
+	background: #28B463; 
+	font-size: 16px; 
+	font-family: 'Montserrat', sans-serif;
+}
+
+.menu__item{
+	position: relative; 
+	display: flex; 
+	align-items: center; 
+	justify-content: center; 
+	padding: 15px 0; 
+	text-decoration: none; 
+	color:whitesmoke; 
+	transition: 0.3s;
+}
+
+.menu__item > i{
+	font-size: 1.5em; 
+}
+
+.menu__item--active{
+	color: #000000; 
+	background: whitesmoke;
+}
+
+.menu__item:hover{
+	background: #229954;
+	font-size: 1.2em; 
+}
+
+.menu__item::after{
+	position: absolute; 
+	display: inline-block; 
+	top: 50%; 
+	transform: translateY(-50%);
+	left: 100%;
+	content: attr(data-tooltip);
+	margin-left: 15px;
+	white-space: nowrap;
+	padding: 7px 12px; 
+	font-size: 0.65em; 
+	font-weight: bold;
+	background:#229954; 
+	border-radius: 10px; 
+	color: #ffffff;
+	visibility: hidden;
+	transition: opacity 0.3s;
+}
+
+.menu__item:hover::after{
+	opacity: 1;
+	visibility: visible; 
+}
+
+/* Search box */

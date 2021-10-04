@@ -1,20 +1,64 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
     <head>
-        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <title>Personal Finance Tracking Login Page</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/stylesheets/login.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     </head>
-    <body>
-        <div class="login_container">
-        <form action="/users" method="post">
-            <h2>Login</h2>
-            <div class="input-field">
-                <input type="text" name="username" id="username" placeholder="Enter Username">
-            </div>
-            <div class="input-field">
-                <input type="password" name="password" id="password" placeholder="Enter Password">
-            </div>
-            <input type="submit" value="LogIn">
+    <body class="header">
+        <form action="/user" method="post">
+            <section>
+                <div class="container" id="container">
+                        <div class="form-container sign-up-container">
+                            <form action="#">
+                                <h1>Create Account</h1>
+                                <input type="text" placeholder="Name" required/>
+                                <input type="email" placeholder="Email" required/>
+                                <input type="password" placeholder="Password" required/>
+                                <button>Sign Up</button>
+                            </form>
+                        </div>
+                        <div class="form-container sign-in-container">
+                            <form action="/users" method="POST">
+                                <h1>Sign in</h1>
+                                <input type="email" name="username" placeholder="Email" required/>
+                                <input type="password" name="password" placeholder="Password" required/>
+                                <a href="#">Forgot your password?</a>
+                                <button type="submit" value="LogIn">Sign In</button>
+                            </form>
+                        </div>
+                        <div class="overlay-container">
+                            <div class="overlay">
+                                <div class="overlay-panel overlay-left">
+                                    <h1>Welcome Back!</h1>
+                                    <p>To continue planning your finances, please login with your personal info</p>
+                                    <button class="ghost" id="signIn">Sign In</button>
+                                </div>
+                                <div class="overlay-panel overlay-right">
+                                    <h1>Hello!</h1>
+                                    <p>Enter your personal details and start your financial planning right!</p>
+                                    <button class="ghost" id="signUp">Sign Up</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <script>
+                    const signUpButton = document.getElementById('signUp');
+                    const signInButton = document.getElementById('signIn');
+                    const container = document.getElementById('container');
+                    signUpButton.addEventListener('click', () => {
+                        container.classList.add("right-panel-active");  
+                    });
+        
+                    signInButton.addEventListener('click', () => {
+                        container.classList.remove("right-panel-active");
+                    });
+                </script>
+            </section>
         </form>
-        </div>
     </body>
 </html>
