@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mysql = require('mysql2');
 const sessions = require('express-session')
+const { flash } = require('express-flash-message');
 require('dotenv').config()
 
 //Set up routers
@@ -48,6 +49,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
+
+// apply express-flash-message middleware
+app.use(flash({ sessionKeyName: 'flashMessage' }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

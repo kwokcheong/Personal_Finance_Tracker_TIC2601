@@ -12,6 +12,7 @@
     "dotenv": "^10.0.0",
     "ejs": "^2.7.4",
     "express": "^4.17.1",
+    "express-flash-message": "^2.1.0",
     "express-session": "^1.17.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",

@@ -23,4 +23,8 @@ router.get('/logout',(req,res) => {
   res.redirect('/');
 });
 
+router.get('/invalid', function(req, res) {
+  res.send('Invalid User');
+});
+
 module.exports = router;

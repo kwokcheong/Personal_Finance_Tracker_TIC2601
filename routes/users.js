@@ -7,15 +7,15 @@ const mypassword = 'mypassword'
 
 /* GET users listing. */
 router.post('/',(req,res) => {
-    
   if(req.body.username == myusername && req.body.password == mypassword){
       session=req.session;
       session.userid=req.body.username;
-      // console.log(req.session)
-      res.send(`Hey there, welcome <a href=\'/logout'>click to logout</a>`);
+      console.log(req.session)
+      // res.send(`Hey there, welcome <a href=\'/logout'>click to logout</a>`);
+      res.redirect('../')
   }
   else{
-      res.send('Invalid username or password');
+    res.redirect('../invalid')
   }
 })
 
