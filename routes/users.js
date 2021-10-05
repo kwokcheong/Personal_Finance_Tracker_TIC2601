@@ -28,6 +28,15 @@ router.post('/auth',(req,res) => {
   }
 });
 
+router.post('/create', (req, res) => {
+  let data = { name: req.body.name, email: req.body.email, password: req.body.password};
+  let sql = "INSERT INTO users SET ?";
+  db.query(sql, data, (err, result) => {
+    if (err) throw err;
+    res.redirect('../login')
+  })
+});
+
 router.get('/show', (req, res) => {
   let sql = `SELECT * FROM users`;
   db.query(sql, (err, result) => {
