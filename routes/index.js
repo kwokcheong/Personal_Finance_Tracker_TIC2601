@@ -18,6 +18,10 @@ router.get('/login', function(req, res) {
   res.render('login');
 });
 
+router.get('/expenses', function(req, res) {
+  res.render('expenses')
+});
+
 router.get('/logout',(req,res) => {
   req.session.destroy();
   res.redirect('/');
