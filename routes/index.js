@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
   session=req.session;
   // console.log(session.userid)
   if(session.userid){
-      res.render('index')
+      res.render('index');
   }else
   res.render('welcome');
 });
