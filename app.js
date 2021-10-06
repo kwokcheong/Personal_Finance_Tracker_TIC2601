@@ -9,6 +9,7 @@ const logger = require('morgan');
 const mysql = require('mysql2');
 const sessions = require('express-session')
 const { flash } = require('express-flash-message');
+const db = require('./db');
 require('dotenv').config()
 
 //Set up routers
@@ -16,18 +17,6 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
-
-//MySql Database Connection
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: 'crud_express'
-});
-
-connection.connect(function(error) {
-  error ? console.log(error) : console.log('Database connected!');
-});
 
 // creating 24 hours from milliseconds
 const oneDay = 1000 * 60 * 60 * 24;
