@@ -7,9 +7,14 @@ html{
 	position: fixed;
 	top: 0; 
 	left: 0;
-	width: 60px; 
+	width: 90px; 
 	height: 100%; 
-	background: #28B463; 
+	background:linear-gradient(180deg, rgba(248, 184, 139,0) 20%, rgba(248, 184, 139,.1) 20%, rgba(248, 184, 139,.1) 40%, rgba(248, 184, 139,.2) 40%, rgba(248, 184, 139,.2) 60%, rgba(248, 184, 139,.4) 60%, rgba(248, 184, 139,.4) 80%, rgba(248, 184, 139,.5) 80%),
+	linear-gradient(45deg, rgba(250, 248, 132,.3) 20%, rgba(250, 248, 132,.4) 20%, rgba(250, 248, 132,.4) 40%, rgba(250, 248, 132,.5) 40%, rgba(250, 248, 132,.5) 60%, rgba(250, 248, 132,.6) 60%, rgba(250, 248, 132,.6) 80%, rgba(250, 248, 132,.7) 80%),
+	linear-gradient(-45deg, rgba(186, 237, 145,0) 20%, rgba(186, 237, 145,.1) 20%, rgba(186, 237, 145,.1) 40%, rgba(186, 237, 145,.2) 40%, rgba(186, 237, 145,.2) 60%, rgba(186, 237, 145,.4) 60%, rgba(186, 237, 145,.4) 80%, rgba(186, 237, 145,.6) 80%),
+	linear-gradient(90deg, rgba(178, 206, 254,0) 20%, rgba(178, 206, 254,.3) 20%, rgba(178, 206, 254,.3) 40%, rgba(178, 206, 254,.5) 40%, rgba(178, 206, 254,.5) 60%, rgba(178, 206, 254,.7) 60%, rgba(178, 206, 254,.7) 80%, rgba(178, 206, 254,.8) 80%),
+	linear-gradient(-90deg, rgba(242, 162, 232,0) 20%, rgba(242, 162, 232,.4) 20%, rgba(242, 162, 232,.4) 40%, rgba(242, 162, 232,.5) 40%, rgba(242, 162, 232,.5) 60%, rgba(242, 162, 232,.6) 60%, rgba(242, 162, 232,.6) 80%, rgba(242, 162, 232,.8) 80%),
+	linear-gradient(180deg, rgba(254, 163, 170,0) 20%, rgba(254, 163, 170,.4) 20%, rgba(254, 163, 170,.4) 40%, rgba(254, 163, 170,.6) 40%, rgba(254, 163, 170,.6) 60%, rgba(254, 163, 170,.8) 60%, rgba(254, 163, 170,.8) 80%, rgba(254, 163, 170,.9) 80%);; 
 	font-size: 16px; 
 	font-family: 'Montserrat', sans-serif;
 }
@@ -21,22 +26,21 @@ html{
 	justify-content: center; 
 	padding: 15px 0; 
 	text-decoration: none; 
-	color:whitesmoke; 
+	color: #717D7E;
 	transition: 0.3s;
 }
 
 .menu__item > i{
-	font-size: 1.5em; 
+	font-size: 2.0em; 
 }
 
 .menu__item--active{
-	color: #000000; 
+	color: #717D7E; 
 	background: whitesmoke;
 }
 
 .menu__item:hover{
-	background: #229954;
-	font-size: 1.2em; 
+	font-size: 1.5em; 
 }
 
 .menu__item::after{
@@ -51,7 +55,7 @@ html{
 	padding: 7px 12px; 
 	font-size: 0.65em; 
 	font-weight: bold;
-	background:#229954; 
+	background:#73C6B6; 
 	border-radius: 10px; 
 	color: #ffffff;
 	visibility: hidden;

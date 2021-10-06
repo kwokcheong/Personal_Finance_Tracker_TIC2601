@@ -3,7 +3,15 @@
 }
 
 body {
-	background: #f6f5f7;
+	background: 
+	linear-gradient(180deg, rgba(248, 184, 139,0) 20%, rgba(248, 184, 139,.1) 20%, rgba(248, 184, 139,.1) 40%, rgba(248, 184, 139,.2) 40%, rgba(248, 184, 139,.2) 60%, rgba(248, 184, 139,.4) 60%, rgba(248, 184, 139,.4) 80%, rgba(248, 184, 139,.5) 80%),
+	linear-gradient(45deg, rgba(250, 248, 132,.3) 20%, rgba(250, 248, 132,.4) 20%, rgba(250, 248, 132,.4) 40%, rgba(250, 248, 132,.5) 40%, rgba(250, 248, 132,.5) 60%, rgba(250, 248, 132,.6) 60%, rgba(250, 248, 132,.6) 80%, rgba(250, 248, 132,.7) 80%),
+	linear-gradient(-45deg, rgba(186, 237, 145,0) 20%, rgba(186, 237, 145,.1) 20%, rgba(186, 237, 145,.1) 40%, rgba(186, 237, 145,.2) 40%, rgba(186, 237, 145,.2) 60%, rgba(186, 237, 145,.4) 60%, rgba(186, 237, 145,.4) 80%, rgba(186, 237, 145,.6) 80%),
+	linear-gradient(90deg, rgba(178, 206, 254,0) 20%, rgba(178, 206, 254,.3) 20%, rgba(178, 206, 254,.3) 40%, rgba(178, 206, 254,.5) 40%, rgba(178, 206, 254,.5) 60%, rgba(178, 206, 254,.7) 60%, rgba(178, 206, 254,.7) 80%, rgba(178, 206, 254,.8) 80%),
+	linear-gradient(-90deg, rgba(242, 162, 232,0) 20%, rgba(242, 162, 232,.4) 20%, rgba(242, 162, 232,.4) 40%, rgba(242, 162, 232,.5) 40%, rgba(242, 162, 232,.5) 60%, rgba(242, 162, 232,.6) 60%, rgba(242, 162, 232,.6) 80%, rgba(242, 162, 232,.8) 80%),
+	linear-gradient(180deg, rgba(254, 163, 170,0) 20%, rgba(254, 163, 170,.4) 20%, rgba(254, 163, 170,.4) 40%, rgba(254, 163, 170,.6) 40%, rgba(254, 163, 170,.6) 60%, rgba(254, 163, 170,.8) 60%, rgba(254, 163, 170,.8) 80%, rgba(254, 163, 170,.9) 80%);
+	background-color: rgb(254, 163, 170);
+	background-size: 100% 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -30,12 +38,8 @@ p {
 	margin: 20px 0 30px;
 }
 
-span {
-	font-size: 12px;
-}
-
 a {
-	color: #333;
+	color: #717D7E;
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
@@ -43,10 +47,10 @@ a {
 
 button {
 	border-radius: 20px;
-	border: 1px solid #27AE60;
-	background-color: #27AE60;
-	color: #FFFFFF;
-	font-size: 12px;
+	border: 1px solid #A3E4D7;
+	background-color: #73C6B6;
+	color: white;
+	font-size: 15px;
 	font-weight: bold;
 	padding: 12px 45px;
 	letter-spacing: 1px;
@@ -84,18 +88,19 @@ input {
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
+	color:#717D7E;
 }
 
 .container {
 	background-color: #fff;
 	border-radius: 10px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-			0 10px 10px rgba(0,0,0,0.22);
+  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 	position: relative;
 	overflow: hidden;
 	width: 768px;
 	max-width: 100%;
 	min-height: 480px;
+	color:#717D7E;
 }
 
 .form-container {
@@ -157,9 +162,7 @@ input {
 }
 
 .overlay {
-	background: #2ECC71;
-	background: -webkit-linear-gradient(to right, #2ECC71, #28B463);
-	background: linear-gradient(to right, #2ECC71, #28B463);
+	background: linear-gradient(to right, #52BE80, #73C6B6);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
