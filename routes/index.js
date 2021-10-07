@@ -14,14 +14,22 @@ router.get('/', function(req, res) {
   res.render('welcome');
 });
 
+// Login Page
 router.get('/login', function(req, res) {
   res.render('login');
 });
+
+// Forgot Password Page
+router.get('/password', function(req, res) {
+  res.render('password');
+});
+
 
 router.get('/expenses', function(req, res) {
   res.render('expenses')
 });
 
+// Logout Page
 router.get('/logout',(req,res) => {
   req.session.destroy();
   res.redirect('/');

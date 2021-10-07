@@ -45,6 +45,16 @@ a {
 	margin: 15px 0;
 }
 
+a:hover {
+	text-shadow: 1px 1px  #D7DBDD;
+	border:none;
+}
+
+a:active {
+	text-shadow: 1px 1px #D7DBDD;
+	top: 17px;
+}
+
 button {
 	border-radius: 20px;
 	border: 1px solid #A3E4D7;
