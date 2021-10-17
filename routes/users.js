@@ -3,10 +3,6 @@ const { request, response } = require('../app');
 const db = require('../db');
 const router = express.Router();
 
-//username and password
-const myusername = 'user1@hotmail.com'
-const mypassword = 'mypassword'
-
 /* GET users listing. */
 router.post('/auth',(req,res) => {
   let username = req.body.username;

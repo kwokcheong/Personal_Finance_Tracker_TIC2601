@@ -1,8 +1,5 @@
 const mysql = require('mysql2');
-//This is to read from the initialize.sql in the db, you can use it to read from the sql.
-// const fs = require('fs');
-// const datasql = fs.readFileSync('./database/Initialize.sql').toString();
-require('dotenv').config()
+require('dotenv').config();
 
 let db;
 //MySql Database Connection
