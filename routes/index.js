@@ -7,8 +7,7 @@ var session;
 /* GET home page. */
 router.get('/', function(req, res) {
   session=req.session;
-  // console.log(session.userid)
-  if(session.userid){
+  if(session.userID){
       res.render('index');
   }else
   res.render('welcome');

@@ -5,17 +5,19 @@ const router = express.Router();
 
 /* GET users listing. */
 router.post('/auth',(req,res) => {
-  let username = req.body.username;
+  let email = req.body.email;
 	let password = req.body.password;
   let sql = 'SELECT * FROM users WHERE email=? AND password=?';
-  if (username && password){
-    db.query(sql, [username, password], (err, result) => {
+  if (email && password){
+    session=req.session;
+    console.log(session)
+    db.query(sql, [email, password], (err, result) => {
       if (err) throw err;
       if (result.length > 0){
         session=req.session;
         req.session.loggedin = true;
-        req.session.userEmail = username;
-        req.session.userid = result[0].id.toString();
+        req.session.userEmail = email;
+        req.session.userID = result[0].userID.toString();
         res.redirect('../')
       } else {
         res.redirect('../invalid')
