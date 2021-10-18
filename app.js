@@ -15,6 +15,8 @@ require('dotenv').config()
 //Set up routers
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const incomeRouter = require('./routes/income');
+const expensesRouter = require('./routes/expenses');
 
 const app = express();
 
@@ -41,6 +43,8 @@ app.use(cookieParser());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/income', incomeRouter);
+app.use('/expenses', expensesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

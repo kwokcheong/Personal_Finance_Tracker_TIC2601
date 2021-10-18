@@ -4,7 +4,7 @@ const router = express.Router();
 // a variable to save a session
 var session;
 
-/* GET home page. */
+// Home page.
 router.get('/', function(req, res) {
   session=req.session;
   if(session.userID){
@@ -21,11 +21,6 @@ router.get('/login', function(req, res) {
 // Forgot Password Page
 router.get('/password', function(req, res) {
   res.render('password');
-});
-
-
-router.get('/expenses', function(req, res) {
-  res.render('expenses')
 });
 
 // Logout Page

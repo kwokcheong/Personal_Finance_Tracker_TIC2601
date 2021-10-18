@@ -16,8 +16,10 @@ CREATE TABLE users (
 );
 
 CREATE TABLE incomes (
+    incomeID VARCHAR(256) NOT NULL PRIMARY KEY,
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
-    amount DECIMAL(13,2) CHECK(amount >= 0), 
+    name VARCHAR(256) NOT NULL,
+    amount DECIMAL(13,2) CHECK(amount >= 0),
     category VARCHAR(64),
     recurring_date DATE,
     recurring BOOLEAN NOT NULL DEFAULT 0,
@@ -25,6 +27,7 @@ CREATE TABLE incomes (
 );
 
 CREATE TABLE expenses (
+    expensesID VARCHAR(256) NOT NULL PRIMARY KEY,
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
@@ -41,6 +44,7 @@ CREATE TABLE ledger (
 );
 
 CREATE TABLE goals (
+    goalID VARCHAR(256) NOT NULL PRIMARY KEY,
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
