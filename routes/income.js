@@ -1,6 +1,8 @@
 const express = require('express');
+const { session } = require('passport');
 const db = require('../db');
 const router = express.Router();
+
 
 // form page for income
 router.get('/add', (req, res) => {
@@ -19,6 +21,7 @@ router.post('/save', (req , res) => {
     let randomNum = Math.random().toString(36).substr(2,8);
     let data = {
         incomeID : randomNum,
+        userID : req.session.userID,
         name : req.body.name,
         amount : req.body.amount,
         category : req.body.category,
