@@ -50,6 +50,7 @@ CREATE TABLE goals (
     amount DECIMAL(13,2) CHECK(amount >= 0),
     category VARCHAR(64),
     possible BOOLEAN DEFAULT 0,
+    done BOOLEAN DEFAULT 0,
     start_date DATE,
     end_date DATE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP

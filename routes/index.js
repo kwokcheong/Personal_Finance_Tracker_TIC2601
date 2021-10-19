@@ -20,7 +20,9 @@ router.get('/login', function(req, res) {
 
 // Forgot Password Page
 router.get('/password', function(req, res) {
-  res.render('password');
+  res.render('password', {
+    error : ''
+  });
 });
 
 // Logout Page

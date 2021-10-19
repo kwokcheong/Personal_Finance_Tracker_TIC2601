@@ -1,5 +1,4 @@
 const express = require('express');
-const { request, response } = require('../app');
 const db = require('../db');
 const router = express.Router();
 
@@ -10,7 +9,6 @@ router.post('/auth',(req,res) => {
   let sql = 'SELECT * FROM users WHERE email=? AND password=?';
   if (email && password){
     session=req.session;
-    console.log(session)
     db.query(sql, [email, password], (err, result) => {
       if (err) throw err;
       if (result.length > 0){
@@ -42,5 +40,26 @@ router.get('/show', (req, res) => {
       res.send(result[0])
   });
 });
+
+router.post('/update_password', (req,res) => {
+  let email = req.body.email;
+  let new_password = req.body.new_password;
+  let sql = `UPDATE users SET password=? WHERE users.email = '${email}'`
+  let validate_email = `SELECT userID FROM users WHERE users.email = '${email}'`
+  db.query(validate_email, (err, result) => {
+    if (err) throw err;
+    console.log(result[0])
+    if (result[0] == null){
+      res.render('password', {
+        error : 'Email does not exist. Please try again.'
+      });
+    } else {
+      db.query(sql, new_password, (err,result) => {
+        if (err) throw err;
+        res.redirect('../login');
+      })
+    }
+  })
+})
 
 module.exports = router;
