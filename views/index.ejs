@@ -29,7 +29,7 @@
         </a>
         <!-- Logout -->
         <a href="/logout" class="menu__item" data-tooltip="Logout">
-          <i class="material-icons">logout</i>
+          <i class="material-icons" onclick="return logoutFunction()">logout</i>
         </a>
     </nav>
     <section>
@@ -40,3 +40,15 @@
     </section>
 </body>
 </html>
+
+<script type="text/javascript">
+    function logoutFunction(){
+        var flag = confirm("Are you sure you want to log out?")
+        if(flag==true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+</script>
