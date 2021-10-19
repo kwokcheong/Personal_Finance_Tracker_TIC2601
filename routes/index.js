@@ -15,13 +15,15 @@ router.get('/', function(req, res) {
 
 // Login Page
 router.get('/login', function(req, res) {
-  res.render('login');
+  res.render('login', {
+    error : ''
+  });
 });
 
 // Forgot Password Page
 router.get('/password', function(req, res) {
   res.render('password', {
-    error : ''
+    error : ' '
   });
 });
 

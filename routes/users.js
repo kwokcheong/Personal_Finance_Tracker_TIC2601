@@ -18,7 +18,9 @@ router.post('/auth',(req,res) => {
         req.session.userID = result[0].userID.toString();
         res.redirect('../')
       } else {
-        res.redirect('../invalid')
+        res.render('login',{
+          error : 'User does not exist.'
+        })
       }
     });
   }
