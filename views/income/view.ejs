@@ -13,11 +13,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </head>
-
   <body>
     <nav class="menu">
         <!-- Dashboard -->
-        <a href="./" class="menu__item" data-tooltip="Dashboard">
+        <a href="../" class="menu__item" data-tooltip="Dashboard">
             <i class="material-icons">home</i>
         </a>
         <!-- Transactions -->
@@ -37,12 +36,8 @@
           <i class="material-icons" onclick="return logoutFunction()">logout</i>
         </a>
     </nav>
-    <section>
-        <div class="search">
-            <div class="icon"></div>
-            <div class="input"></div>
-        </div>
-    </section>
+    <p style="margin-left: 100px;"><%= data %></p>
+    <p style="margin-left: 100px;"><%= label %></p>
     <section>
     <div id="segmentate">
         <div class="chart">
@@ -64,13 +59,8 @@
     </div>
     </section>
   </body>
-
-    <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
     <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    
     <script>
         let ctx = document.getElementById('myChart');
         let myChart = new Chart(ctx, {
@@ -105,10 +95,11 @@
         });
 
         let ctx2 = document.getElementById('myChart2');
+        var labeldata = JSON.parse('<%- label %>');
         let myChart2 = new Chart(ctx2, {
             type: 'polarArea',
             data: {
-                labels:['Food','luxury','Transport','Bills','Others'],
+                labels: labeldata,
                 datasets: [{
                     label: 'Spending',
                     data: [130,500,200,300,700],
