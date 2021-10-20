@@ -1,9 +1,6 @@
 const express = require('express');
-const { Forbidden } = require('http-errors');
-const { session } = require('passport');
 const db = require('../db');
 const router = express.Router();
-
 
 // form page for income
 router.get('/add', (req, res) => {
@@ -18,12 +15,12 @@ router.get('/add', (req, res) => {
 });
 
 router.get('/view', (req, res) => {
-    let sql = `SELECT * FROM incomes`;
+    let session = req.session;
+    let sql = `SELECT * FROM incomes WHERE userID = ${session.userID}`;
     db.query(sql, (err,result) => {
         if (err) throw err;
-        console.log(result)
         res.render('income/view', {
-            data: JSON.stringify(result)
+            data: JSON.stringify(result[0].amount)
         })
     })
 })

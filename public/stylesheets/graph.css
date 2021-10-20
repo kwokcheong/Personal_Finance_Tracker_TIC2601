@@ -1,0 +1,29 @@
+/*Graph*/
+#segmentate{
+    margin-top: 30px;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    flex-wrap: wrap;
+}
+
+.chart{
+    display:flex;
+    flex-wrap: wrap;
+    height: 700px;
+    margin-top: 10px;
+    justify-content: space-around;
+}
+
+.chart div{
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 30px;
+    border-radius: 40px;
+    box-shadow: 0.1px 0.1px 15px 0.1px rgb(189, 188, 188);
+    text-align: center;
+    max-height: 650px;
+    max-width: 700px;
+    width: 100%;
+}
