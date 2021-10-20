@@ -1,6 +1,6 @@
 /*Graph*/
 #segmentate{
-    margin-top: 30px;
+    margin-top: 10px;
     background-color: rgb(255, 255, 255);
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
@@ -10,7 +10,7 @@
 .chart{
     display:flex;
     flex-wrap: wrap;
-    height: 700px;
+    height: 500px;
     margin-top: 10px;
     justify-content: space-around;
 }
