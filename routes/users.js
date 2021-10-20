@@ -16,6 +16,7 @@ router.post('/auth',(req,res) => {
         req.session.loggedin = true;
         req.session.userEmail = email;
         req.session.userID = result[0].userID.toString();
+        req.session.username = result[0].name.toString();
         res.redirect('../')
       } else {
         res.render('login',{

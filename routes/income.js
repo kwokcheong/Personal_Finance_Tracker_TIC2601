@@ -21,7 +21,7 @@ router.get('/view', (req, res) => {
         res.send('please log in');
     } else {
         let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC`;
-        let months = ['Jan','Feb', 'March', 'April', 'May', 'June']; 
+        let months = ['Jan','Feb', 'March', 'April', 'May', 'June', 'July']; 
         let labeldata = ['food','luxury','Transport','Bills','Others'];
         let amount = [];
         db.query(sql, (err,result) => {
@@ -30,6 +30,7 @@ router.get('/view', (req, res) => {
                 amount[i] = result[i].amount;
             }
             res.render('income/view', {
+                name: session.username,
                 data: JSON.stringify(amount),
                 labelMonth: JSON.stringify(months),
                 label: JSON.stringify(labeldata)

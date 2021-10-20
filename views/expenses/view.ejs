@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Personal Finance Tracking Dashboard Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <nav class="menu">
+        <!-- Dashboard -->
+        <a href="./" class="menu__item" data-tooltip="Dashboard">
+            <i class="material-icons">home</i>
+        </a>
+        <!-- Transactions -->
+        <a href="./" class="menu__item" data-tooltip="Transactions">
+            <i class="material-icons">receipt_long</i>
+        </a>
+        <!-- Money Insights -->
+        <a href="./" class="menu__item" data-tooltip="Money Insights">
+            <i class="material-icons">insights</i>
+        </a>
+        <!-- Settings -->
+        <a href="./" class="menu__item" data-tooltip="Settings">
+            <i class="material-icons">tune</i>
+        </a>
+        <!-- Logout -->
+        <a href="/logout" class="menu__item" data-tooltip="Logout">
+          <i class="material-icons" onclick="return logoutFunction()">logout</i>
+        </a>
+        <a href="/income/view" class="menu__item" data-tooltip="testing">
+            <i class="material-icons">tune</i>
+        </a>
+    </nav>
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</html>

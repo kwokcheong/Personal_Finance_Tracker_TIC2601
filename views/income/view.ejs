@@ -36,9 +36,10 @@
           <i class="material-icons" onclick="return logoutFunction()">logout</i>
         </a>
     </nav>
-    <p style="margin-left: 100px;"><%= data %></p>
-    <p style="margin-left: 100px;"><%= label %></p>
     <section>
+    <div class="row">
+        <h1 style='color: gray; margin-left: 100px;'> Welcome back, <b><%= name %>.</b> </h1>
+    </div>
     <div id="segmentate">
         <div class="chart">
             <div>
@@ -89,8 +90,7 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true,
-                            max: 1000
+                            beginAtZero: true
                         }
                     }]
                 }
