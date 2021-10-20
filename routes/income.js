@@ -1,4 +1,5 @@
 const express = require('express');
+const { Forbidden } = require('http-errors');
 const { session } = require('passport');
 const db = require('../db');
 const router = express.Router();
@@ -9,12 +10,23 @@ router.get('/add', (req, res) => {
     let session = req.session;
     if (session.userID){
         res.render('income/add', {
-            title: 'This is the create income page, you should make the form here',
+            title: 'This is the create income page, you should make the form here'
         });
     } else {
         res.send('please log in')
     }
 });
+
+router.get('/view', (req, res) => {
+    let sql = `SELECT * FROM incomes`;
+    db.query(sql, (err,result) => {
+        if (err) throw err;
+        console.log(result)
+        res.render('income/view', {
+            data: JSON.stringify(result)
+        })
+    })
+})
 
 //interim insert query
 router.post('/save', (req , res) => {
@@ -26,13 +38,13 @@ router.post('/save', (req , res) => {
         amount : req.body.amount,
         category : req.body.category,
         recurring_date : req.body.recurring_date,
-        recurring : req.body.recurring
+        recurring : req.body.recurring == 1 ? 1 : 0
     }
 
     let sql = "INSERT INTO incomes SET ?";
     db.query(sql, data, (err, results) => {
         if (err) throw err;
-        res.redirect('../');
+        res.redirect('../income/view');
     });
 });
 
