@@ -17,15 +17,25 @@ router.get('/add', (req, res) => {
 //To learn- why need to JSON stringify and Parse over at ejs
 router.get('/view', (req, res) => {
     let session = req.session;
-    let sql = `SELECT * FROM incomes WHERE userID = ${session.userID}`;
-    let labeldata = ['dog','luxury','Transport','Bills','Others'];
-    db.query(sql, (err,result) => {
-        if (err) throw err;
-        res.render('income/view', {
-            data: JSON.stringify(result[0].amount),
-            label: JSON.stringify(labeldata)
+    if (!session.userID){
+        res.send('please log in');
+    } else {
+        let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC`;
+        let months = ['Jan','Feb', 'March', 'April', 'May', 'June']; 
+        let labeldata = ['food','luxury','Transport','Bills','Others'];
+        let amount = [];
+        db.query(sql, (err,result) => {
+            if (err) throw err;
+            for (let i=0; i<result.length; i++){
+                amount[i] = result[i].amount;
+            }
+            res.render('income/view', {
+                data: JSON.stringify(amount),
+                labelMonth: JSON.stringify(months),
+                label: JSON.stringify(labeldata)
+            })
         })
-    })
+    }
 })
 
 //interim insert query

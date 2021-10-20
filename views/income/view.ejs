@@ -63,13 +63,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script>
         let ctx = document.getElementById('myChart');
+        var labelmonths = JSON.parse('<%- labelMonth %>');
+        var amount = JSON.parse('<%- data %>');
         let myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Jan_w1', 'Jan_w2', 'Jan_w3', 'Jan_w4', 'Feb_w1'],
+                labels: labelmonths,
                 datasets: [{
                     label: 'Spending',
-                    data: [130,500,200,300,700],
+                    data: amount,
                     backgroundColor: 'rgba(0,0,0,0)',
                     borderColor: 'rgb(75, 192, 192)',
                     borderWidth: 1
@@ -87,7 +89,8 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            max: 1000
                         }
                     }]
                 }
