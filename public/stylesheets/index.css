@@ -1,6 +1,7 @@
 /* Vertical navigation bar */
-html{
-	margin-left: 75px;
+
+.main{
+	margin-left: 100px;
 }
 
 .menu{

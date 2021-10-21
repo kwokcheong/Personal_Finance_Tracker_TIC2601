@@ -10,7 +10,7 @@
 .chart{
     display:flex;
     flex-wrap: wrap;
-    height: 500px;
+    height: 100%;
     margin-top: 10px;
     justify-content: space-around;
 }
@@ -24,6 +24,35 @@
     box-shadow: 0.1px 0.1px 15px 0.1px rgb(189, 188, 188);
     text-align: center;
     max-height: 650px;
+    min-height: 400px;
     max-width: 700px;
     width: 100%;
+}
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+    .chart{
+        display:flex;
+        flex-wrap: wrap;
+        height: 900px;
+        margin-top: 10px;
+        justify-content: space-around;
+    }
+}
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 834px) 
+  and (max-device-width: 1112px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .chart{
+        display:flex;
+        flex-wrap: wrap;
+        height: 900px;
+        margin-top: 10px;
+        justify-content: space-around;
+    }
 }
