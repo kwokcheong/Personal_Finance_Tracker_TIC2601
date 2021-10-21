@@ -65,8 +65,6 @@ CREATE TABLE budgethead (
 
 INSERT INTO users VALUES (1, 'admin', 'admin@hotmail.com', 'admin123');
 INSERT INTO ledger VALUES (1, 500, 500,);
-INSERT INTO incomes VALUES (1, 1, 'a',500, 'Salary','2021-03-03',1,);
-INSERT INTO expenses VALUES(3, 2, 'BBT', 5, 'food', '2021-10-18',1,);
 
 delimiter |
 
