@@ -39,6 +39,10 @@ router.get('/view', (req, res) => {
     }
 })
 
+router.get('/playground', (req,res) => {
+    res.render('income/playground');
+})
+
 //interim insert query
 router.post('/save', (req , res) => {
     let randomNum = Math.random().toString(36).substr(2,8);
