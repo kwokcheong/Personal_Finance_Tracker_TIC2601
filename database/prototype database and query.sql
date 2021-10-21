@@ -95,3 +95,25 @@ SELECT * FROM expenses;
 
 SELECT * FROM expenses WHERE recurring = 1;
 
+DELIMITER 
+
+CREATE TRIGGER complete_goal
+ AFTER UPDATE
+    ON goals FOR EACH ROW
+    BEGIN
+    IF (getDate() = end_date)
+    THEN SET done = 1
+    END;
+    
+DELIMITER 
+
+DELIMITER 
+CREATE TRIGGER set_limit
+ AFTER INSERT
+    ON incomes FOR EACH ROW
+    BEGIN
+    IF name = 'monthly salary'
+    THEN INSERT INTO ledger
+    SET current_balance = current_balance + NEW.amount + expenses;
+    END; 
+DELIMITER
