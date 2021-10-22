@@ -54,7 +54,7 @@
                 <canvas id="myChart3"></canvas>
             </div>
             <div>
-                <canvas id="myChart4"></canvas>
+                <canvas id="myChart2"></canvas>
             </div>
         </div>
     </div>
@@ -63,147 +63,11 @@
     <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script>
-        let ctx = document.getElementById('myChart');
-        var labelmonths = JSON.parse('<%- labelMonth %>');
-        var amount = JSON.parse('<%- data %>');
-        let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labelmonths,
-                datasets: [{
-                    label: 'Spending',
-                    data: amount,
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    borderColor: 'rgb(75, 192, 192)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                reponsive: true,
-                maintainAspectRatio: false,
-                title: {
-                    display: true,
-                    text: 'Average Monthly Spending',
-                    fontSize: 24,
-                    fontColor: 'grey'
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-
-        let ctx2 = document.getElementById('myChart2');
-        var labeldata = JSON.parse('<%- label %>');
-        let myChart2 = new Chart(ctx2, {
-            type: 'polarArea',
-            data: {
-                labels: labeldata,
-                datasets: [{
-                    label: 'Spending',
-                    data: [130,500,200,300,700],
-                    backgroundColor: [
-                            'rgb(75, 99, 132, 10)',
-                            'rgb(75, 192, 192, 10)',
-                            'rgb(255, 205, 86, 10)',
-                            'rgb(201, 203, 207, 10)',
-                            'rgb(54, 162, 235, 10)'
-                            ],
-                }]
-            },
-            options: {
-                reponsive: true,
-                maintainAspectRatio: false,
-                title: {
-                    display: true,
-                    text: 'Spending per category',
-                    fontSize: 24,
-                    fontColor: 'grey'
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-
-        let ctx3 = document.getElementById('myChart3');
-        let myChart3 = new Chart(ctx3, {
-            type: 'doughnut',
-            data: {
-                labels:['info'],
-                datasets: [{
-                    label: 'info',
-                    data: [20, 100],
-                    backgroundColor: [
-                            'rgb(75, 99, 132, 10)',
-                            'rgb(75, 192, 192, 10)',
-                            'rgb(255, 205, 86, 10)',
-                            'rgb(201, 203, 207, 10)',
-                            'rgb(54, 162, 235, 10)'
-                            ],
-                }]
-            },
-            options: {
-                reponsive: true,
-                maintainAspectRatio: false,
-                title: {
-                    display: true,
-                    text: 'Spending per category',
-                    fontSize: 24,
-                    fontColor: 'grey'
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-
-        let ctx4 = document.getElementById('myChart4');
-        let myChart4 = new Chart(ctx4, {
-            type: 'bar',
-            data: {
-                labels:['info', 'something'],
-                datasets: [{
-                    label: 'info',
-                    data: [30, 100],
-                    backgroundColor: [
-                            'rgb(75, 99, 132, 10)',
-                            'rgb(75, 192, 192, 10)',
-                            'rgb(255, 205, 86, 10)',
-                            'rgb(201, 203, 207, 10)',
-                            'rgb(54, 162, 235, 10)'
-                            ],
-                }]
-            },
-            options: {
-                reponsive: true,
-                maintainAspectRatio: false,
-                title: {
-                    display: true,
-                    text: 'Spending per category',
-                    fontSize: 24,
-                    fontColor: 'grey'
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
+        var labelmonths = '<%- labelMonth %>';
+        var amount = '<%- data %>';
+        var labeldata = '<%- label %>';
     </script>
+    <script src="../../js/line-chart.js"></script>
+    <script src="../../js/bar-chart.js"></script>
+    <script src="../../js/doughnut.js"></script>
 </html>

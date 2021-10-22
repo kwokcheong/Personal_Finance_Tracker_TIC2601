@@ -39,8 +39,28 @@ router.get('/view', (req, res) => {
     }
 })
 
-router.get('/playground', (req,res) => {
-    res.render('income/playground');
+router.get('/playground2', (req,res) => {
+    let session = req.session;
+    if (!session.userID){
+        res.send('please log in');
+    } else {
+        let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC`;
+        let months = ['Jan','Feb', 'March', 'April', 'May', 'June', 'July']; 
+        let labeldata = ['food','luxury','Transport','Bills','Others'];
+        let amount = [];
+        db.query(sql, (err,result) => {
+            if (err) throw err;
+            for (let i=0; i<result.length; i++){
+                amount[i] = result[i].amount;
+            }
+            res.render('income/playground2', {
+                name: session.username,
+                data: JSON.stringify(amount),
+                labelMonth: JSON.stringify(months),
+                label: JSON.stringify(labeldata)
+            })
+        })
+    }
 })
 
 //interim insert query
