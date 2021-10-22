@@ -10,7 +10,9 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../../stylesheets/import/styles2.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <script let result = '<%- result %>';></script>
+        <script>
+        let result = '<%- result %>';
+        </script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -150,7 +152,6 @@
                                             <th>Category</th>
                                             <th>recurring</th>
                                             <th>created at</th>
-                                            <th>incomeID</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -160,18 +161,16 @@
                                             <th>Category</th>
                                             <th>Age</th>
                                             <th>Start date</th>
-                                            <th>incomeID</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <% for(var i=0; i<result.length; i++) { console.log(result) %>
+                                        <% for(var i=0; i<result.length; i++) { %>
                                         <tr>
                                             <td><%= result[i].name %></td>
                                             <td><%= result[i].amount %></td>
                                             <td><%= result[i].category %></td>
-                                            <td><%= result[i].recurring %></td>
-                                            <td><%= result[i].created_at %></td>
-                                            <td><%= result[i].incomeID %></td>
+                                            <td><%= result[i].recurring == 1 ? 'Yes' : 'No' %></td>
+                                            <td><%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' '); %></td>
                                         </tr>
                                         <% } %>
                                     </tbody>
@@ -198,6 +197,7 @@
             var labelmonths = '<%- labelMonth %>';
             var amount = '<%- data %>';
             var labeldata = '<%- label %>';
+            var max = '<%- max_amount %>';
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="../../js/scripts.js"></script>

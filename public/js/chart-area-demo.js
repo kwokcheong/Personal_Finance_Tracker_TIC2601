@@ -40,7 +40,7 @@ var myLineChart = new Chart(ctx, {
         beginAtZero: true,
         ticks: {
           min: 0,
-          max: 9000,
+          max: Math.ceil(parseInt(max)/100)*100
         },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",
