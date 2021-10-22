@@ -30,6 +30,7 @@ router.get('/view', (req, res) => {
                 amount[i] = result[i].amount;
             }
             res.render('income/view', {
+                result: JSON.stringify(result),
                 name: session.username,
                 data: JSON.stringify(amount),
                 labelMonth: JSON.stringify(months),
@@ -54,6 +55,7 @@ router.get('/playground2', (req,res) => {
                 amount[i] = result[i].amount;
             }
             res.render('income/playground2', {
+                result: result,
                 name: session.username,
                 data: JSON.stringify(amount),
                 labelMonth: JSON.stringify(months),

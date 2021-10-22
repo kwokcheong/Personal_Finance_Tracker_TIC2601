@@ -10,6 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../../stylesheets/import/styles2.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script let result = '<%- result %>';></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -145,48 +146,34 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Amount</th>
+                                            <th>Category</th>
+                                            <th>recurring</th>
+                                            <th>created at</th>
+                                            <th>incomeID</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
+                                            <th>Amount</th>
+                                            <th>Category</th>
                                             <th>Age</th>
                                             <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>incomeID</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        <% for(var i=0; i<result.length; i++) { console.log(result) %>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
+                                            <td><%= result[i].name %></td>
+                                            <td><%= result[i].amount %></td>
+                                            <td><%= result[i].category %></td>
+                                            <td><%= result[i].recurring %></td>
+                                            <td><%= result[i].created_at %></td>
+                                            <td><%= result[i].incomeID %></td>
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-                                        </tr>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>
