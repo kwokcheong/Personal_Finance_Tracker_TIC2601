@@ -5,7 +5,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
 var myLineChart = new Chart(ctx, {
-  type: 'polarArea',
+  type: 'bar',
   data: {
     labels: JSON.parse(labeldata),
     datasets: [{

@@ -5,7 +5,7 @@ const router = express.Router();
 // form page for income
 router.get('/add', (req, res) => {
     let session = req.session;
-    if (session.userID){
+    if (session.userID) {
         res.render('income/add', {
             title: 'This is the create income page, you should make the form here'
         });
@@ -17,43 +17,34 @@ router.get('/add', (req, res) => {
 //To learn- why need to JSON stringify and Parse over at ejs
 router.get('/view', (req, res) => {
     let session = req.session;
-    if (!session.userID){
+    if (!session.userID) {
         res.send('please log in');
     } else {
         let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC`;
-        let months = ['Jan','Feb', 'March', 'April', 'May', 'June', 'July']; 
-        let labeldata = ['food','luxury','Transport','Bills','Others'];
-        let amount = [];
-        db.query(sql, (err,result) => {
+        db.query(sql, (err, result) => {
             if (err) throw err;
-            for (let i=0; i<result.length; i++){
-                amount[i] = result[i].amount;
-            }
             res.render('income/view', {
-                result: JSON.stringify(result),
-                name: session.username,
-                data: JSON.stringify(amount),
-                labelMonth: JSON.stringify(months),
-                label: JSON.stringify(labeldata)
+                result: result,
+                name: session.username
             })
         })
     }
 })
 
-router.get('/playground2', (req,res) => {
+router.get('/playground2', (req, res) => {
     let session = req.session;
-    if (!session.userID){
+    if (!session.userID) {
         res.send('please log in');
     } else {
         let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC`;
-        let months = ['Jan','Feb', 'March', 'April', 'May', 'June', 'July', 'August']; 
-        let labeldata = ['food','luxury','Transport','Bills','Others'];
+        let months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'August'];
+        let labeldata = ['food', 'luxury', 'Transport', 'Bills', 'Others'];
         let amount = [];
         let max = 0;
-        db.query(sql, (err,result) => {
+        db.query(sql, (err, result) => {
             if (err) throw err;
-            for (let i=0; i<result.length; i++){
-                if (parseInt(result[i].amount) > max){
+            for (let i = 0; i < result.length; i++) {
+                if (parseInt(result[i].amount) > max) {
                     max = result[i].amount;
                 }
                 amount[i] = result[i].amount;
@@ -70,60 +61,72 @@ router.get('/playground2', (req,res) => {
     }
 })
 
-//interim insert query
-router.post('/save', (req , res) => {
-    let randomNum = Math.random().toString(36).substr(2,8);
+//INSET income query
+router.post('/save', (req, res) => {
+    let randomNum = Math.random().toString(36).substr(2, 8);
     let data = {
-        incomeID : randomNum,
-        userID : req.session.userID,
-        name : req.body.name,
-        amount : req.body.amount,
-        category : req.body.category,
-        recurring_date : req.body.recurring_date,
-        recurring : req.body.recurring == 1 ? 1 : 0
+        incomeID: randomNum,
+        userID: req.session.userID,
+        name: req.body.name,
+        amount: req.body.amount,
+        category: req.body.category,
+        recurring_date: req.body.recurring_date,
+        recurring: req.body.recurring == 1 ? 1 : 0
     }
 
     let sql = "INSERT INTO incomes SET ?";
     db.query(sql, data, (err, results) => {
         if (err) throw err;
-        res.redirect('../income/view');
+        res.redirect('../income/playground2');
     });
 });
 
-// //interim delete query
-// router.get('/delete/:incomeID', (req,res) => {
-//     const userID = req.params.userId;
-//     let sql = `DELETE FROM users WHERE id = ${userID}`;
-//     connection.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.redirect('../');
-//     });
-// });
+//DELETE income query
+router.get('/delete/:incomeID', (req, res) => {
+    const userID = req.session.userID;
+    const incomeID = req.params.incomeID;
+    let sql = `DELETE FROM incomes WHERE userID = ${userID} AND incomeID = '${incomeID}'`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.redirect('/income/view');
+    });
+});
 
-// // Edit page
-// router.get('/edit/:userID', (req, res) => {
-//     const userID = req.params.userId;
-//     let sql = `SELECT * FROM users
-//                WHERE users.id = ${userID}`;
-//     connection.query(sql, (err, result) => {
-//         if (err) throw err;
-//         console.log(result[0])
-//         res.render('user_edit', {
-//             title: 'This is edit user page',
-//             user: result[0]
-//         });
-//     });
-// });
+// Edit PAGE
+router.get('/edit/:incomeID', (req, res) => {
+    let session = req.session;
+    if (!session.userID) {
+        res.send('please log in');
+    } else {
+        const userID = session.userID;
+        const incomeID = req.params.incomeID;
+        let sql = `SELECT * FROM incomes
+               WHERE userID = ${userID} AND incomeID = '${incomeID}'`;
+        db.query(sql, (err, result) => {
+            if (err) throw err;
+            console.log(result[0])
+            res.render('income/edit', {
+                result: result
+            });
+        });
+    }
+});
 
-// // interim update query
-// router.post('/update', (req, res) => {
-//     let data = {name: req.body.name, email: req.body.email, phone_no: req.body.phone_no}
-//     let userId = req.body.id;
-//     let sql = `UPDATE users SET ? WHERE users.id = ${userId}`
-//     connection.query(sql, data, (err, result) => {
-//         if (err) throw err;
-//         res.redirect('../');
-//     })
-// })
+// UPDATE income Query
+router.post('/update/:incomeID', (req, res) => {
+    let data = {
+        name: req.body.name,
+        category: req.body.category,
+        rucurring: req.body.recurring,
+        recurring_date: req.body.recurring_date
+    }
+    const userId = req.session.id;
+    const incomeID = req.params.incomeID;
+    let sql = `UPDATE incomes SET ? WHERE users.id = ${userId} AND incomeID = '${incomeID}'`
+    db.query(sql, data, (err, result) => {
+        if (err) throw err;
+        res.redirect('/income/view');
+    })
+})
 
 module.exports = router;

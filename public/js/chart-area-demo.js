@@ -9,7 +9,7 @@ var myLineChart = new Chart(ctx, {
   data: {
     labels: JSON.parse(labelmonths),
     datasets: [{
-      label: "Sessions",
+      label: "Expenses",
       lineTension: 0.3,
       backgroundColor: "rgba(2,117,216,0.2)",
       borderColor: "rgba(2,117,216,1)",
@@ -24,12 +24,6 @@ var myLineChart = new Chart(ctx, {
     }],
   },
   options: {
-    title: {
-      display: true,
-      text: 'Average Monthly Spending',
-      fontSize: 24,
-      fontColor: 'grey'
-    },
     scales: {
       xAxes: [{
         gridLines: {

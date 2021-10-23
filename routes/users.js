@@ -51,7 +51,6 @@ router.post('/update_password', (req,res) => {
   let validate_email = `SELECT userID FROM users WHERE users.email = '${email}'`
   db.query(validate_email, (err, result) => {
     if (err) throw err;
-    console.log(result[0])
     if (result[0] == null){
       res.render('password', {
         error : 'Email does not exist. Please try again.'
