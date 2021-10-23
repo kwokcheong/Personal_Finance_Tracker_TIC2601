@@ -114,15 +114,17 @@ router.get('/edit/:incomeID', (req, res) => {
 
 // UPDATE income Query
 router.post('/update/:incomeID', (req, res) => {
+    let recurring_val = req.body.recurring;
     let data = {
         name: req.body.name,
         category: req.body.category,
-        rucurring: req.body.recurring,
+        recurring: recurring_val == null? false : true,
         recurring_date: req.body.recurring_date
     }
-    const userId = req.session.id;
+    let session = req.session;
+    const userID = session.userID;
     const incomeID = req.params.incomeID;
-    let sql = `UPDATE incomes SET ? WHERE users.id = ${userId} AND incomeID = '${incomeID}'`
+    let sql = `UPDATE incomes SET ? WHERE userID = ${userID} AND incomeID = ${incomeID}`
     db.query(sql, data, (err, result) => {
         if (err) throw err;
         res.redirect('/income/view');
