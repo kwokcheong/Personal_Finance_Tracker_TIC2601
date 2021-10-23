@@ -162,8 +162,7 @@
                                 <label class="custom-control-label" for="recurring">Recurring</label>
                             </div>
                             <div class="form-group">
-                                <input type="date" class="form-control" id="e" 
-                                name="date" name="recurring_date" required>
+                                <input id="rec_date" class="form-control" type="date" name="recurring_date" placeholder="Add recurring date" required/>
                             </div>
                             <button type="submit" class="btn btn-primary" value="update">Update Record</button>
                         </form>
@@ -193,6 +192,11 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script>
+        let myDate = new Date('<%= result[0].recurring_date %>');
+        myDate = myDate.getDate() + parseInt(1);
+        let myDate = myDate.toISOString().substring(0, 10);
+        myDate.setDate(myDate + parseInt(1));
+        document.getElementById('rec_date').value = myDate;
         document.getElementById('r').checked = '<%= result[0].recurring %>' == '1' ? 1 : 0;
         document.getElementById('category').value = '<%= result[0].category %>';
     </script>
