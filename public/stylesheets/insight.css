@@ -1,0 +1,8 @@
+.form-control{
+	width: 40%;
+	position:relative; 
+	left:380px; 
+	top:31px;
+	display:flex;
+    flex-wrap: wrap;
+}
