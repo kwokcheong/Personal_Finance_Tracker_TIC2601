@@ -89,7 +89,7 @@ delimiter |
 CREATE TRIGGER incomes_AFTER_UPDATE AFTER UPDATE ON incomes
   FOR EACH ROW
   BEGIN
-    UPDATE ledger SET current_balance = current_balance + new.amount 
+    UPDATE ledger SET current_balance = current_balance - old.amount+ new.amount 
     WHERE userID=old.userID ;
     
   END;
