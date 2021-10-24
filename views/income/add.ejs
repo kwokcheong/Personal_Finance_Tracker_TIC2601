@@ -167,10 +167,12 @@
                                 <input class="form-control" type="number" min="1" step="any" name="amount"
                                     placeholder="Amount" required />
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" id="recurring" name="recurring"
-                                    value="1">
-                                <label class="custom-control-label" for="recurring">Recurring</label>
+                            <div class="custom-control custom-radio">
+                                <p>Will this be a recurring transaction?</p>
+                                  <input type="radio" id="r" name="recurring" value="1">
+                                  <label for="1">Yes</label><br>
+                                  <input type="radio" id="r" name="recurring" value="0" checked>
+                                  <label for="0">No</label><br>
                             </div>
                             <div class="form-group">
                                 <label for="recurring_start_date">Recurring start date</label>
