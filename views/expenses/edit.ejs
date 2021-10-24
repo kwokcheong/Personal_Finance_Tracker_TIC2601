@@ -44,7 +44,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -83,12 +83,12 @@
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
-                                    aria-controls="pagesCollapseAuth">
+                                    data-bs-target="#pagesCollapseIncome" aria-expanded="false"
+                                    aria-controls="pagesCollapseIncome">
                                     Income
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
+                                <div class="collapse" id="pagesCollapseIncome" aria-labelledby="headingOne"
                                     data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="/income/add">Add</a>
@@ -104,8 +104,8 @@
                                 <div class="collapse" id="pagesCollapseExpenses" aria-labelledby="headingOne"
                                     data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/income/add">Add</a>
-                                        <a class="nav-link" href="register.html">View</a>
+                                        <a class="nav-link" href="/expenses/add">Add</a>
+                                        <a class="nav-link" href="/expenses/view">View</a>
                                     </nav>
                                 </div>
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
@@ -117,8 +117,20 @@
                                 <div class="collapse" id="pagesCollapseBudget" aria-labelledby="headingOne"
                                     data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/income/add">Add</a>
-                                        <a class="nav-link" href="register.html">View</a>
+                                        <a class="nav-link" href="/budgets/view">View</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseGoals" aria-expanded="false"
+                                    aria-controls="pagesCollapseGoals">
+                                    Goals
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseGoals" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="/goals/add">Add</a>
+                                        <a class="nav-link" href="/goals/view">View</a>
                                     </nav>
                                 </div>
                             </nav>
@@ -126,8 +138,9 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                    <div class="small">Logged in as: <%= name %>
+                    </div>
+                    Personal Finance Tracker
                 </div>
             </nav>
         </div>
@@ -190,9 +203,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../../js/scripts.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="../../js/chart-area-demo.js"></script>
+    <script src="../../js/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="../../js/datatables-simple-demo.js"></script>
     <script>
         let myDate = new Date('<%= result[0].recurring_date %>');
         myDate = myDate.getDate() + parseInt(1);

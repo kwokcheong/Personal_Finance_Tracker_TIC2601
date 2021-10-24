@@ -7,17 +7,18 @@ router.get('/add', (req, res) => {
     let session = req.session;
     if (session.userID) {
         res.render('goals/add', {
-            title: 'Add Goals'
+            title: 'Add Goals',
+            name: session.username
         });
     } else {
-        res.send('please log in')
+        res.render('loggedout');
     }
 });
 
 router.get('/view', (req, res) => {
     let session = req.session;
     if (!session.userID) {
-        res.send('please log in');
+        res.render('loggedout');;
     } else {
         let sql = `SELECT * FROM goals WHERE userID = ${session.userID} ORDER BY created_at ASC`;
         db.query(sql, (err, result) => {
@@ -66,7 +67,7 @@ router.get('/delete/:goalID', (req, res) => {
 router.get('/edit/:goalID', (req, res) => {
     let session = req.session;
     if (!session.userID) {
-        res.send('please log in');
+        res.render('loggedout');;
     } else {
         const userID = session.userID;
         const goalID = req.params.goalID;

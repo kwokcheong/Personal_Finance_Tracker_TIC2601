@@ -6,9 +6,11 @@ const router = express.Router();
 router.get('/add', (req, res) => {
     let session = req.session;
     if (session.userID) {
-        res.render('expenses/add');
+        res.render('expenses/add', {
+            name: session.username
+        });
     } else {
-        res.send('please log in')
+        res.render('loggedout')
     }
 });
 
@@ -16,7 +18,7 @@ router.get('/add', (req, res) => {
 router.get('/view', (req, res) => {
     let session = req.session;
     if (!session.userID) {
-        res.send('please log in');
+        res.render('loggedout');;
     } else {
         let sql = `SELECT * FROM expenses WHERE userID = ${session.userID} ORDER BY created_at ASC`;
         db.query(sql, (err, result) => {
@@ -64,7 +66,7 @@ router.get('/delete/:expensesID', (req, res) => {
 router.get('/edit/:expensesID', (req, res) => {
     let session = req.session;
     if (!session.userID) {
-        res.send('please log in');
+        res.render('loggedout');;
     } else {
         const userID = session.userID;
         const expensesID = req.params.expensesID;
@@ -74,7 +76,8 @@ router.get('/edit/:expensesID', (req, res) => {
             if (err) throw err;
             console.log(result[0])
             res.render('expenses/edit', {
-                result: result
+                result: result,
+                name: session.username
             });
         });
     }

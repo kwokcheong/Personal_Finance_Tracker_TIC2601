@@ -65,10 +65,11 @@ CREATE TABLE budgets (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     category VARCHAR(64),
     budget_amount_per_month DECIMAL(13,2) DEFAULT 0,
-    created_at DATE NOT NULL DEFAULT (DATE(CURRENT_TIMESTAMP))
+    created_at DATE NOT NULL DEFAULT (DATE(CURRENT_TIMESTAMP)),
+    PRIMARY KEY(userID, category)
 );
 
-CREATE VIEW userIncome AS SELECT *FROM incomes WHERE userID = 1;
+CREATE VIEW userIncome AS SELECT * FROM incomes WHERE userID = 1;
 
 INSERT INTO users VALUES (1, 'admin', 'admin@hotmail.com', 'admin');
 INSERT INTO ledger VALUES (1, 0, 0);

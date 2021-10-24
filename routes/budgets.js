@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/view', (req, res) => {
     let session = req.session;
     if (!session.userID) {
-        res.send('please log in');
+        res.render('loggedout');;
     } else {
         let sql = `SELECT * FROM budgets WHERE userID = ${session.userID} ORDER BY created_at ASC`;
         db.query(sql, (err, result) => {
@@ -22,7 +22,7 @@ router.get('/view', (req, res) => {
 router.get('/edit/:budgetcategory', (req, res) => {
     let session = req.session;
     if (!session.userID) {
-        res.send('please log in');
+        res.render('loggedout');;
     } else {
         const userID = session.userID;
         const budgetcategory = req.params.budgetcategory;
