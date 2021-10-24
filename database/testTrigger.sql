@@ -102,8 +102,8 @@ delimiter |
 CREATE TRIGGER expenses_AFTER_UPDATE AFTER UPDATE ON expenses
   FOR EACH ROW
   BEGIN
-	UPDATE ledger SET current_balance = current_balance- new.amount 
-    where userID = NEW.userID ;
+	UPDATE ledger SET current_balance = current_balance + old.amount - new.amount 
+    where userID = old.userID ;
     
   END;
 |
