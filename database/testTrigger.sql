@@ -2,6 +2,9 @@ DROP TRIGGER IF EXISTS incomes_AFTER_INSERT;
 DROP TRIGGER IF EXISTS incomes_AFTER_UPDATE;
 DROP TRIGGER IF EXISTS expenses_AFTER_INSERT;
 DROP TRIGGER IF EXISTS expenses_AFTER_UPDATE;
+DROP TRIGGER IF EXISTS incomes_AFTER_DELETE;
+DROP TRIGGER IF EXISTS expenses_AFTER_DELETE;
+
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS incomes;
 DROP TABLE IF EXISTS expenses;
@@ -115,6 +118,32 @@ CREATE TRIGGER expenses_AFTER_INSERT AFTER INSERT ON expenses
   BEGIN
 	UPDATE ledger SET current_balance = current_balance- new.amount 
     where userID = NEW.userID ;
+    
+  END;
+|
+
+delimiter ;
+
+
+
+delimiter |
+CREATE TRIGGER incomes_AFTER_DELETE AFTER DELETE ON incomes
+  FOR EACH ROW
+  BEGIN
+    UPDATE ledger SET current_balance = current_balance - old.amount
+    WHERE userID=old.userID ;
+    
+  END;
+|
+
+delimiter ;
+
+delimiter |
+CREATE TRIGGER expense_AFTER_DELETE AFTER DELETE ON expenses
+  FOR EACH ROW
+  BEGIN
+    UPDATE ledger SET current_balance = current_balance + old.amount
+    WHERE userID=old.userID ;
     
   END;
 |
