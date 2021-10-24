@@ -31,37 +31,7 @@ router.get('/view', (req, res) => {
     }
 })
 
-router.get('/playground2', (req, res) => {
-    let session = req.session;
-    if (!session.userID) {
-        res.send('please log in');
-    } else {
-        let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC`;
-        let months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'August'];
-        let labeldata = ['food', 'luxury', 'Transport', 'Bills', 'Others'];
-        let amount = [];
-        let max = 0;
-        db.query(sql, (err, result) => {
-            if (err) throw err;
-            for (let i = 0; i < result.length; i++) {
-                if (parseInt(result[i].amount) > max) {
-                    max = result[i].amount;
-                }
-                amount[i] = result[i].amount;
-            }
-            res.render('income/playground2', {
-                result: result,
-                max_amount: max,
-                name: session.username,
-                data: JSON.stringify(amount),
-                labelMonth: JSON.stringify(months),
-                label: JSON.stringify(labeldata)
-            })
-        })
-    }
-})
-
-//INSET income query
+//INSERT income query
 router.post('/save', (req, res) => {
     let randomNum = Math.random().toString(36).substr(2, 8);
     let data = {
@@ -77,7 +47,7 @@ router.post('/save', (req, res) => {
     let sql = "INSERT INTO incomes SET ?";
     db.query(sql, data, (err, results) => {
         if (err) throw err;
-        res.redirect('../income/playground2');
+        res.redirect('/');
     });
 });
 

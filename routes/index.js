@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
               }
               amount[i] = result[i].amount;
           }
-          res.render('index', {
+          res.render('./playground2', {
               result: result,
               max_amount: max,
               name: session.username,

@@ -45,7 +45,7 @@ router.post('/save', (req, res) => {
     let sql = "INSERT INTO expenses SET ?";
     db.query(sql, data, (err, results) => {
         if (err) throw err;
-        res.redirect('../');
+        res.redirect('/');
     });
 });
 
