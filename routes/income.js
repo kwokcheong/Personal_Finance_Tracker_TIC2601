@@ -40,14 +40,15 @@ router.post('/save', (req, res) => {
         name: req.body.name,
         amount: req.body.amount,
         category: req.body.category,
-        recurring_date: req.body.recurring_date,
+        recurring_start_date: req.body.recurring_start_date,
+        recurring_end_date: req.body.recurring_end_date,
         recurring: req.body.recurring == 1 ? 1 : 0
     }
 
     let sql = "INSERT INTO incomes SET ?";
     db.query(sql, data, (err, results) => {
         if (err) throw err;
-        res.redirect('/');
+        res.redirect('/income/view');
     });
 });
 
