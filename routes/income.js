@@ -85,12 +85,12 @@ router.get('/edit/:incomeID', (req, res) => {
 
 // UPDATE income Query
 router.post('/update/:incomeID', (req, res) => {
-    let recurring_val = req.body.recurring;
     let data = {
         name: req.body.name,
         category: req.body.category,
-        recurring: recurring_val == null? false : true,
-        recurring_date: req.body.recurring_date
+        recurring: req.body.recurring == 1 ? 1 : 0,
+        recurring_start_date: req.body.recurring_start_date == '' ? null : req.body.recurring_start_date,
+        recurring_end_date: req.body.recurring_end_date == '' ? null : req.body.recurring_end_date, 
     }
     let session = req.session;
     const userID = session.userID;
