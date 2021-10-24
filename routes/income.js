@@ -40,8 +40,8 @@ router.post('/save', (req, res) => {
         name: req.body.name,
         amount: req.body.amount,
         category: req.body.category,
-        recurring_start_date: req.body.recurring_start_date,
-        recurring_end_date: req.body.recurring_end_date,
+        recurring_start_date: req.body.recurring_start_date == '' ? null : req.body.recurring_start_date,
+        recurring_end_date: req.body.recurring_end_date == '' ? null : req.body.recurring_end_date, 
         recurring: req.body.recurring == 1 ? 1 : 0
     }
 
