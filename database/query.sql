@@ -1,4 +1,4 @@
--- Money sight page
+-- Money insight page
 -- Doughnut chart
 
 -- Total expenses --> doughnutDatapoints[0]: 

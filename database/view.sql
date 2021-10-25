@@ -1,3 +1,4 @@
+-- Money Insight table 
 CREATE ALGORITHM = UNDEFINED 
 SQL SECURITY DEFINER VIEW `crud_express`.`v_incomeexpenses` AS
   SELECT 
