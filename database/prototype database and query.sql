@@ -30,7 +30,7 @@ CREATE TABLE expenses (
     expensesID VARCHAR(256) NOT NULL PRIMARY KEY,
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR(256) NOT NULL,
-    amount DECIMAL(13,2) CHECK(amount >= 0),
+    amount DECIMAL(13,2) CHECK(amount <= 0),
     category VARCHAR(64),
 	recurring_date DATE,
     recurring BOOLEAN NOT NULL DEFAULT 0,
@@ -76,13 +76,12 @@ CREATE TRIGGER complete_goal
 DELIMITER 
 
  DELIMITER
-CREATE TRIGGER set_limit
+CREATE TRIGGER close to limit
  AFTER INSERT
-    ON incomes FOR EACH ROW
+    ON expenses FOR EACH ROW
+    bh = budgethead, e = expenses; 
     BEGIN
-    IF name = 'monthly salary'
-    THEN INSERT INTO ledger
-    SET current_balance = current_balance + NEW.amount + expenses;
+    IF bh.category = e.category AND bh.amount = e.amount
     END; 
 DELIMITER 
 
@@ -109,26 +108,26 @@ INSERT INTO incomes (incomeID, userID,amount, name, category, recurring_date,rec
 VALUES (0, 2, 3250.50, 'monthly salary', 'monthly salary', '2021-10-10', 1); 
 
 INSERT INTO expenses(expensesID, userID, name, amount, category, created_at)
-VALUES(3, 2, 'Hokkien Mee', 5, 'food', '2021-10-18');
+VALUES(3, 2, 'Hokkien Mee', -5, 'food', '2021-10-18');
 
 INSERT INTO expenses(expensesID, userID, name, amount, category, created_at)
-VALUES(4, 2, 'Laksa', 2, 'food', '2021-10-18');
+VALUES(4, 2, 'Laksa', -2, 'food', '2021-10-18');
 
 UPDATE expenses
-SET amount = 5
+SET amount = -5
 WHERE userID = 2 AND created_at = '2021-10-18'; 
 
 INSERT INTO expenses(expensesID, userID, name, amount, category, created_at)
-VALUES(5, 2, 'Laksa', 5, 'food', '2021-10-18');
+VALUES(5, 2, 'Laksa', -5, 'food', '2021-10-18');
 
 INSERT INTO expenses(expensesID, userID, name, amount, category, recurring_date, recurring)
-VALUES(6, 2, 'bubbletea', 6.7, 'drink','2021-10-16', 1);
+VALUES(6, 2, 'bubbletea', -6.7, 'drink','2021-10-16', 1);
 
 INSERT INTO expenses(expensesID, userID, name, amount, category, recurring_date, recurring)
-VALUES(7, 2, 'bubbletea', 6.7, 'drink', '2021-10-17', 1);
+VALUES(7, 2, 'bubbletea', -6.7, 'drink', '2021-10-17', 1);
 
 INSERT INTO expenses(expensesID, userID, name, amount, category, recurring_date, recurring)
-VALUES(8, 2, 'bubbletea', 6.7, 'drink', '2021-10-18', 1);
+VALUES(8, 2, 'bubbletea', -6.7, 'drink', '2021-10-18', 1);
 
 SELECT * FROM expenses;
 
@@ -140,3 +139,11 @@ VALUES (1, 2, 3250.50, 'monthly salary', 'monthly salary', '2021-09-10', 1);
 SELECT * FROM incomes; 
 
 SELECT * FROM ledger; 
+
+INSERT INTO budgethead (userid, category, budget_amount_per_month) 
+VALUES (2, 'food', -300);
+
+ INSERT INTO budgethead (userid, category, budget_amount_per_month) 
+VALUES (2, 'transport', -100);
+
+SELECT * FROM budgethead; 
