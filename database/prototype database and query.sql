@@ -63,6 +63,45 @@ CREATE TABLE budgethead (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+DELIMITER 
+
+CREATE TRIGGER complete_goal
+ AFTER UPDATE
+    ON goals FOR EACH ROW
+    BEGIN
+    IF (getDate() = end_date)
+    THEN SET done = 1
+    END;
+    
+DELIMITER 
+
+ DELIMITER
+CREATE TRIGGER set_limit
+ AFTER INSERT
+    ON incomes FOR EACH ROW
+    BEGIN
+    IF name = 'monthly salary'
+    THEN INSERT INTO ledger
+    SET current_balance = current_balance + NEW.amount + expenses;
+    END; 
+DELIMITER 
+
+DELIMITER 
+CREATE TRIGGER update_balance
+ AFTER INSERT
+    ON incomes FOR EACH ROW
+    BEGIN
+    IF name = 'monthly salary'
+	THEN INSERT INTO ledger(userID, average_monthly_saving, current_balance)
+    i = income, e = expenses; 
+    VALUES (2, AVG(NEW.current_balance), NEW.current_balance);
+    NEW.current_balance = OLD.current_balance + i.amount + e.amount
+    WHERE expenses
+    DECLARE @today date = GetDate();
+    SELECT Sum(amount) FROM expenses WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
+    END IF;
+    END
+DELIMITER 
 
 INSERT INTO users VALUES (2, 'Root', 'root@gmail.com', 'root123'); 
 
@@ -95,41 +134,9 @@ SELECT * FROM expenses;
 
 SELECT * FROM expenses WHERE recurring = 1;
 
-DELIMITER 
+INSERT INTO incomes (incomeID, userID,amount, name, category, recurring_date,recurring) 
+VALUES (1, 2, 3250.50, 'monthly salary', 'monthly salary', '2021-09-10', 1); 
 
-CREATE TRIGGER complete_goal
- AFTER UPDATE
-    ON goals FOR EACH ROW
-    BEGIN
-    IF (getDate() = end_date)
-    THEN SET done = 1
-    END;
-    
-DELIMITER 
- 
- DELIMITER
-CREATE TRIGGER set_limit
- AFTER INSERT
-    ON incomes FOR EACH ROW
-    BEGIN
-    IF name = 'monthly salary'
-    THEN INSERT INTO ledger
-    SET current_balance = current_balance + NEW.amount + expenses;
-    END; 
-DELIMITER 
+SELECT * FROM incomes; 
 
-DELIMITER 
-CREATE TRIGGER update_balance
- AFTER INSERT
-    ON incomes FOR EACH ROW
-    BEGIN
-    IF name = 'monthly salary'
-	THEN INSERT INTO ledger(userID, average_monthly_saving, current_balance)
-    VALUES (2, AVG(NEW.current_balance), NEW.current_balance);
-    NEW.current_balance = current_balance + NEW.amount + expenses
-    WHERE expenses
-    DECLARE @today date = GetDate();
-    SELECT Sum(amount) FROM expenses WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -1, @today);
-    END IF;
-    END
-DELIMITER 
+SELECT * FROM ledger; 
