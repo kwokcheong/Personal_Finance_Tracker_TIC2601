@@ -1,6 +1,5 @@
 -- Money insight page
 -- Doughnut chart
-
 -- Total expenses --> doughnutDatapoints[0]: 
 -- Change '2021' to the user input year and '09' to the user input month
 -- Change userID = 1 to the session's user id
@@ -35,3 +34,14 @@ ORDER BY category ASC;
 SELECT category, budget_amount_per_month FROM budgets
 WHERE userID = 1
 ORDER BY category ASC;
+
+-- Income / Expenses Table
+-- Change userID = 1 to the session's user id
+SELECT * FROM v_incomeexpenses WHERE userID = 1
+ORDER BY createdDt DESC;
+
+-- Income page
+-- Income / Expenses Table
+-- Change userID = 1 to the session's user id
+SELECT userID, name, amount, category, recurring, created_at FROM incomes WHERE userID = 1
+ORDER BY created_at DESC;
