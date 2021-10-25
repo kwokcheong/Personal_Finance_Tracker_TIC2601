@@ -1,3 +1,4 @@
+-- Ingiht page: Doughnut chart
 -- Function: fn_isInputDateBetweenPeriod
 DELIMETER $$
 DROP FUNCTION IF EXISTS `fn_isInputDateBetweenPeriod`$$

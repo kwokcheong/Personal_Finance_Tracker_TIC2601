@@ -1,3 +1,4 @@
+-- Bulk data seeding
 DELIMETER $$
 DROP PROCEDURE IF EXISTS `sp_insertBulkData` $$
 CREATE PROCEDURE `sp_insertBulkData`()

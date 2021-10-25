@@ -69,3 +69,5 @@ CREATE TABLE budgets (
     PRIMARY KEY(userID, category)
 );
 
+-- Seed bulk data 
+call crud_express.sp_insertBulkData();

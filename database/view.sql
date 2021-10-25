@@ -1,7 +1,5 @@
-CREATE 
-ALGORITHM = UNDEFINED 
-SQL SECURITY DEFINER
-VIEW `crud_express`.`v_incomeexpenses` AS
+CREATE ALGORITHM = UNDEFINED 
+SQL SECURITY DEFINER VIEW `crud_express`.`v_incomeexpenses` AS
   SELECT 
       `e`.`userID` AS `userID`,
       `e`.`name` AS `name`,

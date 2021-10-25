@@ -20,7 +20,6 @@ SELECT SUM(amount) AS totalExpense FROM expenses
 WHERE STR_TO_DATE(CONCAT('2021', '/', '09', '/01'), '%Y/%m/%d') BETWEEN 
 recurring_start_date AND recurring_end_date AND userID = 1)) AS remainingAllowanceAvailable;
 
-
 -- Bar chart
 -- Spent --> Green bar
 -- Change '2021' to the user input year and '09' to the user input month
