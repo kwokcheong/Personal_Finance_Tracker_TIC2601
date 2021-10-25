@@ -1,0 +1,9 @@
+.add-income{
+    height: 20%;
+	width: 40%;
+	position:relative; 
+	left:450px; 
+	top:8px;
+	display:flex;
+    flex-wrap: wrap;
+}

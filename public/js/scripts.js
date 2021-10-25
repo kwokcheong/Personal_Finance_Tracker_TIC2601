@@ -15,3 +15,22 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+function toggleDisable(){
+    let radio = document.getElementById("no_recurring");
+    let datefield = document.getElementById("r_date");
+    let datefield2 = document.getElementById("r_date2");
+    let datebox = document.getElementById("date1");
+    let datebox2 = document.getElementById("date2");
+    if (radio.checked){
+        datefield.disabled = true;
+        datefield2.disabled = true;
+        datebox.hidden = true;
+        datebox2.hidden = true;
+    } else {
+        datefield.disabled = false;
+        datefield2.disabled = false;
+        datebox.hidden = false;
+        datebox2.hidden = false;
+    }
+};
