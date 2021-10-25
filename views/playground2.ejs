@@ -9,13 +9,9 @@
     <meta name="author" content="" />
     <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../stylesheets/common.css"/>
-    <link rel="stylesheet" href="/stylesheets/income.css">
-    <link rel="stylesheet" href="/stylesheets/graph.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>crossorigin="anonymous"></script>
+    <link href="../../stylesheets/import/styles2.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+        crossorigin="anonymous"></script>
     <script>
         let result = '<%- result %>';
     </script>
@@ -31,10 +27,10 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
                     aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button> -->
+                        class="fas fa-search"></i></button>
             </div>
         </form>
         <!-- Navbar-->
@@ -54,159 +50,116 @@
         </ul>
     </nav>
     <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="/income/playground2">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Graphs
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Money Insights</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Goals</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Tables
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseIncome" aria-expanded="false" aria-controls="pagesCollapseIncome">
-                                        Income
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseIncome" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="/income/add">Add</a>
-                                            <a class="nav-link" href="/income/view">View</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseExpenses" aria-expanded="false" aria-controls="pagesCollapseExpenses">
-                                        Expenses
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseExpenses" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="/income/add">Add</a>
-                                            <a class="nav-link" href="register.html">View</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseBudget" aria-expanded="false" aria-controls="pagesCollapseBudget">
-                                        Budget
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseBudget" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="/income/add">Add</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseGoals" aria-expanded="false" aria-controls="pagesCollapseGoals">
-                                        Goals
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseGoals" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="/income/add">Add</a>
-                                            <a class="nav-link" href="register.html">View</a>
-                                        </nav>
-                                    </div>
-                                </nav>
-                            </div>
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Interface</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Layouts
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                            aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Tables
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseIncome" aria-expanded="false"
+                                    aria-controls="pagesCollapseIncome">
+                                    Income
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseIncome" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="/income/add">Add</a>
+                                        <a class="nav-link" href="/income/view">View</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseExpenses" aria-expanded="false"
+                                    aria-controls="pagesCollapseExpenses">
+                                    Expenses
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseExpenses" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="/expenses/add">Add</a>
+                                        <a class="nav-link" href="/expenses/view">View</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseBudget" aria-expanded="false"
+                                    aria-controls="pagesCollapseBudget">
+                                    Budget
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseBudget" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="/budgets/view">View</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseGoals" aria-expanded="false"
+                                    aria-controls="pagesCollapseGoals">
+                                    Goals
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseGoals" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="/goals/add">Add</a>
+                                        <a class="nav-link" href="/goals/view">View</a>
+                                    </nav>
+                                </div>
+                            </nav>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as: <%= name %></div>
-                        Personal Finance Tracker
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as: <%= name %>
                     </div>
-                </nav>
-            </div>
+                    Personal Finance Tracker
+                </div>
+            </nav>
+        </div>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
                     <!-- main website starts here -->
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <h1 class="mt-4">Income</h1>
-                        </div>
-                        <div class="col-xl-6 add-income">
-                            <button type="button " class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Income</button>
-                        </div>
-                    </div>
-                    <!-- <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active"></li>
-                    </ol> -->
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">
-                              <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Create New Income</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <form action="/income/save" method="POST">
-                                            <div class="form-group">
-                                                <label for="name">NAME</label>
-                                                <input class="form-control" type="text" name="name" placeholder="Name" required />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="category">SELECT CATEGORY</label>
-                                                <select class="form-control" name="category" id="category">
-                                                    <option value="Salary">Allowance</option>
-                                                    <option value="Freelance">Freelance</option>
-                                                    <option value="Allowance">Others</option>
-                                                    <option value="Others">Salary</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="amount">AMOUNT</label>
-                                                <input class="form-control" type="number" min="1" step="any" name="amount"
-                                                    placeholder="Amount" required />
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <p>RECURRING TRANSACTION?</p>
-                                                  <input type="radio" name="recurring" value="1" onclick="toggleDisable()">
-                                                  <label for="1">Yes</label><br>
-                                                  <input type="radio" id="no_recurring" name="recurring" value="0" checked onclick="toggleDisable()"/>
-                                                  <label for="0">No</label><br>
-                                            </div>
-                                            <div class="form-group" id="date1" hidden="true">
-                                                <label for="recurring_start_date">RECURRING START DATE</label>
-                                                <input class="form-control" type="date" name="recurring_start_date"
-                                                    placeholder="Add recurring start date" id="r_date" disabled="disabled"/>
-                                            </div>
-                                            <div class="form-group" id="date2" hidden="true">
-                                                <label for="recurring_end_date">RECURRING END DATE</label>
-                                                <input class="form-control" type="date" name="recurring_end_date"
-                                                    placeholder="Add recurring end date" id="r_date2" disabled="disabled"/>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" value="add">Add Record</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
+                    <h1 class="mt-4">Welcome back, <b>
+                            <%= name %>.
+                        </b></h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Whatchu doin' today? ;)</li>
+                    </ol>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-area me-1"></i>
-                                    Income Category
+                                    Area Chart Example
                                 </div>
                                 <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                             </div>
@@ -215,7 +168,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-bar me-1"></i>
-                                    Total Income
+                                    Bar Chart Example
                                 </div>
                                 <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                             </div>
@@ -224,68 +177,52 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Income Records
+                            DataTable Example
                         </div>
                         <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Amount</th>
+                                        <th>Category</th>
+                                        <th>recurring</th>
+                                        <th>created at</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Amount</th>
+                                        <th>Category</th>
+                                        <th>Age</th>
+                                        <th>Start date</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <% for(var i=0; i<result.length; i++) { %>
                                         <tr>
-                                            <th>DATE</th>
-                                            <th>CATEGORY</th>
-                                            <th>DESCRIPTION</th>
-                                            <th>AMOUNT</th>
-                                            <th>RECURRING</th>
-                                            <th>CONTROLS</th>
+                                            <td>
+                                                <%= result[i].name %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].amount %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].category %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].recurring==1 ? 'Yes' : 'No' %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' ' );
+                                                    %>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>DATE</th>
-                                            <th>CATEGORY</th>
-                                            <th>DESCRIPTION</th>
-                                            <th>AMOUNT</th>
-                                            <th>RECURRING</th>
-                                            <th>CONTROLS</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <th>Company</th>
-                                            <th>Contact</th>
-                                            <th>Country</th>
-                                            <th>Company</th>
-                                            <th>Contact</th>
-                                            <th>Country </th>
-                                            <!-- Insert Icons -->
-                                        </tr>
-                                        <!-- <% for(var i=0; i<result.length; i++) { %>
-                                            <tr>
-                                                <td>
-                                                    <%= result[i].name %>
-                                                </td>
-                                                <td>
-                                                    <%= result[i].amount %>
-                                                </td>
-                                                <td>
-                                                    <%= result[i].category %>
-                                                </td>
-                                                <td>
-                                                    <%= result[i].recurring==1 ? 'Yes' : 'No' %>
-                                                </td>
-                                                <td>
-                                                    <%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' ' ); %>
-                                                </td>
-                                                <td>
-                                                    <a href="/income/delete/<%= result[i].incomeID %>"><i
-                                                            class="fas fa-trash"></i></a>
-                                                    <a href="/income/edit/<%= result[i].incomeID %>"><i
-                                                            class="fas fa-edit"></i></a>
-                                                </td>
-                                            </tr>
-                                            <% } %> -->
-                                    </tbody>
-                                </table>
-                            </div>
+                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <!-- ends here -->
                 </div>
@@ -315,9 +252,8 @@
         crossorigin="anonymous"></script>
     <script src="../../js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="../../js/income-line.js"></script>
-    <script src="../../js/income-bar.js"></script>
-    <script src="../../js/scripts.js"></script>
+    <script src="../../js/chart-area-demo.js"></script>
+    <script src="../../js/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="../../js/datatables-simple-demo.js"></script>
 </body>

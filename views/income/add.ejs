@@ -227,49 +227,65 @@
                             Income Records
                         </div>
                         <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Amount</th>
-                                        <th>Category</th>
-                                        <th>recurring</th>
-                                        <th>created at</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Amount</th>
-                                        <th>Category</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <% for(var i=0; i<result.length; i++) { %>
+                                <table id="datatablesSimple">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <%= result[i].name %>
-                                            </td>
-                                            <td>
-                                                <%= result[i].amount %>
-                                            </td>
-                                            <td>
-                                                <%= result[i].category %>
-                                            </td>
-                                            <td>
-                                                <%= result[i].recurring==1 ? 'Yes' : 'No' %>
-                                            </td>
-                                            <td>
-                                                <%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' ' );
-                                                    %>
-                                            </td>
+                                            <th>DATE</th>
+                                            <th>CATEGORY</th>
+                                            <th>DESCRIPTION</th>
+                                            <th>AMOUNT</th>
+                                            <th>RECURRING</th>
+                                            <th>CONTROLS</th>
                                         </tr>
-                                        <% } %>
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>DATE</th>
+                                            <th>CATEGORY</th>
+                                            <th>DESCRIPTION</th>
+                                            <th>AMOUNT</th>
+                                            <th>RECURRING</th>
+                                            <th>CONTROLS</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <th>Company</th>
+                                            <th>Contact</th>
+                                            <th>Country</th>
+                                            <th>Company</th>
+                                            <th>Contact</th>
+                                            <th>Country </th>
+                                            <!-- Insert Icons -->
+                                        </tr>
+                                        <!-- <% for(var i=0; i<result.length; i++) { %>
+                                            <tr>
+                                                <td>
+                                                    <%= result[i].name %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].amount %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].category %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].recurring==1 ? 'Yes' : 'No' %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' ' ); %>
+                                                </td>
+                                                <td>
+                                                    <a href="/income/delete/<%= result[i].incomeID %>"><i
+                                                            class="fas fa-trash"></i></a>
+                                                    <a href="/income/edit/<%= result[i].incomeID %>"><i
+                                                            class="fas fa-edit"></i></a>
+                                                </td>
+                                            </tr>
+                                            <% } %> -->
+                                    </tbody>
+                                </table>
+                            </div>
                     </div>
                     <!-- ends here -->
                 </div>
