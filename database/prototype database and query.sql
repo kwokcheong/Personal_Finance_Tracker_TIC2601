@@ -106,8 +106,8 @@ CREATE TRIGGER complete_goal
     END;
     
 DELIMITER 
-
-DELIMITER 
+ 
+ DELIMITER
 CREATE TRIGGER set_limit
  AFTER INSERT
     ON incomes FOR EACH ROW
@@ -116,4 +116,20 @@ CREATE TRIGGER set_limit
     THEN INSERT INTO ledger
     SET current_balance = current_balance + NEW.amount + expenses;
     END; 
-DELIMITER
+DELIMITER 
+
+DELIMITER 
+CREATE TRIGGER update_balance
+ AFTER INSERT
+    ON incomes FOR EACH ROW
+    BEGIN
+    IF name = 'monthly salary'
+	THEN INSERT INTO ledger(userID, average_monthly_saving, current_balance)
+    VALUES (2, AVG(NEW.current_balance), NEW.current_balance);
+    NEW.current_balance = current_balance + NEW.amount + expenses
+    WHERE expenses
+    DECLARE @today date = GetDate();
+    SELECT Sum(amount) FROM expenses WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -1, @today);
+    END IF;
+    END
+DELIMITER 
