@@ -23,7 +23,7 @@ CREATE TABLE incomes (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
-    category ENUM('Salary', 'Freelance', 'Allowance', 'Others'),
+    category ENUM('Allowance', 'Freelance', 'Others','Salary'),
     recurring_start_date DATE,
     recurring_end_date DATE,
     recurring BOOLEAN NOT NULL DEFAULT 0,
@@ -35,7 +35,7 @@ CREATE TABLE expenses (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
-    category ENUM('Food', 'Luxury', 'Travel', 'Bills', 'Others', 'Utility'),
+    category ENUM('Bills', 'Food', 'Luxury','Others', 'Travel', 'Utility'),
     recurring_start_date DATE,
     recurring_end_date DATE,
     recurring BOOLEAN NOT NULL DEFAULT 0,
@@ -63,7 +63,7 @@ CREATE TABLE goals (
 
 CREATE TABLE budgets (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
-    category ENUM('Food', 'Luxury', 'Transport', 'Bills', 'Others'),
+    category ENUM('Bills','Food', 'Luxury', 'Others', 'Travel', 'Utility'),
     budget_amount_per_month DECIMAL(13,2) DEFAULT 0,
     created_at DATE NOT NULL DEFAULT (DATE(CURRENT_TIMESTAMP)),
     PRIMARY KEY(userID, category)

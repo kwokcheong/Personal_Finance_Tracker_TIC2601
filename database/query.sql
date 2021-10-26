@@ -26,14 +26,12 @@ recurring_start_date AND recurring_end_date AND userID = 1)) AS remainingAllowan
 SELECT category, SUM(amount) AS totalExpense FROM expenses
 WHERE STR_TO_DATE(CONCAT('2021', '/', '09', '/01'), '%Y/%m/%d') BETWEEN 
 recurring_start_date AND recurring_end_date AND userID = 1
-GROUP BY category
-ORDER BY category ASC;
+GROUP BY category;
 
 -- Budget --> Green bar
 -- Change userID = 1 to the session's user id
 SELECT category, budget_amount_per_month FROM budgets
-WHERE userID = 1
-ORDER BY category ASC;
+WHERE userID = 1;
 
 -- Income / Expenses Table
 -- Change userID = 1 to the session's user id
@@ -51,3 +49,9 @@ ORDER BY created_at DESC;
 -- Change userID = 1 to the session's user id
 SELECT userID, name, amount, category, recurring, created_at FROM expenses WHERE userID = 1
 ORDER BY created_at DESC;
+
+
+-- Budget page 
+-- Budget category pie chart
+-- Change userID = 1 to the session's user id
+SELECT category, budget_amount_per_month FROM budgets WHERE userID = 1;
