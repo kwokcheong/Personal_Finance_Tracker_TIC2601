@@ -1,5 +1,5 @@
 -- Bulk data seeding
-DELIMETER $$
+DELIMITER $$
 DROP PROCEDURE IF EXISTS `sp_insertBulkData` $$
 CREATE PROCEDURE `sp_insertBulkData`()
 BEGIN
@@ -34,9 +34,9 @@ WHILE COUNTER <= 300 DO
 END WHILE;
 
 END$$
-DELIMETER;
+DELIMITER;
 
-DELIMETER $$
+DELIMITER $$
 DROP PROCEDURE IF EXISTS `sp_insertData` $$
 CREATE PROCEDURE `sp_insertData`(COUNTER INT, CATEGORY_INCOME TEXT, CATEGORY_EXPENSE TEXT)
 BEGIN
@@ -48,11 +48,11 @@ INSERT INTO `crud_express`.`incomes` (`incomeID`,`userID`, `name`, `amount`, `ca
 	(COUNTER,'1', CONCAT('Expense',COUNTER), RAND()*(1000-0)+10, CATEGORY_EXPENSE, CURRENT_DATE - INTERVAL FLOOR(RAND() * 2500) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 365 DAY), FLOOR(RAND()*(1-0+1))+0);
 
 END$$
-DELIMETER;
+DELIMITER;
 
--- Income table
+-- Income / Expenses Form
 -- Graphs months label --> should only query the past 6 months including current month
-DELIMETER $$
+DELIMITER $$
 DROP PROCEDURE IF EXISTS `sp_getAllMonthsFromDateDiff` $$
 CREATE PROCEDURE `sp_getAllMonthsFromDateDiff`(INPUT_DATE DATE, MONTHS INT)
 BEGIN
@@ -80,17 +80,18 @@ BEGIN
 	ORDER BY m1;
     
 END$$
-DELIMETER;
+DELIMITER;
 
--- Monthly bar chart / Line chart datapoint
+-- Income Monthly bar chart / Line chart datapoint
 -- For line chart, pass in true as parameter input
 -- For bar graph, pass in false as parameter input
-DELIMETER $$
+DELIMITER $$
 DROP PROCEDURE IF EXISTS `sp_calculateIncomePerMonth` $$
 CREATE PROCEDURE `sp_calculateIncomePerMonth`(IS_SUM_BY_CATEGORY BOOLEAN)
 BEGIN
-	DROP TABLE IF EXISTS TempIncomeTableCategory; 
-	CREATE TEMPORARY TABLE TempIncomeTableCategory
+
+	DROP TABLE IF EXISTS TempIncomeTable; 
+	CREATE TEMPORARY TABLE TempIncomeTable
 	(	
 		`incomeID` VARCHAR(64),
 		`category` VARCHAR(10), 
@@ -99,7 +100,7 @@ BEGIN
         `amount` DECIMAL(19,2)
 	); 
     
-    INSERT INTO TempIncomeTableCategory
+    INSERT INTO TempIncomeTable
     SELECT 	
 			I.incomeID,
 			I.category, 
@@ -111,16 +112,59 @@ BEGIN
     
     IF IS_SUM_BY_CATEGORY THEN 
 		(SELECT TI.record_month, TI.record_year, TI.category, SUM(TI.amount) AS amount
-		FROM TempIncomeTableCategory TI
+		FROM TempIncomeTable TI
 		GROUP BY TI.record_month, TI.record_year,TI.category
 		ORDER BY TI.record_month, TI.record_year ASC);
 	ELSE
 		(SELECT TI.record_month, TI.record_year, SUM(TI.amount) AS amount
-		FROM TempIncomeTableCategory TI
+		FROM TempIncomeTable TI
 		GROUP BY TI.record_month, TI.record_year
 		ORDER BY TI.record_month, TI.record_year ASC);
 
     END IF; 
 
 END$$
-DELIMETER;
+DELIMITER;
+
+
+-- Expenses Monthly bar chart / Line chart datapoint
+-- For line chart, pass in true as parameter input
+-- For bar graph, pass in false as parameter input
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `sp_calculateExpensesPerMonth` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_calculateExpensesPerMonth`(IS_SUM_BY_CATEGORY BOOLEAN)
+BEGIN
+	DROP TABLE IF EXISTS TempExpensesTable; 
+	CREATE TEMPORARY TABLE TempExpensesTable
+	(	
+		`expensesID` VARCHAR(64),
+		`category` VARCHAR(10), 
+        `record_month` INT, 
+        `record_year` INT,
+        `amount` DECIMAL(19,2)
+	); 
+    
+    INSERT INTO TempExpensesTable
+    SELECT 	
+			E.expensesID,
+			E.category, 
+            MONTH(E.recurring_start_date), 
+            YEAR(E.recurring_start_date), 
+            E.amount
+	FROM expenses E
+    WHERE expensesID IN (SELECT E2.expensesID FROM expenses E2 WHERE E2.userID = 1 AND E2.recurring_start_date >= STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') AND  DATE(NOW()) <= E2.recurring_end_date);
+    
+    IF IS_SUM_BY_CATEGORY THEN 
+		(SELECT TE.record_month, TE.record_year, TE.category, SUM(TE.amount) AS amount
+		FROM TempExpensesTable TE
+		GROUP BY TE.record_month, TE.record_year,TE.category
+		ORDER BY TE.record_month, TE.record_year ASC);
+	ELSE
+		(SELECT TE.record_month, TE.record_year, SUM(TE.amount) AS amount
+		FROM TempExpensesTable TE
+		GROUP BY TE.record_month, TE.record_year
+		ORDER BY TE.record_month, TE.record_year ASC);
+
+    END IF; 
+END$$
+DELIMITER;

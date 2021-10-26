@@ -41,7 +41,13 @@ SELECT * FROM v_incomeexpenses WHERE userID = 1
 ORDER BY createdDt DESC;
 
 -- Income page
--- Income / Expenses Table
+-- Income table
 -- Change userID = 1 to the session's user id
 SELECT userID, name, amount, category, recurring, created_at FROM incomes WHERE userID = 1
+ORDER BY created_at DESC;
+
+-- Expenses page
+-- Expenses table
+-- Change userID = 1 to the session's user id
+SELECT userID, name, amount, category, recurring, created_at FROM expenses WHERE userID = 1
 ORDER BY created_at DESC;
