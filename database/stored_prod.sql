@@ -82,43 +82,12 @@ BEGIN
 END$$
 DELIMETER;
 
--- Line graph datapoints
-DELIMETER $$
-DROP PROCEDURE IF EXISTS `sp_calculateIncomePerMonthCat` $$
-CREATE PROCEDURE `sp_calculateIncomePerMonthCat`()
-BEGIN
-	DROP TABLE IF EXISTS TempIncomeTableCategory; 
-	CREATE TEMPORARY TABLE TempIncomeTableCategory
-	(	
-		`incomeID` VARCHAR(64),
-		`category` VARCHAR(10), 
-        `record_month` INT, 
-        `record_year` INT,
-        `amount` DECIMAL(19,2)
-	); 
-    
-    INSERT INTO TempIncomeTableCategory
-    SELECT 	
-			I.incomeID,
-			I.category, 
-            MONTH(I.recurring_start_date), 
-            YEAR(I.recurring_start_date), 
-            I.amount
-	FROM incomes I
-    WHERE incomeID IN (SELECT I2.incomeID FROM incomes I2 WHERE I2.userID = 1 AND I2.recurring_start_date >= STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') AND  DATE(NOW()) <= I2.recurring_end_date);
-    
-    SELECT TI.record_month, TI.record_year, TI.category, SUM(TI.amount) AS amount
-    FROM TempIncomeTableCategory TI
-    GROUP BY TI.record_month, TI.record_year,TI.category
-    ORDER BY TI.record_month, TI.record_year ASC; 
-    
-END$$
-DELIMETER;
-
--- Monthly bar chart datapoint
+-- Monthly bar chart / Line chart datapoint
+-- For line chart, pass in true as parameter input
+-- For bar graph, pass in false as parameter input
 DELIMETER $$
 DROP PROCEDURE IF EXISTS `sp_calculateIncomePerMonth` $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_calculateIncomePerMonth`()
+CREATE PROCEDURE `sp_calculateIncomePerMonth`(IS_SUM_BY_CATEGORY BOOLEAN)
 BEGIN
 	DROP TABLE IF EXISTS TempIncomeTableCategory; 
 	CREATE TEMPORARY TABLE TempIncomeTableCategory
@@ -140,10 +109,18 @@ BEGIN
 	FROM incomes I
     WHERE incomeID IN (SELECT I2.incomeID FROM incomes I2 WHERE I2.userID = 1 AND I2.recurring_start_date >= STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') AND  DATE(NOW()) <= I2.recurring_end_date);
     
-    SELECT TI.record_month, TI.record_year, SUM(TI.amount) AS amount
-    FROM TempIncomeTableCategory TI
-    GROUP BY TI.record_month, TI.record_year
-    ORDER BY TI.record_month, TI.record_year ASC; 
-    
+    IF IS_SUM_BY_CATEGORY THEN 
+		(SELECT TI.record_month, TI.record_year, TI.category, SUM(TI.amount) AS amount
+		FROM TempIncomeTableCategory TI
+		GROUP BY TI.record_month, TI.record_year,TI.category
+		ORDER BY TI.record_month, TI.record_year ASC);
+	ELSE
+		(SELECT TI.record_month, TI.record_year, SUM(TI.amount) AS amount
+		FROM TempIncomeTableCategory TI
+		GROUP BY TI.record_month, TI.record_year
+		ORDER BY TI.record_month, TI.record_year ASC);
+
+    END IF; 
+
 END$$
 DELIMETER;
