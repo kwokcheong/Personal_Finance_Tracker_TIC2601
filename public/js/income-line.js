@@ -92,7 +92,7 @@ var myLineChart = new Chart(ctx, {
       }],
     },
     legend: {
-      display: false
+      display: true
     }, 
     responsive: true,
     tooltips: {

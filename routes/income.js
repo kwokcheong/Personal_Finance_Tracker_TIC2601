@@ -5,13 +5,26 @@ const router = express.Router();
 // form page for income
 router.get('/add', (req, res) => {
     let session = req.session;
-    if (session.userID) {
-        res.render('income/add', {
-            title: 'This is the create income page, you should make the form here',
-            name: session.username
-        });
+    let amount = [];
+    let max = 0;
+    if (!session.userID) {
+        res.render('loggedout');;
     } else {
-        res.render('loggedout')
+        let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC`;
+        db.query(sql, (err, result) => {
+            if (err) throw err;
+            for (let i=0; i<result.length; i++){
+                if (parseInt(result[i].amount) > max){
+                    max = result[i].amount;
+                }
+                amount[i] = result[i].amount;
+            }
+            res.render('income/add', {
+                result: result,
+                max_amount: max,
+                name: session.username
+            })
+        })
     }
 });
 
