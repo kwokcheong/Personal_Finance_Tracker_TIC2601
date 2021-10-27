@@ -5,10 +5,6 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 // Area Chart Example
 
 const monthLabel = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug'];
-const salaryDatapoints = [215, 532, 651, 784, 821,593,123,300];
-const freelanceDatapoints = [115, 232, 851, 484, 521,293,423,600];
-const allowanceDatapoints = [315, 202, 411, 284, 511,524,180,310];
-const othersDatapoints = [415, 132, 251, 184, 421,693,323,361];
 
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
@@ -28,7 +24,7 @@ var myLineChart = new Chart(ctx, {
         pointHoverBackgroundColor: "#263238",
         pointHitRadius: 50,
         pointBorderWidth: 1,
-        data: allowanceDatapoints
+        data: JSON.parse(allowanceDatapoints)
       }, 
       {
         label: "Freelance",
@@ -42,7 +38,7 @@ var myLineChart = new Chart(ctx, {
         pointHoverBackgroundColor: "#263238",
         pointHitRadius: 50,
         pointBorderWidth: 1,
-        data: freelanceDatapoints
+        data: JSON.parse(freelanceDatapoints)
       }, 
       {
         label: "Others",
@@ -56,7 +52,7 @@ var myLineChart = new Chart(ctx, {
         pointHoverBackgroundColor: "#263238",
         pointHitRadius: 50,
         pointBorderWidth: 1,
-        data: othersDatapoints
+        data: JSON.parse(othersDatapoints)
       },
       {
       label: "Salary",
@@ -70,7 +66,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBackgroundColor: "#263238",
       pointHitRadius: 50,
       pointBorderWidth: 1,
-      data: salaryDatapoints
+      data: JSON.parse(salaryDatapoints)
     }
   ]},
   options: {

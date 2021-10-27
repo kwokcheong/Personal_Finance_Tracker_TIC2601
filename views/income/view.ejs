@@ -9,11 +9,17 @@
     <meta name="author" content="" />
     <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../stylesheets/common.css" />
+    <link rel="stylesheet" href="/stylesheets/income.css">
+    <link rel="stylesheet" href="/stylesheets/graph.css">
     <link href="../../stylesheets/import/styles2.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
         crossorigin="anonymous"></script>
     <script>
         let result = '<%- result %>';
+        let categoryAmount = '<%- categoryAmount %>';
     </script>
 </head>
 
@@ -27,10 +33,10 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
                     aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
+                        class="fas fa-search"></i></button> -->
             </div>
         </form>
         <!-- Navbar-->
@@ -63,14 +69,14 @@
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Layouts
+                            Graphs
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                <a class="nav-link" href="layout-static.html">Money Insights</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">Goals</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
@@ -82,57 +88,18 @@
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseIncome" aria-expanded="false"
-                                    aria-controls="pagesCollapseIncome">
+                                <a class="nav-link" href="/income/view">
                                     Income
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseIncome" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/income/add">Add</a>
-                                        <a class="nav-link" href="/income/view">View</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseExpenses" aria-expanded="false"
-                                    aria-controls="pagesCollapseExpenses">
+                                <a class="nav-link" href="/expenses/view">
                                     Expenses
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseExpenses" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/expenses/add">Add</a>
-                                        <a class="nav-link" href="/expenses/view">View</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseBudget" aria-expanded="false"
-                                    aria-controls="pagesCollapseBudget">
+                                <a class="nav-link" href="/budgets/view">
                                     Budget
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseBudget" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/budgets/view">View</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseGoals" aria-expanded="false"
-                                    aria-controls="pagesCollapseGoals">
+                                <a class="nav-link" href="/goals/view">
                                     Goals
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseGoals" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/goals/add">Add</a>
-                                        <a class="nav-link" href="/goals/view">View</a>
-                                    </nav>
-                                </div>
                             </nav>
                         </div>
                     </div>
@@ -148,62 +115,152 @@
             <main>
                 <div class="container-fluid px-4">
                     <!-- main website starts here -->
-                    <div>
-                        <h1 style='color: gray;'> Income table </b> </h1>
+                        <div class="row p-md-3">
+                          <div class="col mt-2 mb-2">
+                            <h1 class="float-start">Income</h1>
+                          </div>
+                          <div class="col mt-2 mb-2">
+                            <button type="button" class="btn btn-info btn-lg float-end" data-toggle="modal"
+                            data-target="#myModal">Add Income</button>
+                          </div>
+                        </div>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Create New Income</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form action="/income/save" method="POST">
+                                            <div class="form-group">
+                                                <label for="name">NAME</label>
+                                                <input class="form-control" type="text" name="name" placeholder="Name"
+                                                    required />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="category">SELECT CATEGORY</label>
+                                                <select class="form-control" name="category" id="category">
+                                                    <option value="Salary">Salary</option>
+                                                    <option value="Allowance">Allowance</option>
+                                                    <option value="Freelance">Freelance</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="amount">AMOUNT</label>
+                                                <input class="form-control" type="number" min="1" step="any"
+                                                    name="amount" placeholder="Amount" required />
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <p>RECURRING TRANSACTION?</p>
+                                                  <input type="radio" name="recurring" value="1"
+                                                    onclick="toggleDisable()">
+                                                  <label for="1">Yes</label><br>
+                                                  <input type="radio" id="no_recurring" name="recurring" value="0"
+                                                    checked onclick="toggleDisable()" />
+                                                  <label for="0">No</label><br>
+                                            </div>
+                                            <div class="form-group" id="date1" hidden="true">
+                                                <label for="recurring_start_date">RECURRING START DATE</label>
+                                                <input class="form-control" type="date" name="recurring_start_date"
+                                                    placeholder="Add recurring start date" id="r_date"
+                                                    disabled="disabled" />
+                                            </div>
+                                            <div class="form-group" id="date2" hidden="true">
+                                                <label for="recurring_end_date">RECURRING END DATE</label>
+                                                <input class="form-control" type="date" name="recurring_end_date"
+                                                    placeholder="Add recurring end date" id="r_date2"
+                                                    disabled="disabled" />
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" value="add">Add Record</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Amount</th>
-                                    <th>Category</th>
-                                    <th>Recurring</th>
-                                    <th>Created at</th>
-                                    <th>Controls</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Amount</th>
-                                    <th>Category</th>
-                                    <th>Recurring</th>
-                                    <th>Created at</th>
-                                    <th>Controls</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <% for(var i=0; i<result.length; i++) { %>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-area me-1"></i>
+                                    Income Category
+                                </div>
+                                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    Total Income
+                                </div>
+                                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Income Records
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            <%= result[i].name %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].amount %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].category %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].recurring==1 ? 'Yes' : 'No' %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' ' ); %>
-                                        </td>
-                                        <td>
-                                            <a href="/income/delete/<%= result[i].incomeID %>"><i
-                                                    class="fas fa-trash"></i></a>
-                                            <a href="/income/edit/<%= result[i].incomeID %>"><i
-                                                    class="fas fa-edit"></i></a>
-                                        </td>
+                                        <th>DATE</th>
+                                        <th>CATEGORY</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>AMOUNT</th>
+                                        <th>RECURRING</th>
+                                        <th>CONTROLS</th>
                                     </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>CATEGORY</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>AMOUNT</th>
+                                        <th>RECURRING</th>
+                                        <th>CONTROLS</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <% for(var i=0; i<result.length; i++) { %>
+                                        <tr>
+                                            <td> 
+                                                <%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' ' );
+                                                    %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].category %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].name %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].amount %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].recurring==1 ? 'Yes' : 'No' %>
+                                            </td>
+                                            <td>
+                                                <a href="/income/delete/<%= result[i].incomeID %>"><i
+                                                        class="fas fa-trash"></i></a>
+                                                <a href="/income/edit/<%= result[i].incomeID %>"><i
+                                                        class="fas fa-edit"></i></a>
+                                            </td>
+                                        </tr>
                                     <% } %>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-body">
-                        <a href="add"><button class="btn btn-success" href="/income/add">Add new</button></a>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <!-- ends here -->
                 </div>
@@ -223,12 +280,28 @@
             </footer>
         </div>
     </div>
+    <script>
+        let max = '<%- max_amount %>';
+        let salaryDatapoints = '<%- JSON.stringify(categoryAmount[0]) %>';
+        let freelanceDatapoints = '<%- JSON.stringify(categoryAmount[1]) %>';
+        let allowanceDatapoints = '<%- JSON.stringify(categoryAmount[2]) %>';
+        let othersDatapoints = '<%- JSON.stringify(categoryAmount[3]) %>';
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../../js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="../../js/chart-area-demo.js"></script>
-    <script src="../../js/chart-bar-demo.js"></script>
+    <script src="../../js/income-line.js"></script>
+    <script src="../../js/income-bar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="../../js/datatables-simple-demo.js"></script>
 </body>

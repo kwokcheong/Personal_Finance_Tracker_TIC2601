@@ -26,7 +26,7 @@ CREATE TEMPORARY TABLE TempExpensesTableCategory
     `category` VARCHAR(10)
 ); 
 
-INSERT INTO TempExpensesTableCategory VALUES ('1','Food'),('2','Luxury'),('3','Travel'),('4','Bills'),('5','Others'),('6','Utility');
+INSERT INTO TempExpensesTableCategory VALUES ('1','Food'),('2','Luxury'),('3','Transport'),('4','Bills'),('5','Others'),('6','Utility');
 
 WHILE COUNTER <= 300 DO
 	CALL sp_insertData(COUNTER,(SELECT category FROM TempIncomeTableCategory ORDER BY RAND() LIMIT 1),(SELECT category FROM TempExpensesTableCategory ORDER BY RAND() LIMIT 1));
