@@ -2,62 +2,73 @@
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
-// Bar Chart Example
-const label = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June'];
-const incomeDatapoints = [215, 532, 651, 784, 821,593,123,300];
+// Bar Chart: Insert data here
+const categoryDatapoints = ['May', 'June', 'July', 'Aug', 'Sep', 'Oct'];
 
 var ctx = document.getElementById("myBarChart");
-var myLineChart = new Chart(ctx, {
+var barChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: label,
+    labels: categoryDatapoints,
     datasets: [{
-      backgroundColor: [
-        'rgb(75, 99, 132, 10)',
-        'rgb(75, 192, 192, 10)',
-        'rgb(255, 205, 86, 10)',
-        'rgb(206, 147, 216, 10)',
-        'rgb(54, 162, 235, 10)', 
-        'rgb(229, 115, 115, 10)', 
-        ],
-      data: incomeDatapoints
-    }],
+      label: 'Allowance',
+      data:JSON.parse(allowanceDatapoints),
+      hoverBackgroundColor: '#16A085',
+      backgroundColor: '#45B39D'
+    }, 
+    {
+      label: 'Freelance',
+      data: JSON.parse(freelanceDatapoints),
+      hoverBackgroundColor: '#48C9B0',
+      backgroundColor: '#76D7C4'
+    }, 
+    {
+      label: 'Others',
+      data: JSON.parse(othersDatapoints),
+      hoverBackgroundColor: '#45B39D',
+      backgroundColor: '#73C6B6'
+    }, 
+    {
+      label: 'Salary',
+      data: JSON.parse(salaryDatapoints),
+      hoverBackgroundColor: '#3498DB',
+      backgroundColor: '#5DADE2'
+    }
+  ]
   },
   options: {
     reponsive: true,
     tooltips: {
-        callbacks: {
-          label: function(tooltipItem, data) {
-            if (tooltipItem.datasetIndex === 0) {
-                return ' $ ' + data['datasets'][0]['data'][tooltipItem['index']]
-            } else if (tooltipItem.datasetIndex === 1) {
-                return ' $ ' + data['datasets'][1]['data'][tooltipItem['index']];
-            } else if (tooltipItem.datasetIndex === 2) {
-              return ' $ ' + data['datasets'][2]['data'][tooltipItem['index']];
-            } else if (tooltipItem.datasetIndex === 3) {
-              return ' $ ' + data['datasets'][3]['data'][tooltipItem['index']];
-            } else if (tooltipItem.datasetIndex === 4) {
-              return ' $ ' + data['datasets'][4]['data'][tooltipItem['index']];
-            } else if (tooltipItem.datasetIndex === 5) {
-              return ' $ ' + data['datasets'][5]['data'][tooltipItem['index']];
-            }
+      mode: 'index',
+      callbacks: {
+      label: function(tooltipItem, data) {
+          if (tooltipItem.datasetIndex === 0) {
+              return 'Allowance: ' + ' $' + data['datasets'][0]['data'][tooltipItem['index']]
+          } else if (tooltipItem.datasetIndex === 1) {
+              return 'Freelance: ' + ' $' + data['datasets'][1]['data'][tooltipItem['index']];
+          }else if (tooltipItem.datasetIndex === 2) {
+            return 'Others: ' + ' $' + data['datasets'][2]['data'][tooltipItem['index']];
+          }else if (tooltipItem.datasetIndex === 3) {
+              return 'Salary: ' + ' $' + data['datasets'][3]['data'][tooltipItem['index']];
           }
         }
-    },
-    legend: {
-      display: false,
+      }
     },
     scales: {
-      xAxes: [{
-        gridLines: {
-          display: false
-        }
-      }],
-      yAxes: [{
-        gridLines: {
-          display: true
-        }
-      }],
-    },
+        xAxes: [{
+          gridLines: {
+              display:false
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: Math.ceil(parseInt(max)/100)*100
+          },
+          gridLines: {
+              display:true
+          }   
+        }]
+    }
   }
 });
