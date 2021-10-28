@@ -17,7 +17,7 @@ CREATE TEMPORARY TABLE TempIncomeTableCategory
     `category` VARCHAR(10)
 ); 
 
-INSERT INTO TempIncomeTableCategory VALUES ('1','Salary'),('2','Allowance'),('3','Freelance'),('4','Others');
+INSERT INTO TempIncomeTableCategory VALUES ('1','Allowance'),('2','Freelance'),('3','Others'),('4','Salary');
 
 DROP TABLE IF EXISTS TempExpensesTableCategory; 
 CREATE TEMPORARY TABLE TempExpensesTableCategory
@@ -26,7 +26,7 @@ CREATE TEMPORARY TABLE TempExpensesTableCategory
     `category` VARCHAR(10)
 ); 
 
-INSERT INTO TempExpensesTableCategory VALUES ('1','Food'),('2','Luxury'),('3','Transport'),('4','Bills'),('5','Others'),('6','Utility');
+INSERT INTO TempExpensesTableCategory VALUES ('1','Bills'),('2','Food'),('3','Luxury'),('4','Others'),('5','Transport'),('6','Utility');
 
 WHILE COUNTER <= 300 DO
 	CALL sp_insertData(COUNTER,(SELECT category FROM TempIncomeTableCategory ORDER BY RAND() LIMIT 1),(SELECT category FROM TempExpensesTableCategory ORDER BY RAND() LIMIT 1));
@@ -41,11 +41,11 @@ DROP PROCEDURE IF EXISTS `sp_insertData` $$
 CREATE PROCEDURE `sp_insertData`(COUNTER INT, CATEGORY_INCOME TEXT, CATEGORY_EXPENSE TEXT)
 BEGIN
 
-INSERT INTO `crud_express`.`incomes` (`incomeID`,`userID`, `name`, `amount`, `category`, `recurring_start_date`, `recurring_end_date`, `recurring`) VALUES 
-	(COUNTER,'1', CONCAT('Income',COUNTER), RAND()*(1000-0)+10, CATEGORY_INCOME, CURRENT_DATE - INTERVAL FLOOR(RAND() * 2500) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 365 DAY), FLOOR(RAND()*(1-0+1))+0);
+	INSERT INTO `crud_express`.`incomes` (`incomeID`,`userID`, `name`, `amount`, `category`, `recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`) VALUES 
+	(COUNTER,'1', CONCAT('Income',COUNTER), RAND()*(1000-0)+10, CATEGORY_INCOME, CURRENT_DATE - INTERVAL FLOOR(RAND() * 2500) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 365 DAY), FLOOR(RAND()*(1-0+1))+0, CURRENT_DATE - INTERVAL FLOOR(RAND() * 1000) DAY);
 
-	INSERT INTO `crud_express`.`expenses` (`expensesID`, `userID`, `name`, `amount`, `category`,`recurring_start_date`, `recurring_end_date`, `recurring`) VALUES 
-	(COUNTER,'1', CONCAT('Expense',COUNTER), RAND()*(1000-0)+10, CATEGORY_EXPENSE, CURRENT_DATE - INTERVAL FLOOR(RAND() * 2500) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 365 DAY), FLOOR(RAND()*(1-0+1))+0);
+	INSERT INTO `crud_express`.`expenses` (`expensesID`, `userID`, `name`, `amount`, `category`,`recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`) VALUES 
+	(COUNTER,'1', CONCAT('Expense',COUNTER), RAND()*(1000-0)+10, CATEGORY_EXPENSE, CURRENT_DATE - INTERVAL FLOOR(RAND() * 2500) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 365 DAY), FLOOR(RAND()*(1-0+1))+0, CURRENT_DATE - INTERVAL FLOOR(RAND() * 1000) DAY);
 
 END$$
 DELIMITER;
