@@ -43,24 +43,6 @@ router.get('/view', (req, res) => {
     }
 });
 
-// //To learn- why need to JSON stringify and Parse over at ejs
-// router.get('/view', (req, res) => {
-//     let session = req.session;
-//     if (!session.userID) {
-//         res.render('loggedout');;
-//     } else {
-//         let sql = 
-//         `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC;`;
-//         db.query(sql, (err, result) => {
-//             if (err) throw err;
-//             res.render('income/view', {
-//                 result: result,
-//                 name: session.username
-//             })
-//         })
-//     }
-// })
-
 //INSERT income query
 router.post('/save', (req, res) => {
     let randomNum = Math.random().toString(36).substr(2, 8);
@@ -102,12 +84,17 @@ router.get('/edit/:incomeID', (req, res) => {
         const userID = session.userID;
         const incomeID = req.params.incomeID;
         let sql = `SELECT * FROM incomes
-               WHERE userID = ${userID} AND incomeID = '${incomeID}'`;
+               WHERE userID = ${userID} AND incomeID = '${incomeID}';
+               SELECT DATE(recurring_start_date) as 'start_date',
+               DATE(recurring_end_date) as 'end_date'
+               FROM incomes
+               WHERE userID = ${userID} AND incomeID = '${incomeID}';`;
         db.query(sql, (err, result) => {
             if (err) throw err;
-            console.log(result[0])
             res.render('income/edit', {
-                result: result,
+                result: result[0],
+                start_date: result[1][0].start_date.toISOString().split('T')[0],
+                end_date: result[1][0].end_date.toISOString().split('T')[0],
                 name: session.username
             });
         });
@@ -119,6 +106,7 @@ router.post('/update/:incomeID', (req, res) => {
     let data = {
         name: req.body.name,
         category: req.body.category,
+        amount: req.body.amount,
         recurring: req.body.recurring == 1 ? 1 : 0,
         recurring_start_date: req.body.recurring_start_date == '' ? null : req.body.recurring_start_date,
         recurring_end_date: req.body.recurring_end_date == '' ? null : req.body.recurring_end_date, 

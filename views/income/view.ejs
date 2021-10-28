@@ -132,11 +132,13 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <form action="/income/save" method="POST">
+                                            <!-- name -->
                                             <div class="form-group">
                                                 <label for="name">NAME</label>
                                                 <input class="form-control" type="text" name="name" placeholder="Name"
                                                     required />
                                             </div>
+                                            <!-- select category -->
                                             <div class="form-group">
                                                 <label for="category">SELECT CATEGORY</label>
                                                 <select class="form-control" name="category" id="category">
@@ -146,20 +148,27 @@
                                                     <option value="Others">Others</option>
                                                 </select>
                                             </div>
+                                            <!-- Amount -->
                                             <div class="form-group">
                                                 <label for="amount">AMOUNT</label>
                                                 <input class="form-control" type="number" min="1" step="any"
                                                     name="amount" placeholder="Amount" required />
                                             </div>
-                                            <div class="custom-control custom-radio">
+                                            <!-- recurring radio -->
+                                            <div class="form-group">
                                                 <p>RECURRING TRANSACTION?</p>
-                                                  <input type="radio" name="recurring" value="1"
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" type="radio" name="recurring" value="1"
                                                     onclick="toggleDisable()">
-                                                  <label for="1">Yes</label><br>
-                                                  <input type="radio" id="no_recurring" name="recurring" value="0"
-                                                    checked onclick="toggleDisable()" />
-                                                  <label for="0">No</label><br>
+                                                    <label class="form-check-label" for="recurring">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" id="no_recurring" name="recurring" value="0"
+                                                    checked onclick="toggleDisable()">
+                                                    <label class="form-check-label" for="recurring">No</label>
+                                                </div>
                                             </div>
+                                            <!-- recurring datebox -->
                                             <div class="form-group" id="date1" hidden="true">
                                                 <label for="recurring_start_date">RECURRING START DATE</label>
                                                 <input class="form-control" type="date" name="recurring_start_date"

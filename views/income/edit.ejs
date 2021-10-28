@@ -9,11 +9,15 @@
     <meta name="author" content="" />
     <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="../../stylesheets/import/styles2.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
         crossorigin="anonymous"></script>
     <script>
         let result = '<%- result %>';
+        let start_date = '<%- start_date %>';
+        let end_date = '<%- end_date %>';
     </script>
 </head>
 
@@ -63,14 +67,13 @@
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Layouts
+                            Graphs
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                <a class="nav-link" href="layout-static.html">Money Insights</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
@@ -82,57 +85,18 @@
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseIncome" aria-expanded="false"
-                                    aria-controls="pagesCollapseIncome">
+                                <a class="nav-link" href="/income/view">
                                     Income
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseIncome" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/income/add">Add</a>
-                                        <a class="nav-link" href="/income/view">View</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseExpenses" aria-expanded="false"
-                                    aria-controls="pagesCollapseExpenses">
+                                <a class="nav-link" href="/expenses/view">
                                     Expenses
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseExpenses" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/expenses/add">Add</a>
-                                        <a class="nav-link" href="/expenses/view">View</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseBudget" aria-expanded="false"
-                                    aria-controls="pagesCollapseBudget">
+                                <a class="nav-link" href="/budgets/view">
                                     Budget
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseBudget" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/budgets/view">View</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseGoals" aria-expanded="false"
-                                    aria-controls="pagesCollapseGoals">
+                                <a class="nav-link" href="/goals/view">
                                     Goals
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="pagesCollapseGoals" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="/goals/add">Add</a>
-                                        <a class="nav-link" href="/goals/view">View</a>
-                                    </nav>
-                                </div>
                             </nav>
                         </div>
                     </div>
@@ -152,11 +116,11 @@
                         <form action="/income/update/'<%= result[0].incomeID %>'" method="POST">
                             <h1>Edit income form</h1>
                             <div class="form-group">
-                                <label for="name">name</label>
+                                <label for="name">NAME</label>
                                 <input class="form-control" type="text" name="name" value='<%= result[0].name %>' />
                             </div>
                             <div class="form-group">
-                                <label for="category">Select a category</label>
+                                <label for="category">SELECT A CATEGORY</label>
                                 <select class="form-control" name="category" id="category">
                                     <option value="Salary">Salary</option>
                                     <option value="Freelance">Freelance</option>
@@ -165,28 +129,37 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="amount">Amount</label>
+                                <label for="amount">AMOUNT</label>
                                 <input class="form-control" type="number" min="1" step="any" name="amount"
                                 value=<%= result[0].amount %> />
                             </div>
-                            <div class="custom-control custom-radio">
-                                <p>Will this be a recurring transaction?</p>
-                                  <input type="radio" name="recurring" value="1" onclick="toggleDisable()">
-                                  <label for="1">Yes</label><br>
-                                  <input type="radio" id="no_recurring" name="recurring" value="0" checked onclick="toggleDisable()"/>
-                                  <label for="0">No</label><br>
+                            <!-- recurring radio -->
+                            <div class="form-group mt-2 mb-2" name="recurringForm">
+                                <p>RECURRING TRANSACTION?</p>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" type="radio" id="recurring" name="recurring" value="1"
+                                    onclick="toggleDisable()">
+                                    <label class="form-check-label" for="recurring">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="no_recurring" name="recurring" value="0"
+                                    checked onclick="toggleDisable()">
+                                    <label class="form-check-label" for="recurring">No</label>
+                                </div>
                             </div>
                             <div class="form-group" id="date1" hidden="true">
-                                <label for="recurring_start_date">Recurring start date</label>
-                                <input class="form-control" type="date" name="recurring_start_date"
-                                    placeholder="Add recurring start date" id="r_date" disabled="disabled"/>
+                                <label for="recurring_start_date">RECURRING START DATE</label>
+                                <input style="max-width: 25%;" class="form-control" type="date" name="recurring_start_date"
+                                    placeholder="Add recurring start date" id="r_date" disabled="disabled" required="required"/>
                             </div>
                             <div class="form-group" id="date2" hidden="true">
-                                <label for="recurring_end_date">Recurring end date</label>
-                                <input class="form-control" type="date" name="recurring_end_date"
-                                    placeholder="Add recurring end date" id="r_date2" disabled="disabled"/>
+                                <label for="recurring_end_date">RECURRING END DATE</label>
+                                <input style="max-width: 25%;" class="form-control" type="date" name="recurring_end_date"
+                                    placeholder="Add recurring end date" id="r_date2" disabled="disabled" required="required" value="2013-01-08"/>
                             </div>
-                            <button type="submit" class="btn btn-primary" value="update">Update Record</button>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary" value="update">Update Record</button>
+                            </div>
                         </form>
                     </div>
                     <!-- ends here -->
@@ -210,11 +183,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../../js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="../../js/chart-area-demo.js"></script>
-    <script src="../../js/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="../../js/datatables-simple-demo.js"></script>
+    <!-- i cant believe this is working!-->
+    <script>
+        let recurring = '<%- result[0].recurring %>';
+        if(recurring == '1'){
+            document.getElementById('recurring').click();
+        } else {
+            document.getElementById('no_recurring').click();
+        }
+    </script>
+    <script>
+        document.getElementById('r_date').value = start_date;
+        document.getElementById('r_date2').value = end_date;
+    </script>
     <script>
         let selected = 0;
         switch('<%- result[0].category %>'){
@@ -236,11 +217,15 @@
                 if (radio.checked){
                     datefield.disabled = true;
                     datefield2.disabled = true;
+                    datefield.required = false;
+                    datefield2.required = false;
                     datebox.hidden = true;
                     datebox2.hidden = true;
                 } else {
                     datefield.disabled = false;
                     datefield2.disabled = false;
+                    datefield.required = true;
+                    datefield2.required = true;
                     datebox.hidden = false;
                     datebox2.hidden = false;
                 }
