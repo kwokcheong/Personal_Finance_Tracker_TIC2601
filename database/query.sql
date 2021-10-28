@@ -55,3 +55,7 @@ ORDER BY created_at DESC;
 -- Budget category pie chart
 -- Change userID = 1 to the session's user id
 SELECT category, budget_amount_per_month FROM budgets WHERE userID = 1;
+
+-- Dashboard page
+-- Current balance
+SELECT current_balance FROM ledger;

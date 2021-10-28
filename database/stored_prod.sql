@@ -36,6 +36,7 @@ END WHILE;
 END$$
 DELIMITER;
 
+-- Tables that require bulk data
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `sp_insertData` $$
 CREATE PROCEDURE `sp_insertData`(COUNTER INT, CATEGORY_INCOME TEXT, CATEGORY_EXPENSE TEXT)
@@ -60,6 +61,12 @@ DROP PROCEDURE IF EXISTS `sp_calculateIncomePerMonth` $$
 CREATE PROCEDURE `sp_calculateIncomePerMonth`(IS_SUM_BY_CATEGORY BOOLEAN, USER_ID TEXT)
 BEGIN
 
+	DECLARE START_DATE DATE; 
+    DECLARE END_DATE DATE; 
+    
+	SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
+    SET END_DATE = DATE(NOW());
+    
 	DROP TABLE IF EXISTS TempIncomeTable; 
 	CREATE TEMPORARY TABLE TempIncomeTable
 	(	
@@ -78,7 +85,7 @@ BEGIN
             YEAR(I.created_at), 
             I.amount
 	FROM incomes I
-    WHERE incomeID IN (SELECT I2.incomeID FROM incomes I2 WHERE I2.userID = USER_ID AND I2.created_at BETWEEN STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') AND  DATE(NOW()));
+    WHERE incomeID IN (SELECT I2.incomeID FROM incomes I2 WHERE I2.userID = USER_ID AND I2.created_at BETWEEN START_DATE AND END_DATE);
     
     IF IS_SUM_BY_CATEGORY THEN 
 		(SELECT TI.record_month, TI.record_year, TI.category, SUM(TI.amount) AS amount
@@ -90,8 +97,7 @@ BEGIN
 		FROM TempIncomeTable TI
 		GROUP BY TI.record_month, TI.record_year
 		ORDER BY TI.record_month, TI.record_year ASC);
-
-    END IF; 
+	END IF; 
 
 END$$
 DELIMITER;
@@ -104,6 +110,13 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `sp_calculateExpensesPerMonth` $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_calculateExpensesPerMonth`(IS_SUM_BY_CATEGORY BOOLEAN, USER_ID TEXT)
 BEGIN
+
+	DECLARE START_DATE DATE; 
+    DECLARE END_DATE DATE; 
+    
+	SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
+    SET END_DATE = DATE(NOW());
+
 	DROP TABLE IF EXISTS TempExpensesTable; 
 	CREATE TEMPORARY TABLE TempExpensesTable
 	(	
@@ -122,7 +135,7 @@ BEGIN
 			YEAR(E.created_at), 
 			E.amount
 	FROM expenses E
-	WHERE expensesID IN (SELECT E2.expensesID FROM expenses E2 WHERE E2.userID = USER_ID AND E2.created_at BETWEEN STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') AND  DATE(NOW()));
+	WHERE expensesID IN (SELECT E2.expensesID FROM expenses E2 WHERE E2.userID = USER_ID AND E2.created_at BETWEEN START_DATE AND END_DATE);
 	
     IF IS_SUM_BY_CATEGORY THEN 
 		(SELECT TE.record_month, TE.record_year, TE.category, SUM(TE.amount) AS amount
@@ -134,7 +147,61 @@ BEGIN
 		FROM TempExpensesTable TE
 		GROUP BY TE.record_month, TE.record_year
 		ORDER BY TE.record_month, TE.record_year ASC);
+	END IF; 
 
+END$$
+DELIMITER;
+
+-- Dashboard
+-- Avg Income
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `sp_calculateAverageIncome` $$
+CREATE PROCEDURE `sp_calculateAverageIncome`(IN IS_SUM_BY_CATEGORY BOOLEAN, IN USER_ID TEXT)
+BEGIN
+
+	DECLARE START_DATE DATE; 
+    DECLARE END_DATE DATE; 
+    
+    SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
+    SET END_DATE = DATE(NOW());
+    
+	IF IS_SUM_BY_CATEGORY THEN (
+		SELECT I.category, (SUM(I.amount) / 6) FROM incomes I
+		WHERE I.incomeID IN (SELECT I2.incomeID FROM incomes I2
+						   WHERE I2.userID = USER_ID AND I2.created_at 
+						   BETWEEN START_DATE AND END_DATE)
+		GROUP BY I.category
+		ORDER BY I.category ASC);
+    
+    ELSE SELECT fn_calculateAverageIncome(USER_ID) AS avgIncome;
+    
     END IF; 
+    
+END$$
+DELIMITER;
+
+-- Avg Expenses
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `sp_calculateAverageExpenses` $$
+CREATE PROCEDURE `sp_calculateAverageExpenses`(IN IS_SUM_BY_CATEGORY BOOLEAN, IN USER_ID TEXT)
+BEGIN
+
+	DECLARE START_DATE DATE; 
+    DECLARE END_DATE DATE; 
+    
+    SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
+    SET END_DATE = DATE(NOW());
+    
+	IF IS_SUM_BY_CATEGORY THEN (
+		SELECT E.category, (SUM(E.amount) / 6) FROM expenses E
+		WHERE E.expensesID IN (SELECT E2.expensesID FROM expenses E2
+						   WHERE E2.userID = USER_ID AND E2.created_at 
+						   BETWEEN START_DATE AND END_DATE)
+		GROUP BY E.category
+        ORDER BY E.category ASC);
+    
+    ELSE SELECT fn_calculateAverageExpense(USER_ID) AS avgExpenses;
+    END IF; 
+    
 END$$
 DELIMITER;
