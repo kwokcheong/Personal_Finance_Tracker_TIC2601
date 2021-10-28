@@ -24,8 +24,8 @@ CREATE TABLE incomes (
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
     category ENUM('Allowance', 'Freelance', 'Others','Salary'),
-    recurring_start_date DATE,
-    recurring_end_date DATE,
+    recurring_start_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
+    recurring_end_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
     recurring BOOLEAN NOT NULL DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -36,8 +36,8 @@ CREATE TABLE expenses (
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
     category ENUM('Bills', 'Food', 'Luxury','Others', 'Transport', 'Utility'),
-    recurring_start_date DATE,
-    recurring_end_date DATE,
+    recurring_start_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
+    recurring_end_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
     recurring BOOLEAN NOT NULL DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -55,8 +55,8 @@ CREATE TABLE goals (
     category VARCHAR(64),
     possible BOOLEAN DEFAULT 0,
     done BOOLEAN DEFAULT 0,
-    start_date DATE,
-    end_date DATE,
+    start_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
+    end_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -68,5 +68,5 @@ CREATE TABLE budgets (
     PRIMARY KEY(userID, category)
 );
 
--- Seed bulk data 
+INSERT INTO users (`name`, `email`, `password`) VALUES ('admin', 'admin@hotmail.com', 'admin');
 call crud_express.sp_insertBulkData();

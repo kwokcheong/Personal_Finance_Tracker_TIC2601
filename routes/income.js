@@ -46,14 +46,15 @@ router.get('/view', (req, res) => {
 //INSERT income query
 router.post('/save', (req, res) => {
     let randomNum = Math.random().toString(36).substr(2, 8);
+    let today = new Date().toISOString().split('T')[0];
     let data = {
         incomeID: randomNum,
         userID: req.session.userID,
         name: req.body.name,
         amount: req.body.amount,
         category: req.body.category,
-        recurring_start_date: req.body.recurring_start_date == '' ? null : req.body.recurring_start_date,
-        recurring_end_date: req.body.recurring_end_date == '' ? null : req.body.recurring_end_date, 
+        recurring_start_date: req.body.recurring_start_date == null ? today : req.body.recurring_start_date,
+        recurring_end_date: req.body.recurring_end_date == null ? today : req.body.recurring_end_date, 
         recurring: req.body.recurring == 1 ? 1 : 0
     }
 
@@ -103,13 +104,14 @@ router.get('/edit/:incomeID', (req, res) => {
 
 // UPDATE income Query
 router.post('/update/:incomeID', (req, res) => {
+    let today = new Date().toISOString().split('T')[0];
     let data = {
         name: req.body.name,
         category: req.body.category,
         amount: req.body.amount,
         recurring: req.body.recurring == 1 ? 1 : 0,
-        recurring_start_date: req.body.recurring_start_date == '' ? null : req.body.recurring_start_date,
-        recurring_end_date: req.body.recurring_end_date == '' ? null : req.body.recurring_end_date, 
+        recurring_start_date: req.body.recurring_start_date == null ? today : req.body.recurring_start_date,
+        recurring_end_date: req.body.recurring_end_date == null ? today : req.body.recurring_end_date, 
     }
     let session = req.session;
     const userID = session.userID;
