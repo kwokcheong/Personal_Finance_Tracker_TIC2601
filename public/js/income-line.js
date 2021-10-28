@@ -14,7 +14,7 @@ var myAreaChart = new Chart(ctx, {
     datasets: [ {
       label: 'Income',
       lineTension: 0.3,
-      backgroundColor: "rgba(2,117,216,0)",
+      backgroundColor: "rgba(93, 173, 226,0.3)",
       borderColor: "#3498DB",
       pointRadius: 3,
       pointBackgroundColor: "#616161",

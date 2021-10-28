@@ -12,7 +12,7 @@ let expenseLineGraph = new Chart(ctx3, {
       label: 'Expenses',
         data: [1000, 200, 200, 100, 500, 320],
         lineTension: 0.3,
-        backgroundColor: "rgba(2,117,216,0)",
+        backgroundColor: "rgba(241, 148, 138,0.3)",
         borderColor: "#EC7063",
         pointRadius: 3,
         pointBackgroundColor: "#616161",
