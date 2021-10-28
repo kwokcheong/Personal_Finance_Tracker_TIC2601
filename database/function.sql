@@ -58,12 +58,12 @@ DELIMETER;
 -- Static value for avg expenses
 DELIMETER $$
 DROP FUNCTION IF EXISTS `fn_calculateAverageExpense`$$
-CREATE FUNCTION `fn_calculateAverageExpense`(ip_user TEXT) RETURNS decimal(6,2)
+CREATE FUNCTION `fn_calculateAverageExpense`(ip_user TEXT) RETURNS decimal(13,2)
 BEGIN
 
 	DECLARE START_DATE DATE; 
     DECLARE END_DATE DATE; 
-    DECLARE FINAL_OUTPUT DECIMAL(6,2);
+    DECLARE FINAL_OUTPUT DECIMAL(13,2);
     
     SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
     SET END_DATE = DATE(NOW());
@@ -78,12 +78,12 @@ DELIMETER;
 -- Static value for avg income
 DELIMETER $$
 DROP FUNCTION IF EXISTS `fn_calculateAverageIncome`$$
-CREATE FUNCTION `fn_calculateAverageIncome`(ip_user TEXT) RETURNS decimal(6,2)
+CREATE FUNCTION `fn_calculateAverageIncome`(ip_user TEXT) RETURNS decimal(13,2)
 BEGIN
 
 	DECLARE START_DATE DATE; 
     DECLARE END_DATE DATE; 
-    DECLARE FINAL_OUTPUT DECIMAL(6,2);
+    DECLARE FINAL_OUTPUT DECIMAL(13,2);
     
     SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
     SET END_DATE = DATE(NOW());
@@ -98,12 +98,12 @@ DELIMETER;
 -- Static value for av savings
 DELIMETER $$
 DROP FUNCTION IF EXISTS `fn_calculateAverageSavings`$$
-CREATE FUNCTION `fn_calculateAverageSavings`(ip_user TEXT) RETURNS decimal(6,2)
+CREATE FUNCTION `fn_calculateAverageSavings`(ip_user TEXT) RETURNS decimal(13,2)
 BEGIN
 
-	DECLARE INCOME DECIMAL(6,2); 
-    DECLARE EXPENSES DECIMAL(6,2); 
-    DECLARE FINAL_OUTPUT DECIMAL(6,2);
+	DECLARE INCOME DECIMAL(13,2); 
+    DECLARE EXPENSES DECIMAL(13,2); 
+    DECLARE FINAL_OUTPUT DECIMAL(13,2);
     
     SET INCOME = (SELECT fn_calculateAverageIncome(ip_user) AS avgIncome);
     SET EXPENSES = (SELECT fn_calculateAverageExpense(ip_user) AS avgExpenses);

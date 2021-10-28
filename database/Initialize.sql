@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS budgets;
 CREATE TABLE users (
 	userID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(256) NOT NULL,
-    email VARCHAR(256) NOT NULL UNIQUE,
+    email VARCHAR(256) NOT NULL UNIQUE CHECK(email LIKE '%_@_%.__%'),
 	password VARCHAR(25) NOT NULL
 );
 
@@ -44,7 +44,6 @@ CREATE TABLE expenses (
 
 CREATE TABLE ledger (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
-    average_monthly_saving DECIMAL(13,2) DEFAULT 0,
     current_balance DECIMAL(13,2) DEFAULT 0
 );
 

@@ -74,7 +74,7 @@ BEGIN
 		`category` VARCHAR(10), 
         `record_month` INT, 
         `record_year` INT,
-        `amount` DECIMAL(19,2)
+        `amount` DECIMAL(13,2)
 	); 
     
     INSERT INTO TempIncomeTable
@@ -124,7 +124,7 @@ BEGIN
 		`category` VARCHAR(10), 
         `record_month` INT, 
         `record_year` INT,
-        `amount` DECIMAL(19,2)
+        `amount` DECIMAL(13,2)
 	); 
     
     INSERT INTO TempExpensesTable
