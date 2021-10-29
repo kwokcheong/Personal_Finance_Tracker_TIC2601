@@ -7,10 +7,23 @@ var ctx = document.getElementById("moincomeChart");
 var myPieChart = new Chart(ctx, {
   type: 'pie',
   data: {
-    labels: ["Sallary", "Gift", "Bonus", "Love"],
+    labels: ['Allowance', 'Freelance', 'Others','Salary'],
     datasets: [{
       data: [2900, 500, 4000, 520],
-      backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
-    }],
+      backgroundColor: ['#45B39D', '#76D7C4', '#73C6B6', '#5DADE2'],
+    }]
   },
+  options:{
+    reponsive: true,
+    tooltips: {
+        callbacks: {
+            title: function(tooltipItem, data) {
+                return data['labels'][tooltipItem[0]['index']];
+            },
+            label: function(tooltipItem, data) {
+                return ' $ ' + data['datasets'][0]['data'][tooltipItem['index']];
+            }
+        }
+    }
+  }
 });

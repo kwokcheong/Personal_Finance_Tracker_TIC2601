@@ -7,10 +7,23 @@ var ctx = document.getElementById("moexpensesChart");
 var myPieChart = new Chart(ctx, {
   type: 'pie',
   data: {
-    labels: ["Food", "MRT", "Grab", "Cloth"],
+    labels: ['Bills', 'Food', 'Luxury', 'Others', 'Travel', 'Utility'],
     datasets: [{
-      data: [900, 70, 100, 670],
-      backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
-    }],
+      data: [900, 70, 100, 670,402, 812],
+      backgroundColor: ['#E67E22', '#F5B041', '#F4D03F', '#E59866', '#F5CBA7','#D68910'],
+    }]
   },
+  options:{
+    reponsive: true,
+    tooltips: {
+        callbacks: {
+            title: function(tooltipItem, data) {
+                return data['labels'][tooltipItem[0]['index']];
+            },
+            label: function(tooltipItem, data) {
+                return ' $ ' + data['datasets'][0]['data'][tooltipItem['index']];
+            }
+        }
+    }
+  }
 });

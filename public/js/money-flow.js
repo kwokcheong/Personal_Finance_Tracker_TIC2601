@@ -7,21 +7,17 @@ var ctx = document.getElementById("moneyflowChart");
 var myLineChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: [1,2,3,4,5],
+    labels: ['May', 'June', 'July', 'Aug', 'Sep', 'Oct'],
     datasets: [
     {
-      label: "IN",
-      backgroundColor: [
-        'rgb(75, 192, 192, 10)'
-        ],
-      data: [4215, 5312, 6251, 7841, 9821],
+      label: "Income",
+      backgroundColor: '#3498DB',
+      data: [4215, 5312, 6251, 7841, 9821,3023],
     },
     {
-        label: "OUT",
-        backgroundColor: [
-          'rgb(255, 205, 86, 10)'
-          ],
-        data: [800, 3200, 3476, 2390, 6500],
+        label: "Expenses",
+        backgroundColor: '#EC7063',
+        data: [800, 3200, 3476, 2390, 6500,8013],
       }
     ],
   },

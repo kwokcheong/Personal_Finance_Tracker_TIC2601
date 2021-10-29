@@ -7,7 +7,7 @@ BEGIN
 DECLARE COUNTER INT DEFAULT 1;
 
 INSERT INTO users (`name`, `email`, `password`) VALUES ('admin', 'admin@hotmail.com', 'admin');
-INSERT INTO ledger VALUES (1, 0, 0);
+INSERT INTO ledger VALUES (1, 0);
 INSERT INTO `crud_express`.`budgets` (`userID`, `category`, `budget_amount_per_month`) VALUES ('1', 'Food', RAND()*(1000-0)+10), ('1', 'Luxury', RAND()*(1000-0)+10),('1', 'Transport', RAND()*(1000-0)+10), ('1', 'Bills', RAND()*(1000-0)+10),('1', 'Others', RAND()*(1000-0)+10);
 
 DROP TABLE IF EXISTS TempIncomeTableCategory; 
