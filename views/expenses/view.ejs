@@ -16,6 +16,10 @@
     <link href="../../stylesheets/import/styles2.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
         crossorigin="anonymous"></script>
+        <script>
+            let result = '<%- result %>';
+
+        </script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -285,6 +289,15 @@
             </footer>
         </div>
     </div>
+    <script>
+        let foodDatapoints = '<%- Food %>';
+        let billsDatapoints = '<%- Bills %>';
+        let transportDatapoints = '<%- Transport %>';
+        let utilityDatapoints = '<%- Utility %>';
+        let luxuryDatapoints = '<%- Luxury %>';
+        let othersDatapoints = '<%- Others %>';
+        let monthlytotalDatapoints = '<%- total_per_month %>'
+    </script>
     <script>
         document.getElementById('r_date').value = new Date().toISOString().split('T')[0];
         document.getElementById('r_date2').value = new Date().toISOString().split('T')[0];

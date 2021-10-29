@@ -38,8 +38,7 @@ var myAreaChart = new Chart(ctx, {
       yAxes: [{
         beginAtZero: true,
         ticks: {
-          min: 0,
-          max: Math.ceil(parseFloat(maxAmount)/100.0)*100.0
+          min: 0
         },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",

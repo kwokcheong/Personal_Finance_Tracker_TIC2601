@@ -10,7 +10,7 @@ let expenseLineGraph = new Chart(ctx3, {
     labels: ['May', 'June', 'July', 'Aug', 'Sep', 'Oct'],
     datasets: [{
       label: 'Expenses',
-        data: [1000, 200, 200, 100, 500, 320],
+        data: JSON.parse(monthlytotalDatapoints),
         lineTension: 0.3,
         backgroundColor: "rgba(241, 148, 138,0.3)",
         borderColor: "#EC7063",
@@ -32,10 +32,6 @@ let expenseLineGraph = new Chart(ctx3, {
       }],
       yAxes: [{
         beginAtZero: true,
-        // ticks: {
-        //   min: 0,
-        //   max: Math.ceil(parseInt(max)/100)*100
-        // },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",
         }

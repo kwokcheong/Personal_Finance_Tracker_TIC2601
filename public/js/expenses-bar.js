@@ -12,37 +12,37 @@ var expensesBarChart = new Chart(ctx, {
     labels: categoryDatapoints,
     datasets: [{
       label: 'Bills',
-      data:[413,709,132,662,790,830],
+      data: JSON.parse(billsDatapoints),
       hoverBackgroundColor: '#CA6F1E',
       backgroundColor: '#E67E22'
     }, 
     {
       label: 'Food',
-      data:[313,509,332,652,720,430],
+      data:JSON.parse(foodDatapoints),
       hoverBackgroundColor: '#F39C12',
       backgroundColor: '#F5B041'
     }, 
     {
       label: 'Luxury',
-      data:[113,209,142,262,590,130],
+      data:JSON.parse(luxuryDatapoints),
       hoverBackgroundColor: '#F1C40F',
       backgroundColor: '#F4D03F'
     }, 
     {
       label: 'Others',
-      data:[445,369,352,232,590,270],
+      data:JSON.parse(othersDatapoints),
       hoverBackgroundColor: '#DC7633',
       backgroundColor: '#E59866'
     }, 
     {
-      label: 'Travel',
-      data:[345,169,852,332,490,570],
+      label: 'Transport',
+      data:JSON.parse(transportDatapoints),
       hoverBackgroundColor: '#F0B27A',
       backgroundColor: '#F5CBA7'
     }, 
     {
       label: 'Utility',
-      data:[145,329,452,239,490,280],
+      data:JSON.parse(utilityDatapoints),
       hoverBackgroundColor: '#B9770E',
       backgroundColor: '#D68910'
     }
@@ -63,7 +63,7 @@ var expensesBarChart = new Chart(ctx, {
           }else if (tooltipItem.datasetIndex === 3) {
               return 'Others: ' + ' $' + data['datasets'][3]['data'][tooltipItem['index']];
           }else if (tooltipItem.datasetIndex === 4) {
-            return 'Travel: ' + ' $' + data['datasets'][4]['data'][tooltipItem['index']];
+            return 'Transport: ' + ' $' + data['datasets'][4]['data'][tooltipItem['index']];
           }else if (tooltipItem.datasetIndex === 5) {
             return 'Utility: ' + ' $' + data['datasets'][5]['data'][tooltipItem['index']];
           }
@@ -77,10 +77,6 @@ var expensesBarChart = new Chart(ctx, {
           }
         }],
         yAxes: [{
-          // ticks: {
-          //   min: 0,
-          //   max: Math.ceil(parseInt(max)/100)*100
-          // },
           gridLines: {
               display:true
           }   
