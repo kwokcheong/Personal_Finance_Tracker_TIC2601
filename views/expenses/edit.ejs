@@ -14,6 +14,8 @@
         crossorigin="anonymous"></script>
     <script>
         let result = '<%- result %>';
+        let start_date = '<%- start_date %>';
+        let end_date = '<%- end_date %>';
     </script>
 </head>
 
@@ -150,36 +152,56 @@
                     <!-- main website starts here -->
                     <div class="form-group">
                         <form action="/expenses/update/'<%= result[0].expensesID %>'" method="POST">
-                            <h1>Edit expenses form</h1>
+                            <h1>Edit expense form</h1>
                             <div class="form-group">
-                                <label for="name">name</label>
+                                <label for="name">NAME</label>
                                 <input class="form-control" type="text" name="name" value='<%= result[0].name %>' />
                             </div>
                             <div class="form-group">
-                                <label for="category">Select a category</label>
+                                <label for="category">SELECT CATEGORY</label>
                                 <select class="form-control" name="category" id="category">
-                                    <option value="Food">Food</option>
-                                    <option value="Transport">Transport</option>
-                                    <option value="Luxury">Luxury</option>
                                     <option value="Bills">Bills</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Luxury">Luxury</option>
+                                    <option value="Transport">Transport</option>
                                     <option value="Utility">Utility</option>
                                     <option value="Others">Others</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="amount">Amount</label>
+                                <label for="amount">AMOUNT</label>
                                 <input class="form-control" type="number" min="1" step="any" name="amount"
-                                value=<%= result[0].amount %> disabled />
+                                    value=<%=result[0].amount %> />
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="recurring"
-                                    value="1" id='r' checked="true">
-                                <label class="custom-control-label" for="recurring">Recurring</label>
+                            <!-- recurring radio -->
+                            <div class="form-group mt-2 mb-2" name="recurringForm">
+                                <p>RECURRING TRANSACTION?</p>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" type="radio" id="recurring"
+                                        name="recurring" value="1" onclick="toggleDisable()">
+                                    <label class="form-check-label" for="recurring">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="no_recurring" name="recurring"
+                                        value="0" checked onclick="toggleDisable()">
+                                    <label class="form-check-label" for="recurring">No</label>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input id="rec_date" class="form-control" type="date" name="recurring_date" placeholder="Add recurring date" required/>
+                            <div class="form-group" id="date1" hidden="true">
+                                <label for="recurring_start_date">RECURRING START DATE</label>
+                                <input style="max-width: 25%;" class="form-control" type="date"
+                                    name="recurring_start_date" placeholder="Add recurring start date" id="r_date"
+                                    disabled="disabled" required="required" />
                             </div>
-                            <button type="submit" class="btn btn-primary" value="update">Update Record</button>
+                            <div class="form-group" id="date2" hidden="true">
+                                <label for="recurring_end_date">RECURRING END DATE</label>
+                                <input style="max-width: 25%;" class="form-control" type="date"
+                                    name="recurring_end_date" placeholder="Add recurring end date" id="r_date2"
+                                    disabled="disabled" required="required" value="2013-01-08" />
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary" value="update">Update Record</button>
+                            </div>
                         </form>
                     </div>
                     <!-- ends here -->
@@ -204,18 +226,54 @@
         crossorigin="anonymous"></script>
     <script src="../../js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="../../js/chart-area-demo.js"></script>
-    <script src="../../js/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="../../js/datatables-simple-demo.js"></script>
     <script>
-        let myDate = new Date('<%= result[0].recurring_date %>');
-        myDate = myDate.getDate() + parseInt(1);
-        let myDate = myDate.toISOString().substring(0, 10);
-        myDate.setDate(myDate + parseInt(1));
-        document.getElementById('rec_date').value = myDate;
-        document.getElementById('r').checked = '<%= result[0].recurring %>' == '1' ? 1 : 0;
-        document.getElementById('category').value = '<%= result[0].category %>';
+        let recurring = '<%- result[0].recurring %>';
+        if (recurring == '1') {
+            document.getElementById('recurring').click();
+        } else {
+            document.getElementById('no_recurring').click();
+        }
+    </script>
+    <script>
+        document.getElementById('r_date').value = start_date;
+        document.getElementById('r_date2').value = end_date;
+    </script>
+    <script>
+        let selected = 0;
+        switch ('<%- result[0].category %>') {
+            case 'Bills': selected = 0; break;
+            case 'Food': selected = 1; break;
+            case 'Luxury': selected = 2; break;
+            case 'Transport': selected = 3; break;
+            case 'Utility': selected = 4; break;
+            case 'Others': selected = 5; break;
+            default: selected = 0;
+        }
+        document.getElementById('category').selectedIndex = selected;
+    </script>
+    <script type="text/javascript">
+        function toggleDisable() {
+            let radio = document.getElementById("no_recurring");
+            let datefield = document.getElementById("r_date");
+            let datefield2 = document.getElementById("r_date2");
+            let datebox = document.getElementById("date1");
+            let datebox2 = document.getElementById("date2");
+            if (radio.checked) {
+                datefield.disabled = true;
+                datefield2.disabled = true;
+                datefield.required = false;
+                datefield2.required = false;
+                datebox.hidden = true;
+                datebox2.hidden = true;
+            } else {
+                datefield.disabled = false;
+                datefield2.disabled = false;
+                datefield.required = true;
+                datefield2.required = true;
+                datebox.hidden = false;
+                datebox2.hidden = false;
+            }
+        }
     </script>
 </body>
 

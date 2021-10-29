@@ -231,15 +231,6 @@
                 }
             }
         </script>
-    <script>
-        let myDate = new Date('<%= result[0].recurring_start_date %>');
-        myDate = myDate.getDate() + parseInt(1);
-        let myDate = myDate.toISOString().substring(0, 10);
-        myDate.setDate(myDate + parseInt(1));
-        // document.getElementById('rec_date').value = myDate;
-        document.getElementById('r').checked = '<%= result[0].recurring %>' == '1' ? 1 : 0;
-        document.getElementById('category').value = '<%= result[0].category %>';
-    </script>
 </body>
 
 </html>

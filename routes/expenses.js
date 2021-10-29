@@ -2,25 +2,12 @@ const express = require('express');
 const db = require('../db');
 const router = express.Router();
 
-// form page for expenses
-router.get('/add', (req, res) => {
-    let session = req.session;
-    if (session.userID) {
-        res.render('expenses/add', {
-            name: session.username
-        });
-    } else {
-        res.render('loggedout')
-    }
-});
-
-//To learn- why need to JSON stringify and Parse over at ejs
 router.get('/view', (req, res) => {
     let session = req.session;
     if (!session.userID) {
         res.render('loggedout');;
     } else {
-        let sql = `SELECT * FROM expenses WHERE userID = ${session.userID} ORDER BY created_at ASC`;
+        let sql = `SELECT * FROM expenses WHERE userID = ${session.userID} ORDER BY created_at DESC`;
         db.query(sql, (err, result) => {
             if (err) throw err;
             res.render('expenses/view', {
@@ -34,14 +21,15 @@ router.get('/view', (req, res) => {
 //INSERT expenses query
 router.post('/save', (req, res) => {
     let randomNum = Math.random().toString(36).substr(2, 8);
+    let today = new Date().toISOString().split('T')[0];
     let data = {
         expensesID: randomNum,
         userID: req.session.userID,
         name: req.body.name,
         amount: req.body.amount,
         category: req.body.category,
-        recurring_start_date: req.body.recurring_start_date == '' ? null : req.body.recurring_start_date,
-        recurring_end_date: req.body.recurring_end_date == '' ? null : req.body.recurring_end_date, 
+        recurring_start_date: req.body.recurring_start_date == null ? today : req.body.recurring_start_date,
+        recurring_end_date: req.body.recurring_end_date == null ? today : req.body.recurring_end_date, 
         recurring: req.body.recurring == 1 ? 1 : 0
     }
 
@@ -72,12 +60,18 @@ router.get('/edit/:expensesID', (req, res) => {
         const userID = session.userID;
         const expensesID = req.params.expensesID;
         let sql = `SELECT * FROM expenses
-               WHERE userID = ${userID} AND expensesID = '${expensesID}'`;
+               WHERE userID = ${userID} AND expensesID = '${expensesID}';
+               SELECT DATE(recurring_start_date) as 'start_date',
+               DATE(recurring_end_date) as 'end_date'
+               FROM expenses
+               WHERE userID = ${userID} AND expensesID = '${expensesID}';`;
         db.query(sql, (err, result) => {
             if (err) throw err;
             console.log(result[0])
             res.render('expenses/edit', {
-                result: result,
+                result: result[0],
+                start_date: result[1][0].start_date.toISOString().split('T')[0],
+                end_date: result[1][0].end_date.toISOString().split('T')[0],
                 name: session.username
             });
         });
@@ -86,12 +80,14 @@ router.get('/edit/:expensesID', (req, res) => {
 
 // UPDATE expenses Query
 router.post('/update/:expensesID', (req, res) => {
-    let recurring_val = req.body.recurring;
+    let today = new Date().toISOString().split('T')[0];
     let data = {
         name: req.body.name,
         category: req.body.category,
-        recurring: recurring_val == null? false : true,
-        recurring_date: req.body.recurring_date
+        amount: req.body.amount,
+        recurring: req.body.recurring == 1 ? 1 : 0,
+        recurring_start_date: req.body.recurring_start_date == null ? today : req.body.recurring_start_date,
+        recurring_end_date: req.body.recurring_end_date == null ? today : req.body.recurring_end_date, 
     }
     let session = req.session;
     const userID = session.userID;

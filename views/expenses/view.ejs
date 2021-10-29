@@ -108,155 +108,167 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                <!-- main website starts here -->
-                <div class="row p-md-3">
-                    <div class="col mt-2 mb-2">
-                    <h1 class="float-start">Expenses</h1>
+                    <!-- main website starts here -->
+                    <div class="row p-md-3">
+                        <div class="col mt-2 mb-2">
+                            <h1 class="float-start">Expenses</h1>
+                        </div>
+                        <div class="col mt-2 mb-2">
+                            <button type="button" class="btn btn-info btn-lg float-end" data-toggle="modal"
+                                data-target="#myModal">Add Expenses</button>
+                        </div>
                     </div>
-                    <div class="col mt-2 mb-2">
-                    <button type="button" class="btn btn-info btn-lg float-end" data-toggle="modal"
-                    data-target="#myModal">Add Expenses</button>
-                    </div>
-                </div>
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Create New Expenses</h4>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Create New Expenses</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form action="/expenses/save" method="POST">
+                                            <!-- name -->
+                                            <div class="form-group">
+                                                <label for="name">NAME</label>
+                                                <input class="form-control" type="text" name="name" placeholder="Name"
+                                                    required />
+                                            </div>
+                                            <!-- select category -->
+                                            <div class="form-group">
+                                                <label for="category">SELECT CATEGORY</label>
+                                                <select class="form-control" name="category" id="category">
+                                                    <option value="Bills">Bills</option>
+                                                    <option value="Food">Food</option>
+                                                    <option value="Luxury">Luxury</option>
+                                                    <option value="Transport">Transport</option>
+                                                    <option value="Utility">Utility</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+                                            <!-- Amount -->
+                                            <div class="form-group">
+                                                <label for="amount">AMOUNT</label>
+                                                <input class="form-control" type="number" min="1" step="any"
+                                                    name="amount" placeholder="Amount" required />
+                                            </div>
+                                            <!-- recurring radio -->
+                                            <div class="form-group">
+                                                <p>RECURRING TRANSACTION?</p>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" type="radio"
+                                                        name="recurring" value="1" onclick="toggleDisable()">
+                                                    <label class="form-check-label" for="recurring">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" id="no_recurring"
+                                                        name="recurring" value="0" checked onclick="toggleDisable()">
+                                                    <label class="form-check-label" for="recurring">No</label>
+                                                </div>
+                                            </div>
+                                            <!-- recurring datebox -->
+                                            <div class="form-group" id="date1" hidden="true">
+                                                <label for="recurring_start_date">RECURRING START DATE</label>
+                                                <input class="form-control" type="date" name="recurring_start_date"
+                                                    placeholder="Add recurring start date" id="r_date"
+                                                    disabled="disabled" />
+                                            </div>
+                                            <div class="form-group" id="date2" hidden="true">
+                                                <label for="recurring_end_date">RECURRING END DATE</label>
+                                                <input class="form-control" type="date" name="recurring_end_date"
+                                                    placeholder="Add recurring end date" id="r_date2"
+                                                    disabled="disabled" />
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" value="add">Add Record</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                                </form>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <form action="/income/save" method="POST">
-                                        <div class="form-group">
-                                            <label for="name">NAME</label>
-                                            <input class="form-control" type="text" name="name" placeholder="Name"
-                                                required />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="category">SELECT CATEGORY</label>
-                                            <select class="form-control" name="category" id="category">
-                                                <option value="Salary">Bills</option>
-                                                <option value="Allowance">Food</option>
-                                                <option value="Freelance">Luxury</option>
-                                                <option value="Others">Others</option>
-                                                <option value="Others">Travel</option>
-                                                <option value="Others">Utility</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="amount">AMOUNT</label>
-                                            <input class="form-control" type="number" min="1" step="any"
-                                                name="amount" placeholder="Amount" required />
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <p>RECURRING TRANSACTION?</p>
-                                              <input type="radio" name="recurring" value="1"
-                                                onclick="toggleDisable()">
-                                              <label for="1">Yes</label><br>
-                                              <input type="radio" id="no_recurring" name="recurring" value="0"
-                                                checked onclick="toggleDisable()" />
-                                              <label for="0">No</label><br>
-                                        </div>
-                                        <div class="form-group" id="date1" hidden="true">
-                                            <label for="recurring_start_date">RECURRING START DATE</label>
-                                            <input class="form-control" type="date" name="recurring_start_date"
-                                                placeholder="Add recurring start date" id="r_date"
-                                                disabled="disabled" />
-                                        </div>
-                                        <div class="form-group" id="date2" hidden="true">
-                                            <label for="recurring_end_date">RECURRING END DATE</label>
-                                            <input class="form-control" type="date" name="recurring_end_date"
-                                                placeholder="Add recurring end date" id="r_date2"
-                                                disabled="disabled" />
-                                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    Expenses Category
+                                </div>
+                                <div class="card-body"><canvas id="expensesBarChart" width="100%" height="40"></canvas>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" value="add">Add Record</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-pie me-1"></i>
+                                    Total Expenses
+                                </div>
+                                <div class="card-body"><canvas id="expenseLineGraph" width="100%" height="40"></canvas>
+                                </div>
                             </div>
-                        </form>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Expenses Category 
-                            </div>
-                            <div class="card-body"><canvas id="expensesBarChart" width="100%" height="40"></canvas></div>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Income Records
                         </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-pie me-1"></i>
-                                Total Expenses
-                            </div>
-                            <div class="card-body"><canvas id="expenseLineGraph" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        Income Records
-                    </div>
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                                <tr>
-                                    <th>DATE</th>
-                                    <th>CATEGORY</th>
-                                    <th>DESCRIPTION</th>
-                                    <th>AMOUNT</th>
-                                    <th>RECURRING</th>
-                                    <th>CONTROLS</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>DATE</th>
-                                    <th>CATEGORY</th>
-                                    <th>DESCRIPTION</th>
-                                    <th>AMOUNT</th>
-                                    <th>RECURRING</th>
-                                    <th>CONTROLS</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <% for(var i=0; i<result.length; i++) { %>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            <%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' ' ); %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].category %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].name %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].amount %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].recurring==1 ? 'Yes' : 'No' %>
-                                        </td>
-                                        <td>
-                                            <a href="/expenses/delete/<%= result[i].expensesID %>"><i
-                                                    class="fas fa-trash"></i></a>
-                                            <a href="/expenses/edit/<%= result[i].expensesID %>"><i
-                                                    class="fas fa-edit"></i></a>
-                                        </td>
+                                        <th>DATE</th>
+                                        <th>CATEGORY</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>AMOUNT</th>
+                                        <th>RECURRING</th>
+                                        <th>CONTROLS</th>
                                     </tr>
-                                <% } %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>CATEGORY</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>AMOUNT</th>
+                                        <th>RECURRING</th>
+                                        <th>CONTROLS</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <% for(var i=0; i<result.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <%= result[i].created_at.toISOString().slice(0, 10).replace('T', ' ' );
+                                                    %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].category %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].name %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].amount %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].recurring==1 ? 'Yes' : 'No' %>
+                                            </td>
+                                            <td>
+                                                <a href="/expenses/delete/<%= result[i].expensesID %>"><i
+                                                        class="fas fa-trash"></i></a>
+                                                <a href="/expenses/edit/<%= result[i].expensesID %>"><i
+                                                        class="fas fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
@@ -273,6 +285,10 @@
             </footer>
         </div>
     </div>
+    <script>
+        document.getElementById('r_date').value = new Date().toISOString().split('T')[0];
+        document.getElementById('r_date2').value = new Date().toISOString().split('T')[0];
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
