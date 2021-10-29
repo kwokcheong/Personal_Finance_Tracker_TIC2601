@@ -4,7 +4,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Area Chart Example
 
-const monthLabel = ['May', 'June', 'July', 'Aug', 'Sep', 'Oct'];
+const monthLabel = ['June', 'July', 'Aug', 'Sep', 'Oct', 'Nov'];
 let baramountCompare = JSON.parse(baramountDatapoint)
 let maxAmount = Math.max(...baramountCompare);
 

@@ -3,7 +3,7 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Bar Chart: Insert data here
-const categoryDatapoints = ['May', 'June', 'July', 'Aug', 'Sep', 'Oct'];
+const categoryDatapoints = ['June', 'July', 'Aug', 'Sep', 'Oct', 'Nov'];
 
 var ctx = document.getElementById("expensesBarChart");
 var expensesBarChart = new Chart(ctx, {

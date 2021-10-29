@@ -7,7 +7,7 @@ let ctx3 = document.getElementById('expenseLineGraph');
 let expenseLineGraph = new Chart(ctx3, {
   type: 'line',
   data: {
-    labels: ['May', 'June', 'July', 'Aug', 'Sep', 'Oct'],
+    labels: ['June', 'July', 'Aug', 'Sep', 'Oct', 'Nov'],
     datasets: [{
       label: 'Expenses',
         data: JSON.parse(monthlytotalDatapoints),
