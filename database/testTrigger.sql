@@ -68,7 +68,7 @@ CREATE TABLE budgethead (
 );
 
 INSERT INTO users VALUES (1, 'admin', 'admin@hotmail.com', 'admin123');
-INSERT INTO ledger VALUES (1, 0, 0);
+INSERT INTO ledger VALUES (1, 0);
 
 delimiter |
 

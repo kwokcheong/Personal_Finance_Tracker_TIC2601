@@ -59,3 +59,29 @@ SELECT category, budget_amount_per_month FROM budgets WHERE userID = 1;
 -- Dashboard page
 -- Current balance
 SELECT current_balance FROM ledger;
+
+-- Events to validate recurring bool 
+DELIMITER |
+CREATE EVENT checkIncomeRecurrenceValue
+   ON SCHEDULE 
+	EVERY 1 DAY
+   COMMENT 'Check if exisitng records are still recurring records'
+   DO BEGIN
+	UPDATE incomes
+	SET recurring = 0
+	WHERE recurring = TRUE AND CURRENT_DATE NOT BETWEEN recurring_start_date AND recurring_end_date;
+  END|
+DELIMITER ;
+
+DELIMITER |
+CREATE EVENT checkExpensesRecurrenceValue
+   ON SCHEDULE 
+	EVERY 1 DAY
+   COMMENT 'Check if exisitng records are still recurring records'
+   DO BEGIN
+	UPDATE expenses
+	SET recurring = 0
+	WHERE recurring = TRUE AND CURRENT_DATE NOT BETWEEN recurring_start_date AND recurring_end_date;
+  END|
+DELIMITER ;
+

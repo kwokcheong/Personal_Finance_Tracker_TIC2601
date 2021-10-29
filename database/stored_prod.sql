@@ -8,7 +8,8 @@ DECLARE COUNTER INT DEFAULT 1;
 
 INSERT INTO users (`name`, `email`, `password`) VALUES ('admin', 'admin@hotmail.com', 'admin');
 INSERT INTO ledger VALUES (1, 0);
-INSERT INTO `crud_express`.`budgets` (`userID`, `category`, `budget_amount_per_month`) VALUES ('1', 'Food', RAND()*(1000-0)+10), ('1', 'Luxury', RAND()*(1000-0)+10),('1', 'Transport', RAND()*(1000-0)+10), ('1', 'Bills', RAND()*(1000-0)+10),('1', 'Others', RAND()*(1000-0)+10);
+-- Budget amount will be within range from 500 - 1000 int
+INSERT INTO `crud_express`.`budgets` (`userID`, `category`, `budget_amount_per_month`) VALUES ('1', 'Food', FLOOR(RAND()*(1000-500+1)+500)), ('1', 'Luxury', FLOOR(RAND()*(1000-500+1)+500)),('1', 'Transport', FLOOR(RAND()*(1000-500+1)+500)), ('1', 'Bills', FLOOR(RAND()*(1000-500+1)+500)),('1', 'Others', FLOOR(RAND()*(1000-500+1)+500));
 
 DROP TABLE IF EXISTS TempIncomeTableCategory; 
 CREATE TEMPORARY TABLE TempIncomeTableCategory
@@ -28,7 +29,7 @@ CREATE TEMPORARY TABLE TempExpensesTableCategory
 
 INSERT INTO TempExpensesTableCategory VALUES ('1','Bills'),('2','Food'),('3','Luxury'),('4','Others'),('5','Transport'),('6','Utility');
 
-WHILE COUNTER <= 6 DO
+WHILE COUNTER <= 100 DO
 	CALL sp_insertData(COUNTER,(SELECT category FROM TempIncomeTableCategory ORDER BY RAND() LIMIT 1),(SELECT category FROM TempExpensesTableCategory ORDER BY RAND() LIMIT 1));
     SET COUNTER = COUNTER + 1;
 END WHILE;
@@ -42,11 +43,13 @@ DROP PROCEDURE IF EXISTS `sp_insertData` $$
 CREATE PROCEDURE `sp_insertData`(COUNTER INT, CATEGORY_INCOME TEXT, CATEGORY_EXPENSE TEXT)
 BEGIN
 
+	-- Income amount will be within range from 1500 - 2000 int
 	INSERT INTO `crud_express`.`incomes` (`incomeID`,`userID`, `name`, `amount`, `category`, `recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`) VALUES 
-	(COUNTER,'1', CONCAT('Income',COUNTER), RAND()*(1000-0)+10, CATEGORY_INCOME, CURRENT_DATE - INTERVAL FLOOR(RAND() * 2500) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 365 DAY), FLOOR(RAND()*(1-0+1))+0, CURRENT_DATE - INTERVAL FLOOR(RAND() * 1000) DAY);
-
+	(COUNTER,'1', CONCAT('Income',COUNTER), FLOOR(RAND()*(2000-1500+1)+1500), CATEGORY_INCOME, CURRENT_DATE - INTERVAL FLOOR(RAND() * 300) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 100 DAY), FLOOR(RAND()*(1-0+1))+0, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 100 DAY);
+	
+	-- Expenses amount will be within range from 1500 - 500 dec
 	INSERT INTO `crud_express`.`expenses` (`expensesID`, `userID`, `name`, `amount`, `category`,`recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`) VALUES 
-	(COUNTER,'1', CONCAT('Expense',COUNTER), RAND()*(1000-0)+10, CATEGORY_EXPENSE, CURRENT_DATE - INTERVAL FLOOR(RAND() * 2500) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 365 DAY), FLOOR(RAND()*(1-0+1))+0, CURRENT_DATE - INTERVAL FLOOR(RAND() * 1000) DAY);
+	(COUNTER,'1', CONCAT('Expense',COUNTER), RAND()*(1500-500)+500, CATEGORY_EXPENSE, CURRENT_DATE - INTERVAL FLOOR(RAND() * 300) DAY, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 100 DAY), FLOOR(RAND()*(1-0+1))+0, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 100) DAY, INTERVAL 100 DAY));
 
 END$$
 DELIMITER;
@@ -85,7 +88,7 @@ BEGIN
             YEAR(I.created_at), 
             I.amount
 	FROM incomes I
-    WHERE incomeID IN (SELECT I2.incomeID FROM incomes I2 WHERE I2.userID = USER_ID AND I2.created_at BETWEEN START_DATE AND END_DATE);
+    WHERE incomeID IN (SELECT I2.incomeID FROM incomes I2 WHERE I2.userID = USER_ID AND DATE(I2.created_at) BETWEEN START_DATE AND END_DATE);
     
     IF IS_SUM_BY_CATEGORY THEN 
 		(SELECT TI.record_month, TI.record_year, TI.category, SUM(TI.amount) AS amount
@@ -135,7 +138,7 @@ BEGIN
 			YEAR(E.created_at), 
 			E.amount
 	FROM expenses E
-	WHERE expensesID IN (SELECT E2.expensesID FROM expenses E2 WHERE E2.userID = USER_ID AND E2.created_at BETWEEN START_DATE AND END_DATE);
+	WHERE expensesID IN (SELECT E2.expensesID FROM expenses E2 WHERE E2.userID = USER_ID AND DATE(E2.created_at) BETWEEN START_DATE AND END_DATE);
 	
     IF IS_SUM_BY_CATEGORY THEN 
 		(SELECT TE.record_month, TE.record_year, TE.category, SUM(TE.amount) AS amount
@@ -168,7 +171,7 @@ BEGIN
 	IF IS_SUM_BY_CATEGORY THEN (
 		SELECT I.category, (SUM(I.amount) / 6) FROM incomes I
 		WHERE I.incomeID IN (SELECT I2.incomeID FROM incomes I2
-						   WHERE I2.userID = USER_ID AND I2.created_at 
+						   WHERE I2.userID = USER_ID AND DATE(I2.created_at)
 						   BETWEEN START_DATE AND END_DATE)
 		GROUP BY I.category
 		ORDER BY I.category ASC);
@@ -195,7 +198,7 @@ BEGIN
 	IF IS_SUM_BY_CATEGORY THEN (
 		SELECT E.category, (SUM(E.amount) / 6) FROM expenses E
 		WHERE E.expensesID IN (SELECT E2.expensesID FROM expenses E2
-						   WHERE E2.userID = USER_ID AND E2.created_at 
+						   WHERE E2.userID = USER_ID AND DATE(E2.created_at)
 						   BETWEEN START_DATE AND END_DATE)
 		GROUP BY E.category
         ORDER BY E.category ASC);
