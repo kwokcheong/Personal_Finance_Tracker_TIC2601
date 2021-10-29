@@ -2,41 +2,67 @@ const express = require('express');
 const db = require('../db');
 const router = express.Router();
 
+
 // form page for income
 router.get('/view', (req, res) => {
     let session = req.session;
-    let amount= [];
-    let categoryData = [];
-    let temp = [];
+    let amount= [0,0,0,0,0,0];
     let max = 0;
+    let salary = [0,0,0,0,0,0];
+    let freelance = [0,0,0,0,0,0];
+    let allowance = [0,0,0,0,0,0];
+    let others = [0,0,0,0,0,0];
+    
+    function insertCategory(result,x,y){
+        if(result[x].category == 'Freelance'){freelance[y] = parseFloat(result[x].amount);}
+        if(result[x].category == 'Salary'){salary[y] = parseFloat(result[x].amount);}
+        if(result[x].category == 'Allowance'){allowance[y] = parseFloat(result[x].amount);}
+        if(result[x].category == 'Others'){others[y] = parseFloat(result[x].amount);}
+    }
+
     if (!session.userID) {
         res.render('loggedout');;
     } else {
         let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at DESC;
-        SELECT amount FROM incomes WHERE userID = ${session.userID} AND category = 'Salary' ORDER BY created_at ASC;
-        SELECT amount FROM incomes WHERE userID = ${session.userID} AND category = 'Freelance' ORDER BY created_at ASC;
-        SELECT amount FROM incomes WHERE userID = ${session.userID} AND category = 'Allowance' ORDER BY created_at ASC;
-        SELECT amount FROM incomes WHERE userID = ${session.userID} AND category = 'Others' ORDER BY created_at ASC; `;
+                    call crud_express.sp_calculateIncomePerMonth(1, ${session.userID});
+                    `;
         db.query(sql, (err, result) => {
             if (err) throw err;
-            //find max
-            for (let i=0; i<result[0].length; i++){
-                if (parseInt(result[0][i].amount) > max){
-                    max = result[0][i].amount;
+            for(let i=0 ; i<result[1].length; i++){
+                switch(result[1][i].record_month){
+                    case 5 : insertCategory(result[1],i,0);
+                        break;
+                    case 6 : insertCategory(result[1],i,1);
+                        break;
+                    case 7 : insertCategory(result[1],i,2);
+                        break;
+                    case 8 : insertCategory(result[1],i,3);
+                        break;
+                    case 9 : insertCategory(result[1],i,4);
+                        break;
+                    case 10: insertCategory(result[1],i,5);
+                        break;
                 }
-                amount[i] = result[0][i].amount;
             }
-            for(let i=1; i<=4; i++){
-                for(let j=0; j<result[i].length; j++){
-                    temp.push(parseInt(result[i][j].amount));
-                }
-                categoryData.push(temp);
-                temp = [];
+            let a = Math.max(...freelance);
+            let b = Math.max(...allowance);
+            let c = Math.max(...salary);
+            let d = Math.max(...others);
+            max = Math.max(a,b,c,d);
+
+            for(let i=0; i<=5; i++){
+                amount[i] = freelance[i] + allowance[i] + salary[i] + others[i];
             }
+            
+            console.log(amount)
             res.render('income/view', {
                 result: result[0],
-                categoryAmount: categoryData,
+                freelance: JSON.stringify(freelance),
+                allowance: JSON.stringify(allowance),     
+                salary: JSON.stringify(salary),
+                others: JSON.stringify(others),           
                 max_amount: max,
+                baramount: JSON.stringify(amount),
                 name: session.username
             })
         })

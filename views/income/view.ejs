@@ -18,7 +18,11 @@
         crossorigin="anonymous"></script>
     <script>
         let result = '<%- result %>';
-        let categoryAmount = '<%- categoryAmount %>';
+        let allowance = '<%- allowance %>';
+        let others = '<%- others %>';
+        let freelance = '<%- freelance %>';
+        let salary = '<%- salary %>';
+        let amount = '<%- baramount %>';
     </script>
 </head>
 
@@ -289,10 +293,11 @@
     </div>
     <script>
         let max = '<%- max_amount %>';
-        let salaryDatapoints = '<%- JSON.stringify(categoryAmount[0]) %>';
-        let freelanceDatapoints = '<%- JSON.stringify(categoryAmount[1]) %>';
-        let allowanceDatapoints = '<%- JSON.stringify(categoryAmount[2]) %>';
-        let othersDatapoints = '<%- JSON.stringify(categoryAmount[3]) %>';
+        let salaryDatapoints = '<%- salary %>';
+        let freelanceDatapoints = '<%- freelance %>';
+        let allowanceDatapoints = '<%- allowance %>';
+        let othersDatapoints = '<%- others %>';
+        let baramountDatapoint = '<%- baramount %>'
     </script>
     <script>
         document.getElementById('r_date').value = new Date().toISOString().split('T')[0];

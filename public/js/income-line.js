@@ -5,6 +5,8 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 // Area Chart Example
 
 const monthLabel = ['May', 'June', 'July', 'Aug', 'Sep', 'Oct'];
+let baramountCompare = JSON.parse(baramountDatapoint)
+let maxAmount = Math.max(...baramountCompare);
 
 var ctx = document.getElementById("myAreaChart");
 var myAreaChart = new Chart(ctx, {
@@ -23,7 +25,7 @@ var myAreaChart = new Chart(ctx, {
       pointHoverBackgroundColor: "#263238",
       pointHitRadius: 50,
       pointBorderWidth: 1,
-      data: [1000, 200, 200, 100, 500, 320]
+      data: JSON.parse(baramountDatapoint)
     }
   ]},
   options: {
@@ -37,7 +39,7 @@ var myAreaChart = new Chart(ctx, {
         beginAtZero: true,
         ticks: {
           min: 0,
-          max: Math.ceil(parseInt(max)/100)*100
+          max: Math.ceil(parseFloat(maxAmount)/100.0)*100.0
         },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",

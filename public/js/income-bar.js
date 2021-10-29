@@ -63,7 +63,7 @@ var barChart = new Chart(ctx, {
         yAxes: [{
           ticks: {
             min: 0,
-            max: Math.ceil(parseInt(max)/100)*100
+            max: Math.ceil(parseFloat(max)/100.0)*100.0
           },
           gridLines: {
               display:true
