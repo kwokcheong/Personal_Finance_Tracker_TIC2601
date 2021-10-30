@@ -1,6 +1,8 @@
 CREATE DATABASE IF NOT EXISTS crud_express;
 USE crud_express;
 
+SET GLOBAL event_scheduler = ON; 
+
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS incomes;
 DROP TABLE IF EXISTS expenses;
@@ -62,76 +64,61 @@ CREATE TABLE budgethead (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-DELIMITER 
-
-CREATE TRIGGER complete_goal
- AFTER INSERT 
-    ON goals FOR EACH ROW
-    BEGIN
-    DECLARE @today date = GetDate();
-    SET done = 1;
-    WHERE
-    end_date <= @today
-    END;
-    
-DELIMITER 
-
-DELIMITER
+DELIMITER| 
 CREATE TRIGGER goal_possible 
  AFTER INSERT 
     ON goals FOR EACH ROW
     BEGIN
-    income i, expenses e, goal g
-    DECLARE @avgmonth as INTEGER
-    DECLARE @Avgsaving as decimal(13,2) 
-    DECLARE @expected_saving as decimal(13,2)
+    income i, expenses e, goal g;
+    DECLARE avgmonth INT unsigned DEFAULT 1;
+    DECLARE Avgsaving decimal(13,2);
+    DECLARE expected_saving decimal(13,2);
     Avgsaving = (SELECT SUM(amount) FROM income + SELECT SUM(amount) FROM expenses) / avgmonth
     expected_saving = Avgsaving * (SELECT MONTH(end_date) - SELECT MONTH(start_date))
     if(expected_saving >= g.amount) 
     SET g.possible = 1; 
-    END; 
-DELIMITER
+    END IF
+    END|
+DELIMITER;
 
-DELIMITER
+DELIMITER|
 CREATE TRIGGER close_to_limit
  AFTER INSERT
     ON expenses FOR EACH ROW
     bh = budgethead, e = expenses; 
     BEGIN
     IF bh.category = e.category AND bh.amount = e.amount
-    END; 
-DELIMITER 
+    END|
+DELIMITER;
 
-DELIMITER
+DELIMITER |
 CREATE TRIGGER setupaccount
  AFTER INSERT
     ON users FOR EACH ROW
     BEGIN
-    u = users
     INSERT INTO ledger (userID, current_balance)
-    VALUE(u.userid,0); 
-    END; 
-DELIMITER
+    VALUE(OLD.userid,0); 
+    END|
+DELIMITER;
 
-DELIMITER 
+DELIMITER |
 CREATE TRIGGER update_balance
  AFTER INSERT
     ON incomes FOR EACH ROW
     BEGIN
     IF name = 'monthly salary'
 	THEN INSERT INTO ledger(userID, current_balance)
-    i = income, e = expenses; 
     VALUES (2, NEW.current_balance);
     NEW.current_balance = OLD.current_balance + SUM(i.amount) + SUM(e.amount)
     WHERE expenses
     DECLARE @today date = GetDate();
     SELECT Sum(amount) FROM expenses WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
-    WHERE incomes
+    AND WHERE incomes
     DECLARE @today date = GetDate();
     SELECT Sum(amount) FROM incomes WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
     END IF;
-    END
-DELIMITER 
+    END |
+DELIMITER ;
 
 INSERT INTO users VALUES (2, 'Root', 'root@gmail.com', 'root123'); 
 
