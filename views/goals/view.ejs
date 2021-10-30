@@ -9,7 +9,11 @@
     <meta name="author" content="" />
     <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="../../stylesheets/import/styles2.css" rel="stylesheet" />
+    <link href="../../stylesheets/goals.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Assistant' rel='stylesheet'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
         crossorigin="anonymous"></script>
     <script>
@@ -109,75 +113,171 @@
             <main>
                 <div class="container-fluid px-4">
                     <!-- main website starts here -->
-                    <div>
-                        <h1 style='color: gray;'> Goals table </b> </h1>
+                    <div class="row p-md-3">
+                        <div class="col mt-2 mb-2">
+                          <h1 class="float-start">Your Goals 🏝️</h1>
+                        </div>
+                        <div class="col mt-2 mb-2">
+                          <button type="button" class="btn btn-info btn-lg float-end" data-toggle="modal"
+                          data-target="#myModal">Add New Goal</button>
+                        </div>
+                      </div>
+                      <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Create New Goal</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form action="/goals/save" method="POST">
+                                            <!-- name -->
+                                            <div class="form-group">
+                                                <label for="name">name</label>
+                                                <input class="form-control" type="text" name="name" placeholder="Name" required />
+                                            </div>
+                                            <!-- image -->
+                                            <div class="form-group">
+                                                <label for="image_url">Image url</label>
+                                                <input class="form-control" type="text" name="image_url" value='' placeholder="Paste image url here"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="category">Select a category</label>
+                                                <select class="form-control" name="category" id="category">
+                                                    <option value="Food">Food</option>
+                                                    <option value="Transport">Transport</option>
+                                                    <option value="Luxury">Luxury</option>
+                                                    <option value="Bills">Bills</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="amount">Amount</label>
+                                                <input class="form-control" type="number" min="1" step="any" name="amount"
+                                                    placeholder="Amount" required />
+                                            </div>
+                                            <label for="start_date">Goal Start Date</label>
+                                            <div class="form-group">
+                                                <input class="form-control" type="date" id="today" name="start_date"
+                                                    placeholder="Add start date" required />
+                                            </div>
+                                            <label for="end_date">Goal End Date</label>
+                                            <div class="form-group">
+                                                <input class="form-control" type="date" id="enddate" name="end_date"
+                                                    placeholder="Add end date" required />
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" value="add">Add Record</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>            
+
+                    <img id="banner" src="../../images/banner.jpg" alt="island" width="100%" height="500"/>
+
+                    <!-- in page nav-->
+                    <div class="card text-left">
+                        <div class="card-header">
+                            <ul class="nav nav-pills card-header-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#">Active</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">For Review</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Completed</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- cards -->
+                        <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; padding: 2%; justify-content: flex-start;">
+                            <% for(var i=0; i<result.length; i++) { %>
+                                <div class="goalcard" id="goalcards">
+                                    <div class="bg" style="background-image: url('<%= result[i].image_url %>')"></div>
+                                    <div class="info">
+                                      <div class="name"><%= result[i].name %></div>
+                                      <div class="price">$<%= result[i].amount %></div>
+                                      <!-- <div class="sizes">
+                                        <span>38</span>
+                                        <span disabled>39</span>
+                                        <span>40</span>
+                                        <span>41</span>
+                                        <span>42</span>
+                                      </div> -->
+                                      <div class="buy"><%= result[i].possible == 1 ? "Possible" : "Not Possible" %></div>
+                                    </div>
+                                  </div>
+                            <% } %>
+                        </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>name</th>
+                                            <th>Amount</th>
+                                            <th>Category</th>
+                                            <th>Possible</th>
+                                            <th>Done</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                            <th>Control</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>name</th>
+                                            <th>Amount</th>
+                                            <th>Category</th>
+                                            <th>Possible</th>
+                                            <th>Done</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                            <th>Control</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <% for(var i=0; i<result.length; i++) { %>
+                                            <tr>
+                                                <td>
+                                                    <%= result[i].name %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].amount %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].category %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].possible %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].done %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].start_date.toISOString().split('T')[0] %>
+                                                </td>
+                                                <td>
+                                                    <%= result[i].end_date.toISOString().split('T')[0] %>
+                                                </td>
+                                                <td>
+                                                    <a href="/goals/delete/<%= result[i].goalID %>"><i
+                                                            class="fas fa-trash"></i></a>
+                                                    <a href="/goals/edit/<%= result[i].goalID %>"><i
+                                                            class="fas fa-edit"></i></a>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <!-- ends here -->
                     </div>
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                                <tr>
-                                    <th>name</th>
-                                    <th>Amount</th>
-                                    <th>Category</th>
-                                    <th>Possible</th>
-                                    <th>Done</th>
-                                    <th>Start date</th>
-                                    <th>End date</th>
-                                    <th>Control</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>name</th>
-                                    <th>Amount</th>
-                                    <th>Category</th>
-                                    <th>Possible</th>
-                                    <th>Done</th>
-                                    <th>Start date</th>
-                                    <th>End date</th>
-                                    <th>Control</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <% for(var i=0; i<result.length; i++) { %>
-                                    <tr>
-                                        <td>
-                                            <%= result[i].name %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].amount %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].category %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].possible %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].done %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].start_date %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].end_date %>
-                                        </td>
-                                        <td>
-                                            <a href="/goals/delete/<%= result[i].goalID %>"><i
-                                                    class="fas fa-trash"></i></a>
-                                            <a href="/goals/edit/<%= result[i].goalID %>"><i
-                                                    class="fas fa-edit"></i></a>
-                                        </td>
-                                    </tr>
-                                    <% } %>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-body">
-                        <a href="add"><button class="btn btn-success" href="/goals/add">Add new</button></a>
-                    </div>
-                    <!-- ends here -->
-                </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
@@ -194,12 +294,23 @@
             </footer>
         </div>
     </div>
+    <script>
+        document.getElementById('today').value = new Date().toISOString().slice(0, 10);
+        document.getElementById('enddate').value = new Date().toISOString().slice(0, 10);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../../js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="../../js/chart-area-demo.js"></script>
-    <script src="../../js/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="../../js/datatables-simple-demo.js"></script>
 </body>

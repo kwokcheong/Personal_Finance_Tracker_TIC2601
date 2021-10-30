@@ -2,19 +2,6 @@ const express = require('express');
 const db = require('../db');
 const router = express.Router();
 
-// form page for goal
-router.get('/add', (req, res) => {
-    let session = req.session;
-    if (session.userID) {
-        res.render('goals/add', {
-            title: 'Add Goals',
-            name: session.username
-        });
-    } else {
-        res.render('loggedout');
-    }
-});
-
 router.get('/view', (req, res) => {
     let session = req.session;
     if (!session.userID) {
@@ -34,15 +21,17 @@ router.get('/view', (req, res) => {
 //INSERT Query
 router.post('/save', (req, res) => {
     let randomNum = Math.random().toString(36).substr(2, 8);
+    let today = new Date().toISOString().split('T')[0];
     let data = {
         goalID: randomNum,
         userID: req.session.userID,
         name: req.body.name,
         category: req.body.category,
         amount: req.body.amount,
+        image_url: req.body.image_url == '' ? 'https://image.shutterstock.com/image-photo/stock-photo-duct-taped-banana-on-white-wall-250nw-1584501430.jpg' : req.body.image_url,
         done: 0,
-        start_date: req.body.start_date,
-        end_date: req.body.end_date
+        start_date: req.body.start_date == null ? today : req.body.start_date,
+        end_date: req.body.end_date == null ? today : req.body.end_date, 
     }
 
     let sql = "INSERT INTO goals SET ?";
@@ -86,12 +75,13 @@ router.get('/edit/:goalID', (req, res) => {
 
 // UPDATE goal Query
 router.post('/update/:goalID', (req, res) => {
+    let today = new Date().toISOString().split('T')[0];
     let data = {
         name: req.body.name,
         category: req.body.category,
         amount: req.body.amount,
-        start_date: req.body.start_date,
-        end_date: req.body.end_date
+        start_date: req.body.start_date == null ? today : req.body.start_date,
+        end_date: req.body.end_date == null ? today : req.body.end_date, 
     }
     let session = req.session;
     const userID = session.userID;

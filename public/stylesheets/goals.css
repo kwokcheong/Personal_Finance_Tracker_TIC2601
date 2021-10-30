@@ -1,0 +1,86 @@
+
+    .goalcard {
+        overflow: hidden;
+        display: flex;
+        width: 18rem;
+        height: 280px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 1px 1px 6px -2px #999;
+        flex-direction: column;
+        transition: all .3s ease;
+        transform-style: preserve-3d;
+        margin-bottom: 15px;
+        margin-right: 22px;
+      }
+      .goalcard .bg {
+        background-image: url('https://image.shutterstock.com/image-photo/stock-photo-duct-taped-banana-on-white-wall-250nw-1584501430.jpg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        transition: all .4s ease;
+      }
+      .goalcard:hover .bg{
+        background-size: 55%;
+      }
+      .goalcard:hover {
+        box-shadow: 10px 10px 26px -6px #999;
+      }
+      .info{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-weight: 600;
+      }
+      .info > *{
+        padding: .5rem;
+      }
+      .price{
+        font-family: "Assistant", sans-serif;
+        font-size: 22px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: auto;
+        color: darkcyan;
+      }
+      .sizes{
+        display: flex;
+        justify-content: space-evenly;
+      }
+      .sizes > *{
+        background: darkcyan;
+        color: #eee;
+        padding: 4px;
+        border-radius: 4px;
+      }
+      .sizes [disabled]{
+        background: #999;
+        text-decoration: line-through 2px black;
+      }
+      .buy{
+        background: #dd915b;
+        color: white;
+        font-weight: 600;
+        letter-spacing: .6px;
+        text-align: center;
+      }
+
+      #banner {
+        object-fit: cover;
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
+          max-height: 200px;
+      }
+      
+      @media only screen and (max-width: 800px) {
+        #goalcards {
+            width: 25rem;
+            height: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        }
