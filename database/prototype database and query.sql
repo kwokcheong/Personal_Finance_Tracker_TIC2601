@@ -39,7 +39,6 @@ CREATE TABLE expenses (
 
 CREATE TABLE ledger (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
-    average_monthly_saving DECIMAL(13,2) DEFAULT 0,
     current_balance DECIMAL(13,2) DEFAULT 0
 );
 
@@ -66,17 +65,35 @@ CREATE TABLE budgethead (
 DELIMITER 
 
 CREATE TRIGGER complete_goal
- AFTER UPDATE
+ AFTER INSERT 
     ON goals FOR EACH ROW
     BEGIN
-    IF (getDate() = end_date)
-    THEN SET done = 1
+    DECLARE @today date = GetDate();
+    SET done = 1;
+    WHERE
+    end_date <= @today
     END;
     
 DELIMITER 
 
- DELIMITER
-CREATE TRIGGER close to limit
+DELIMITER
+CREATE TRIGGER goal_possible 
+ AFTER INSERT 
+    ON goals FOR EACH ROW
+    BEGIN
+    income i, expenses e, goal g
+    DECLARE @avgmonth as INTEGER
+    DECLARE @Avgsaving as decimal(13,2) 
+    DECLARE @expected_saving as decimal(13,2)
+    Avgsaving = (SELECT SUM(amount) FROM income + SELECT SUM(amount) FROM expenses) / avgmonth
+    expected_saving = Avgsaving * (SELECT MONTH(end_date) - SELECT MONTH(start_date))
+    if(expected_saving >= g.amount) 
+    SET g.possible = 1; 
+    END; 
+DELIMITER
+
+DELIMITER
+CREATE TRIGGER close_to_limit
  AFTER INSERT
     ON expenses FOR EACH ROW
     bh = budgethead, e = expenses; 
@@ -85,24 +102,40 @@ CREATE TRIGGER close to limit
     END; 
 DELIMITER 
 
+DELIMITER
+CREATE TRIGGER setupaccount
+ AFTER INSERT
+    ON users FOR EACH ROW
+    BEGIN
+    u = users
+    INSERT INTO ledger (userID, current_balance)
+    VALUE(u.userid,0); 
+    END; 
+DELIMITER
+
 DELIMITER 
 CREATE TRIGGER update_balance
  AFTER INSERT
     ON incomes FOR EACH ROW
     BEGIN
     IF name = 'monthly salary'
-	THEN INSERT INTO ledger(userID, average_monthly_saving, current_balance)
+	THEN INSERT INTO ledger(userID, current_balance)
     i = income, e = expenses; 
-    VALUES (2, AVG(NEW.current_balance), NEW.current_balance);
-    NEW.current_balance = OLD.current_balance + i.amount + e.amount
+    VALUES (2, NEW.current_balance);
+    NEW.current_balance = OLD.current_balance + SUM(i.amount) + SUM(e.amount)
     WHERE expenses
     DECLARE @today date = GetDate();
     SELECT Sum(amount) FROM expenses WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
+    WHERE incomes
+    DECLARE @today date = GetDate();
+    SELECT Sum(amount) FROM incomes WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
     END IF;
     END
 DELIMITER 
 
 INSERT INTO users VALUES (2, 'Root', 'root@gmail.com', 'root123'); 
+
+SELECT * FROM ledger; 
 
 INSERT INTO incomes (incomeID, userID,amount, name, category, recurring_date,recurring) 
 VALUES (0, 2, 3250.50, 'monthly salary', 'monthly salary', '2021-10-10', 1); 
@@ -147,3 +180,14 @@ VALUES (2, 'food', -300);
 VALUES (2, 'transport', -100);
 
 SELECT * FROM budgethead; 
+
+INSERT INTO goals (goalID, userID, name, amount, category, start_date, end_date) 
+VALUES (1,2,'ps4',350, 'game', '2021-09-10', '2021-12-12');
+
+INSERT INTO goals (goalID, userID, name, amount, category, start_date, end_date) 
+VALUES (2,2,'Japantrip',800, 'holiday', '2021-09-10', '2021-10-25');
+
+INSERT INTO goals (goalID, userID, name, amount, category, start_date, end_date) 
+VALUES (3,2,'Kiseki',50, 'buffet', '2021-09-10', '2021-12-13');
+
+SELECT * FROM goals;
