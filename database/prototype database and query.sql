@@ -72,15 +72,16 @@ CREATE TRIGGER goal_possible
     DECLARE avgmonth INT unsigned DEFAULT 6;
     DECLARE Avgsaving decimal(13,2);
     DECLARE expected_saving decimal(13,2);
-    SET Avgsaving = SELECT SUM(amount) FROM incomes AND expenses 
-    WHERE created_at FROM incomes AND expenses >= dateadd(month, 6, getdate());
-    / avgmonth;
-    SET expected_saving = Avgsaving * (SELECT MONTH(end_date) - SELECT MONTH(start_date));
+    SET Avgsaving = (SELECT SUM(amount) FROM incomes 
+    WHERE created_at >= dateadd(month, 6, getdate())) 
+    + (SELECT SUM(amount) FROM expenses 
+    WHERE created_at >= dateadd(month, 6, getdate())) /avgmonth;
+    SET expected_saving = Avgsaving * (SELECT MONTH(end_date)) - (SELECT MONTH(start_date));
     if(expected_saving >= NEW.amount) 
-    THEN SET NEW.possible = 1; 
+    THEN SET possible = 1; 
     END IF;
     END|
-DELIMITER
+DELIMITER 
 
 DELIMITER |
 CREATE TRIGGER setupaccount
@@ -113,7 +114,7 @@ CREATE TRIGGER update_balance
                     date >= DateAdd(month, -2, today) AND date < DateAdd(month, -0, today));
     END IF;
     END|
-DELIMITER  
+DELIMITER
 
 
 INSERT INTO users VALUES (2, 'Root', 'root@gmail.com', 'root123'); 
