@@ -1,5 +1,7 @@
 -- Insight page: Doughnut chart
 -- Function: fn_isInputDateBetweenPeriod
+SET GLOBAL log_bin_trust_function_creators = 1;
+
 DELIMITER $$
 DROP FUNCTION IF EXISTS `fn_isInputDateBetweenPeriod`$$
 CREATE FUNCTION `fn_isInputDateBetweenPeriod`(
