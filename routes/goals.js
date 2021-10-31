@@ -82,13 +82,23 @@ router.get('/edit/:goalID', (req, res) => {
                WHERE userID = ${userID} AND goalID = '${goalID}'`;
         db.query(sql, (err, result) => {
             if (err) throw err;
-            console.log(result[0])
             res.render('goals/edit', {
                 name: session.username,
                 result: result
             });
         });
     }
+});
+
+router.get('/check/:goalID', (req, res) => {
+    let userID = req.session.userID;
+    let goalID = req.params.goalID;
+    let done = 1;
+    let sql = `UPDATE goals SET done = ? WHERE userID = ${userID} AND goalID = '${goalID}'`;
+    db.query(sql, done, (err,result) => {
+        if (err) throw err;
+        res.redirect('/goals/view');
+    })
 });
 
 // UPDATE goal Query

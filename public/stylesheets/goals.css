@@ -13,6 +13,24 @@
         margin-bottom: 15px;
         margin-right: 15px;
       }
+
+      .completed {
+        position: absolute;
+        top:0;
+        left:0;
+        padding: 7px;
+        margin-left: 3px;
+        display: none;
+      }
+
+      .completed:hover {
+        color: green;
+      }
+
+      .goalcard:hover .completed {
+        display: inline;
+      }
+
       .goalcard .bg {
         background-image: url('https://image.shutterstock.com/image-photo/stock-photo-duct-taped-banana-on-white-wall-250nw-1584501430.jpg');
         background-repeat: no-repeat;

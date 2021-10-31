@@ -201,8 +201,11 @@
                             <% for(var i=0; i<result.length; i++) { %>
                                 <div class="goalcard" id="goalcards">
                                     <div class="bg" style="background-image: url('<%= result[i].image_url %>')"></div>
+                                    <% if (state == "active") { %>
+                                        <a href="check/<%= result[i].goalID %>" class="completed"><i class="fa fa-check" style="color: lightgray;" aria-hidden="true"></i></a>
+                                    <% } %>
                                     <div class="info">
-                                      <div class="name"><%= result[i].name %></div>
+                                        <div class="name"><%= result[i].name %></div>
                                       <div class="price">$<%= result[i].amount %></div>
                                       <div><p style="font-size: 11px;"><%= result[i].description %></p></div>
                                       <!-- <div class="sizes">
@@ -231,7 +234,6 @@
                                         <tr>
                                             <th>name</th>
                                             <th>Amount</th>
-                                            <th>Possible</th>
                                             <th>Start date</th>
                                             <th>End date</th>
                                             <th>Control</th>
@@ -241,7 +243,6 @@
                                         <tr>
                                             <th>name</th>
                                             <th>Amount</th>
-                                            <th>Possible</th>
                                             <th>Start date</th>
                                             <th>End date</th>
                                             <th>Control</th>
@@ -255,9 +256,6 @@
                                                 </td>
                                                 <td>
                                                     <%= result[i].amount %>
-                                                </td>
-                                                <td>
-                                                    <%= result[i].possible %>
                                                 </td>
                                                 <td>
                                                     <%= result[i].start_date.toISOString().split('T')[0] %>
