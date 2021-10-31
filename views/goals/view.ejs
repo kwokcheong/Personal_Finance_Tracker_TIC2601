@@ -143,14 +143,8 @@
                                                 <input class="form-control" type="text" name="image_url" value='' placeholder="Paste image url here"/>
                                             </div>
                                             <div class="form-group">
-                                                <label for="category">Select a category</label>
-                                                <select class="form-control" name="category" id="category">
-                                                    <option value="Food">Food</option>
-                                                    <option value="Transport">Transport</option>
-                                                    <option value="Luxury">Luxury</option>
-                                                    <option value="Bills">Bills</option>
-                                                    <option value="Others">Others</option>
-                                                </select>
+                                                <label for="description">Description</label>
+                                                <input class="form-control" type="textfield" name="description" placeholder="Add description"  maxlength="150" />
                                             </div>
                                             <div class="form-group">
                                                 <label for="amount">Amount</label>
@@ -185,17 +179,24 @@
                         <div class="card-header">
                             <ul class="nav nav-pills card-header-pills">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#">Active</a>
+                                    <a id="not_completed" class="nav-link" href="/goals/view">Active</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">For Review</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Completed</a>
+                                    <a id="completed" class="nav-link" href="/goals/view/completed">Completed</a>
                                 </li>
                             </ul>
                         </div>
                         <!-- cards -->
+                        <% if(result.length == 0 && state == 'active') { %>
+                            <div class="row mt-5">
+                                <h5 style="justify-content: center; text-align: center;">oops, you haven't added any goals yet. Create one now!</h5>
+                            </div>
+                        <% } %>
+                        <% if(result.length == 0 && state == 'completed') { %>
+                            <div class="row mt-5">
+                                <h5 style="justify-content: center; text-align: center;">No completed goals yet.</h5>
+                            </div>
+                        <% } %>
                         <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; padding: 2%; justify-content: flex-start;">
                             <% for(var i=0; i<result.length; i++) { %>
                                 <div class="goalcard" id="goalcards">
@@ -203,6 +204,7 @@
                                     <div class="info">
                                       <div class="name"><%= result[i].name %></div>
                                       <div class="price">$<%= result[i].amount %></div>
+                                      <div><p style="font-size: 11px;"><%= result[i].description %></p></div>
                                       <!-- <div class="sizes">
                                         <span>38</span>
                                         <span disabled>39</span>
@@ -210,7 +212,15 @@
                                         <span>41</span>
                                         <span>42</span>
                                       </div> -->
-                                      <div class="buy"><%= result[i].possible == 1 ? "Possible" : "Not Possible" %></div>
+                                      <% if(result[i].possible == '1' && state == 'active') { %>
+                                            <div class="buy" style="background-color: #2f9211;">Possible</div>
+                                      <% } %>
+                                      <% if(result[i].possible == '0' && state == 'active') { %>
+                                        <div class="buy">Not Possible</div>
+                                      <% } %>
+                                      <% if(state == 'completed') { %>
+                                        <div class="buy" style="background-color: darkgrey;">Completed</div>
+                                      <% } %>
                                     </div>
                                   </div>
                             <% } %>
@@ -221,8 +231,6 @@
                                         <tr>
                                             <th>name</th>
                                             <th>Amount</th>
-                                            <th>Category</th>
-                                            <th>Possible</th>
                                             <th>Done</th>
                                             <th>Start date</th>
                                             <th>End date</th>
@@ -233,8 +241,6 @@
                                         <tr>
                                             <th>name</th>
                                             <th>Amount</th>
-                                            <th>Category</th>
-                                            <th>Possible</th>
                                             <th>Done</th>
                                             <th>Start date</th>
                                             <th>End date</th>
@@ -251,13 +257,7 @@
                                                     <%= result[i].amount %>
                                                 </td>
                                                 <td>
-                                                    <%= result[i].category %>
-                                                </td>
-                                                <td>
                                                     <%= result[i].possible %>
-                                                </td>
-                                                <td>
-                                                    <%= result[i].done %>
                                                 </td>
                                                 <td>
                                                     <%= result[i].start_date.toISOString().split('T')[0] %>
@@ -294,6 +294,18 @@
             </footer>
         </div>
     </div>
+    <script>
+        let state = '<%- state %>';
+        let not_completed = document.getElementById("not_completed");
+        let completed = document.getElementById("completed");
+        if(state == 'completed'){
+            not_completed.className.replace(" active", "");
+            completed.className += " active";
+        } else {
+            not_completed.className += " active";
+        }
+
+    </script>
     <script>
         document.getElementById('today').value = new Date().toISOString().slice(0, 10);
         document.getElementById('enddate').value = new Date().toISOString().slice(0, 10);

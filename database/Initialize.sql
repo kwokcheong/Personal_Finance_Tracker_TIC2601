@@ -52,7 +52,7 @@ CREATE TABLE goals (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
-    category VARCHAR(64),
+    description VARCHAR(256),
     possible BOOLEAN DEFAULT 0,
     done BOOLEAN DEFAULT 0,
     image_url VARCHAR(256),
