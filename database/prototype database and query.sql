@@ -99,19 +99,21 @@ CREATE TRIGGER update_balance
  AFTER INSERT
     ON incomes FOR EACH ROW
     BEGIN
-    IF name = 'monthly salary'
-	THEN INSERT INTO ledger(userID, current_balance)
-    VALUES (2, NEW.current_balance);
-    NEW.current_balance = OLD.current_balance + SUM(i.amount) + SUM(e.amount)
-    WHERE expenses
-    DECLARE @today date = GetDate();
-    SELECT Sum(amount) FROM expenses WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
-    AND WHERE incomes
-    DECLARE @today date = GetDate();
-    SELECT Sum(amount) FROM incomes WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
+    SET @today = getDate();
+    IF (name = 'monthly salary')
+	THEN INSERT INTO ledger
+	SET 
+    userID = NEW.userID,
+    current_balance = OLD.current_balance
+					+ (SELECT Sum(amount) FROM expenses 
+					WHERE 
+                    date >= DateAdd(month, -2, today) AND date < DateAdd(month, -0, today))
+					+ (SELECT Sum(amount) FROM incomes 
+					WHERE 
+                    date >= DateAdd(month, -2, today) AND date < DateAdd(month, -0, today));
     END IF;
-    END |
-DELIMITER 
+    END|
+DELIMITER  
 
 
 INSERT INTO users VALUES (2, 'Root', 'root@gmail.com', 'root123'); 
