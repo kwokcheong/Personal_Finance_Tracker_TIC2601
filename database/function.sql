@@ -1,6 +1,6 @@
 -- Insight page: Doughnut chart
 -- Function: fn_isInputDateBetweenPeriod
-DELIMETER $$
+DELIMITER $$
 DROP FUNCTION IF EXISTS `fn_isInputDateBetweenPeriod`$$
 CREATE FUNCTION `fn_isInputDateBetweenPeriod`(
 	ip_year TEXT, 
@@ -25,10 +25,10 @@ BEGIN
         
     END IF; 
 END$$
-DELIMETER;
+DELIMITER;
 
 -- Function: fn_daysCounter
-DELIMETER $$
+DELIMITER $$
 DROP FUNCTION IF EXISTS `fn_daysCounter`$$
 CREATE FUNCTION `fn_daysCounter`(
 	ip_year TEXT, 
@@ -52,11 +52,11 @@ BEGIN
         
     END IF; 
 END$$
-DELIMETER;
+DELIMITER;
 
 -- Dashboard 
 -- Static value for avg expenses
-DELIMETER $$
+DELIMITER $$
 DROP FUNCTION IF EXISTS `fn_calculateAverageExpense`$$
 CREATE FUNCTION `fn_calculateAverageExpense`(ip_user TEXT) RETURNS decimal(13,2)
 BEGIN
@@ -73,10 +73,10 @@ BEGIN
                         
 RETURN FINAL_OUTPUT;
 END$$
-DELIMETER;
+DELIMITER;
 
 -- Static value for avg income
-DELIMETER $$
+DELIMITER $$
 DROP FUNCTION IF EXISTS `fn_calculateAverageIncome`$$
 CREATE FUNCTION `fn_calculateAverageIncome`(ip_user TEXT) RETURNS decimal(13,2)
 BEGIN
@@ -93,10 +93,10 @@ BEGIN
     
 RETURN FINAL_OUTPUT;
 END$$
-DELIMETER;
+DELIMITER;
 
 -- Static value for av savings
-DELIMETER $$
+DELIMITER $$
 DROP FUNCTION IF EXISTS `fn_calculateAverageSavings`$$
 CREATE FUNCTION `fn_calculateAverageSavings`(ip_user TEXT) RETURNS decimal(13,2)
 BEGIN
@@ -111,4 +111,4 @@ BEGIN
     SET FINAL_OUTPUT = INCOME - EXPENSES;
 	RETURN (FINAL_OUTPUT);
 END$$
-DELIMETER;
+DELIMITER;
