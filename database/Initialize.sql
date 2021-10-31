@@ -3,6 +3,10 @@ USE crud_express;
 
 DROP TRIGGER IF EXISTS incomes_AFTER_INSERT;
 DROP TRIGGER IF EXISTS incomes_AFTER_UPDATE;
+DROP TRIGGER IF EXISTS expenses_AFTER_INSERT;
+DROP TRIGGER IF EXISTS expenses_AFTER_UPDATE;
+DROP TRIGGER IF EXISTS incomes_AFTER_DELETE;
+DROP TRIGGER IF EXISTS expenses_AFTER_DELETE;
 DROP VIEW IF EXISTS userIncome;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS incomes;
@@ -23,11 +27,13 @@ CREATE TABLE incomes (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
-    category ENUM('Allowance', 'Freelance', 'Others','Salary'),
+    category ENUM('Allowance', 'Freelance', 'Others','Salary') NOT NULL,
     recurring_start_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
     recurring_end_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
     recurring BOOLEAN NOT NULL DEFAULT 0,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    CHECK(recurring_start_date <= recurring_end_date), 
+    CHECK(recurring_end_date >= recurring_start_date)
 );
 
 CREATE TABLE expenses (
@@ -35,11 +41,13 @@ CREATE TABLE expenses (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR(256) NOT NULL,
     amount DECIMAL(13,2) CHECK(amount >= 0),
-    category ENUM('Bills', 'Food', 'Luxury','Others', 'Transport', 'Utility'),
+    category ENUM('Bills', 'Food', 'Luxury','Others', 'Transport', 'Utility') NOT NULL,
     recurring_start_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
     recurring_end_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
     recurring BOOLEAN NOT NULL DEFAULT 0,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    CHECK(recurring_start_date <= recurring_end_date), 
+    CHECK(recurring_end_date >= recurring_start_date)
 );
 
 CREATE TABLE ledger (
@@ -58,12 +66,14 @@ CREATE TABLE goals (
     image_url VARCHAR(256),
     start_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
     end_date DATE DEFAULT (DATE(CURRENT_TIMESTAMP)),
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    CHECK(start_date <= end_date), 
+    CHECK(end_date >= start_date)
 );
 
 CREATE TABLE budgets (
 	userID INTEGER REFERENCES users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
-    category ENUM('Bills','Food', 'Luxury', 'Others', 'Transport', 'Utility'),
+    category ENUM('Bills','Food', 'Luxury', 'Others', 'Transport', 'Utility') NOT NULL,
     budget_amount_per_month DECIMAL(13,2) DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(userID, category)

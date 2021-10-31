@@ -68,8 +68,8 @@ BEGIN
     SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
     SET END_DATE = DATE(NOW());
     
-    SET FINAL_OUTPUT = (SELECT (SUM(E.amount) / 6) FROM expenses E WHERE E.expensesID  IN (SELECT E2.expensesID FROM expenses E2
-						WHERE E2.userID = ip_user AND E2.created_at BETWEEN START_DATE AND END_DATE));
+    SET FINAL_OUTPUT = (SELECT (SUM(E.amount) / 6) FROM expenses E 
+						WHERE E.userID = ip_user AND E.created_at BETWEEN START_DATE AND END_DATE);
                         
 RETURN FINAL_OUTPUT;
 END$$
@@ -88,8 +88,8 @@ BEGIN
     SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
     SET END_DATE = DATE(NOW());
     
-    SET FINAL_OUTPUT = (SELECT (SUM(I.amount)/6) FROM incomes I WHERE I.incomeID IN (SELECT I2.incomeID FROM incomes I2
-						WHERE I2.userID = ip_user AND I2.created_at BETWEEN START_DATE AND END_DATE));
+    SET FINAL_OUTPUT = (SELECT (SUM(I.amount)/6) FROM incomes I 
+						WHERE I.userID = ip_user AND I.created_at BETWEEN START_DATE AND END_DATE);
     
 RETURN FINAL_OUTPUT;
 END$$

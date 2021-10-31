@@ -61,6 +61,8 @@ SELECT category, budget_amount_per_month FROM budgets WHERE userID = 1;
 SELECT current_balance FROM ledger;
 
 -- Events to validate recurring bool 
+SET GLOBAL event_scheduler = ON;
+SHOW EVENTS;
 DELIMITER |
 CREATE EVENT checkIncomeRecurrenceValue
    ON SCHEDULE 

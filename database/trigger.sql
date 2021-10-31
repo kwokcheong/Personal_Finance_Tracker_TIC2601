@@ -70,81 +70,99 @@ CREATE TABLE budgethead (
 INSERT INTO users VALUES (1, 'admin', 'admin@hotmail.com', 'admin123');
 INSERT INTO ledger VALUES (1, 0);
 
-delimiter |
-
+DELIMITER |
 CREATE TRIGGER incomes_AFTER_INSERT  AFTER INSERT ON incomes
   FOR EACH ROW
   BEGIN
     UPDATE ledger SET current_balance = current_balance+ new.amount
     WHERE userID=new.userID ;
-    
-  END;
-|
-
-delimiter ;
+  END;|
+DELIMITER ;
 
 
-delimiter |
-
+DELIMITER |
 CREATE TRIGGER incomes_AFTER_UPDATE AFTER UPDATE ON incomes
   FOR EACH ROW
   BEGIN
     UPDATE ledger SET current_balance = current_balance - old.amount+ new.amount 
     WHERE userID=old.userID ;
     
-  END;
-|
-
-delimiter ;
+  END;|
+DELIMITER ;
 
 
-delimiter |
+DELIMITER |
 CREATE TRIGGER expenses_AFTER_UPDATE AFTER UPDATE ON expenses
   FOR EACH ROW
   BEGIN
 	UPDATE ledger SET current_balance = current_balance + old.amount - new.amount 
-    where userID = old.userID ;
-    
-  END;
-|
-
-delimiter ;
+    WHERE userID = old.userID ;
+  END;|
+DELIMITER ;
 
 
-delimiter |
+DELIMITER |
 CREATE TRIGGER expenses_AFTER_INSERT AFTER INSERT ON expenses
   FOR EACH ROW
   BEGIN
 	UPDATE ledger SET current_balance = current_balance- new.amount 
-    where userID = NEW.userID ;
-    
-  END;
-|
-
-delimiter ;
+    WHERE userID = NEW.userID ;
+  END;|
+DELIMITER ;
 
 
 
-delimiter |
+DELIMITER |
 CREATE TRIGGER incomes_AFTER_DELETE AFTER DELETE ON incomes
   FOR EACH ROW
   BEGIN
     UPDATE ledger SET current_balance = current_balance - old.amount
     WHERE userID=old.userID ;
-    
-  END;
-|
+  END;|
+DELIMITER ;
 
-delimiter ;
-
-delimiter |
+DELIMITER |
 CREATE TRIGGER expense_AFTER_DELETE AFTER DELETE ON expenses
   FOR EACH ROW
   BEGIN
     UPDATE ledger SET current_balance = current_balance + old.amount
     WHERE userID=old.userID ;
-    
-  END;
-|
+  END;|
+DELIMITER ;
 
-delimiter ;
+DELIMITER 
+CREATE TRIGGER complete_goal
+ AFTER UPDATE
+    ON goals FOR EACH ROW
+    BEGIN
+    IF (getDate() = end_date)
+    THEN SET done = 1
+    END;| 
+DELIMITER ;
+
+DELIMITER
+CREATE TRIGGER close to limit
+ AFTER INSERT
+    ON expenses FOR EACH ROW
+    bh = budgethead, e = expenses; 
+    BEGIN
+    IF bh.category = e.category AND bh.amount = e.amount
+    END; |
+DELIMITER ;
+
+DELIMITER 
+CREATE TRIGGER update_balance
+ AFTER INSERT
+    ON incomes FOR EACH ROW
+    BEGIN
+    IF name = 'monthly salary'
+	THEN INSERT INTO ledger(userID, average_monthly_saving, current_balance)
+    i = income, e = expenses; 
+    VALUES (2, AVG(NEW.current_balance), NEW.current_balance);
+    NEW.current_balance = OLD.current_balance + i.amount + e.amount
+    WHERE expenses
+    DECLARE @today date = GetDate();
+    SELECT Sum(amount) FROM expenses WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
+    END IF;
+    END;|
+DELIMITER ;
