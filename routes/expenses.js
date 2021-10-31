@@ -33,17 +33,17 @@ router.get('/view', (req, res) => {
             if (err) throw err;
             for(let i=0 ; i<result[1].length; i++){
                 switch(result[1][i].record_month){
-                    case 5 : insertCategory(result[1],i,0);
+                    case 6 : insertCategory(result[1],i,0);
                         break;
-                    case 6 : insertCategory(result[1],i,1);
+                    case 7 : insertCategory(result[1],i,1);
                         break;
-                    case 7 : insertCategory(result[1],i,2);
+                    case 8 : insertCategory(result[1],i,2);
                         break;
-                    case 8 : insertCategory(result[1],i,3);
+                    case 9 : insertCategory(result[1],i,3);
                         break;
-                    case 9 : insertCategory(result[1],i,4);
+                    case 10 : insertCategory(result[1],i,4);
                         break;
-                    case 10: insertCategory(result[1],i,5);
+                    case 11: insertCategory(result[1],i,5);
                         break;
                 }
             }

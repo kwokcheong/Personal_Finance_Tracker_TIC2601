@@ -18,6 +18,7 @@
         crossorigin="anonymous"></script>
     <script>
         let result = '<%- result %>';
+
     </script>
 </head>
 
@@ -200,7 +201,8 @@
                         <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; padding: 2%; justify-content: flex-start;">
                             <% for(var i=0; i<result.length; i++) { %>
                                 <div class="goalcard" id="goalcards">
-                                    <div class="bg" style="background-image: url('<%= result[i].image_url %>')"></div>
+                                    <% let defaultimg = 'https://image.shutterstock.com/image-photo/stock-photo-duct-taped-banana-on-white-wall-250nw-1584501430.jpg'; %>
+                                    <div class="bg" style="background-image: url('<%= result[i].image_url !== null ? result[i].image_url : defaultimg  %>')"></div>
                                     <% if (state == "active") { %>
                                         <a href="check/<%= result[i].goalID %>" class="completed"><i class="fa fa-check" style="color: lightgray;" aria-hidden="true"></i></a>
                                     <% } %>
