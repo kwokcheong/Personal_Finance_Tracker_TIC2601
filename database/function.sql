@@ -63,15 +63,8 @@ DROP FUNCTION IF EXISTS `fn_calculateAverageExpense`$$
 CREATE FUNCTION `fn_calculateAverageExpense`(ip_user TEXT) RETURNS decimal(13,2)
 BEGIN
 
-	DECLARE START_DATE DATE; 
-    DECLARE END_DATE DATE; 
     DECLARE FINAL_OUTPUT DECIMAL(13,2);
-    
-    SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
-    SET END_DATE = DATE(NOW());
-    
-    SET FINAL_OUTPUT = (SELECT (SUM(E.amount) / 6) FROM expenses E 
-						WHERE E.userID = ip_user AND E.created_at BETWEEN START_DATE AND END_DATE);
+    SET FINAL_OUTPUT = (SELECT AVG(E.amount) FROM expenses E WHERE E.userID = ip_user);
                         
 RETURN FINAL_OUTPUT;
 END$$
@@ -83,15 +76,8 @@ DROP FUNCTION IF EXISTS `fn_calculateAverageIncome`$$
 CREATE FUNCTION `fn_calculateAverageIncome`(ip_user TEXT) RETURNS decimal(13,2)
 BEGIN
 
-	DECLARE START_DATE DATE; 
-    DECLARE END_DATE DATE; 
     DECLARE FINAL_OUTPUT DECIMAL(13,2);
-    
-    SET START_DATE = STR_TO_DATE(CONCAT(YEAR(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/', MONTH(DATE_SUB(DATE(NOW()),INTERVAL 5 MONTH)), '/01'), '%Y/%m/%d') ; 
-    SET END_DATE = DATE(NOW());
-    
-    SET FINAL_OUTPUT = (SELECT (SUM(I.amount)/6) FROM incomes I 
-						WHERE I.userID = ip_user AND I.created_at BETWEEN START_DATE AND END_DATE);
+    SET FINAL_OUTPUT = (SELECT AVG(I.amount) FROM incomes I WHERE I.userID = ip_user);
     
 RETURN FINAL_OUTPUT;
 END$$
