@@ -64,32 +64,23 @@ CREATE TABLE budgethead (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-DELIMITER| 
+DELIMITER |
 CREATE TRIGGER goal_possible 
  AFTER INSERT 
     ON goals FOR EACH ROW
     BEGIN
-    income i, expenses e, goal g;
-    DECLARE avgmonth INT unsigned DEFAULT 1;
+    DECLARE avgmonth INT unsigned DEFAULT 6;
     DECLARE Avgsaving decimal(13,2);
     DECLARE expected_saving decimal(13,2);
-    Avgsaving = (SELECT SUM(amount) FROM income + SELECT SUM(amount) FROM expenses) / avgmonth
-    expected_saving = Avgsaving * (SELECT MONTH(end_date) - SELECT MONTH(start_date))
-    if(expected_saving >= g.amount) 
-    SET g.possible = 1; 
-    END IF
+    SET Avgsaving = SELECT SUM(amount) FROM incomes AND expenses 
+    WHERE created_at FROM incomes AND expenses >= dateadd(month, 6, getdate());
+    / avgmonth;
+    SET expected_saving = Avgsaving * (SELECT MONTH(end_date) - SELECT MONTH(start_date));
+    if(expected_saving >= NEW.amount) 
+    THEN SET NEW.possible = 1; 
+    END IF;
     END|
-DELIMITER;
-
-DELIMITER|
-CREATE TRIGGER close_to_limit
- AFTER INSERT
-    ON expenses FOR EACH ROW
-    bh = budgethead, e = expenses; 
-    BEGIN
-    IF bh.category = e.category AND bh.amount = e.amount
-    END|
-DELIMITER;
+DELIMITER
 
 DELIMITER |
 CREATE TRIGGER setupaccount
@@ -101,6 +92,7 @@ CREATE TRIGGER setupaccount
     userID = NEW.userID,
     current_balance = 0;
     END|
+DELIMITER 
 
 DELIMITER |
 CREATE TRIGGER update_balance
@@ -119,14 +111,15 @@ CREATE TRIGGER update_balance
     SELECT Sum(amount) FROM incomes WHERE date >= DateAdd(month, -2, @today) AND date < DateAdd(month, -0, @today);
     END IF;
     END |
-DELIMITER ;
+DELIMITER 
+
 
 INSERT INTO users VALUES (2, 'Root', 'root@gmail.com', 'root123'); 
 
 SELECT * FROM ledger; 
 
 INSERT INTO incomes (incomeID, userID,amount, name, category, recurring_date,recurring) 
-VALUES (0, 2, 3250.50, 'monthly salary', 'monthly salary', '2021-10-10', 1); 
+VALUES (0, 2, 3250.50, 'salary', 'monthly salary', '2021-10-10', 1); 
 
 INSERT INTO expenses(expensesID, userID, name, amount, category, created_at)
 VALUES(3, 2, 'Hokkien Mee', -5, 'food', '2021-10-18');
