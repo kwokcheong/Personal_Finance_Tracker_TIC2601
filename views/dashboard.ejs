@@ -118,51 +118,51 @@
                         <li class="breadcrumb-item active">Plan it right today!</li>
                     </ol>
                     <!-- boxes -->
-                    <div class="row row-cols-4">
-                        <div class="col-sm">
-                            <div class="card mb-4">
-                                <div class="card">
-                                    <div class="card-body avg-income">
-                                        <h5 class="card-title">Average Income:</h5>
-                                        <p class="card-text"><%= parseFloat(averageIncome).toFixed(2) %></p>
-                                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-4 avg-income">
+                                <div class="card-body">
+                                    <h5 class="card-title">Average Income:</h5>
+                                    <p class="card-text">
+                                        <%= parseFloat(averageIncome).toFixed(2) %>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm">
-                            <div class="card mb-4">
-                                <div class="card">
-                                    <div class="card-body avg-expenses">
-                                        <h5 class="card-title">Average Expenses:</h5>
-                                        <p class="card-text"><%= parseFloat(averageExp).toFixed(2) %></p>
-                                    </div>
+                        <div class="col">
+                            <div class="card mb-4 avg-expenses">
+                                <div class="card-body">
+                                    <h5 class="card-title">Average Expenses:</h5>
+                                    <p class="card-text">
+                                        <%= parseFloat(averageExp).toFixed(2) %>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col">
                             <div class="card mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Average Saving:</h5>
-                                        <p class="card-text"><%= parseFloat(averageSaving).toFixed(2) %></p>
-                                    </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Average Saving:</h5>
+                                    <p class="card-text">
+                                        <%= parseFloat(averageSaving).toFixed(2) %>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col">
                             <div class="card mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Total Balance:</h5>
-                                        <p class="card-text"><%= parseFloat(curr_balance).toFixed(2) %></p>
-                                    </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Balance:</h5>
+                                    <p class="card-text">
+                                        <%= parseFloat(curr_balance).toFixed(2) %>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- CHARTS - PROBABLY NEED SOME REWORK -->
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col-xl-4">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-pie me-1"></i>
@@ -171,7 +171,7 @@
                                 <div class="card-body"><canvas id="moincomeChart" width="100%"></canvas></div>
                             </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col-xl-4">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-bar me-1"></i>
@@ -180,7 +180,7 @@
                                 <div class="card-body"><canvas id="moexpensesChart" width="100%"></canvas></div>
                             </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col-xl-4">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-bar me-1"></i>
