@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
       let sql = `SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM incomes;
                  SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM expenses;
                  SELECT current_balance 'bal' FROM ledger WHERE userID = ${session.userID} LIMIT 1;
-                 SELECT * FROM v_incomeexpenses;`
+                 SELECT * FROM v_incomeexpenses ORDER BY createdDt DESC;`
       db.query(sql, (err , result) => {
           if (err) throw err;
           let averageIncome = result[0][0].avg;

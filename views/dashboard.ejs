@@ -218,8 +218,11 @@
                                                 <%= result[i].category %>
                                             </td>
                                             <td>
-                                                <%= result[i].amount %>
-                                            </td>
+                                                <% if(result[i].amount.charAt(0) == '+') { %>
+                                                    <h6 style="color: rgb(75, 202, 75)"><%= result[i].amount %></h6>
+                                                <% } else { %>
+                                                    <h6 style="color: rgb(228, 40, 40)"><%= result[i].amount %></h6>
+                                                <% } %>
                                             <td>
                                                 <%= result[i].createdDt.toISOString().split('T')[0] %>
                                             </td>
