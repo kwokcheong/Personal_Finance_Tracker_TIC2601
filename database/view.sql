@@ -5,7 +5,7 @@ SQL SECURITY DEFINER VIEW `crud_express`.`v_incomeexpenses` AS
         `e`.`userID` AS `userID`,
         `e`.`name` AS `name`,
         `e`.`category` AS `category`,
-        CONCAT('-', `e`.`amount`) AS `amount`,
+        CONCAT('-', '$', `e`.`amount`) AS `amount`,
         `e`.`recurring` AS `recurring`,
         `e`.`created_at` AS `createdDt`
     FROM
@@ -14,7 +14,7 @@ SQL SECURITY DEFINER VIEW `crud_express`.`v_incomeexpenses` AS
         `i`.`userID` AS `userID`,
         `i`.`name` AS `name`,
         `i`.`category` AS `category`,
-        CONCAT('+', `i`.`amount`) AS `amount`,
+        CONCAT('+', '$', `i`.`amount`) AS `amount`,
         `i`.`recurring` AS `recurring`,
         `i`.`created_at` AS `createdDt`
     FROM

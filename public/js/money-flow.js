@@ -22,6 +22,18 @@ var myLineChart = new Chart(ctx, {
     ],
   },
   options: {
+    tooltips: {
+      mode: 'index',
+      callbacks: {
+      label: function(tooltipItem, data) {
+          if (tooltipItem.datasetIndex === 0) {
+              return 'Income: ' + ' $' + data['datasets'][0]['data'][tooltipItem['index']]
+          } else if (tooltipItem.datasetIndex === 1) {
+              return 'Expenses: ' + ' $' + data['datasets'][1]['data'][tooltipItem['index']];
+          }
+        }
+      }
+    },
     scales: {
       xAxes: [{
         time: {
