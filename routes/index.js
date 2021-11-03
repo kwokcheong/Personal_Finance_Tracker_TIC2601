@@ -8,26 +8,27 @@ router.get('/', function(req, res) {
   if (!session.userID){
       res.render('welcome');
   } else {
-      let sql = `SELECT * FROM incomes WHERE userID = ${session.userID} ORDER BY created_at ASC`;
-      let months = ['Jan','Feb', 'March', 'April', 'May', 'June', 'July', 'August']; 
-      let labeldata = ['food','luxury','Transport','Bills','Others'];
-      let amount = [];
-      let max = 0;
-      db.query(sql, (err,result) => {
+      let sql = `SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM incomes;
+                 SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM expenses;
+                 SELECT current_balance 'bal' FROM ledger WHERE userID = ${session.userID} LIMIT 1`;
+      db.query(sql, (err , result) => {
           if (err) throw err;
-          for (let i=0; i<result.length; i++){
-              if (parseInt(result[i].amount) > max){
-                  max = result[i].amount;
-              }
-              amount[i] = result[i].amount;
+          let averageIncome = result[0][0].avg;
+          let averageExpense = result[0][0].avg;
+
+          if(averageIncome == null){
+            averageIncome = result[0][0].sum;
           }
+          if(averageExpense == null){
+            averageExpense = result[1][0].sum;
+          }
+
           res.render('dashboard', {
-              result: result,
-              max_amount: max,
               name: session.username,
-              data: JSON.stringify(amount),
-              labelMonth: JSON.stringify(months),
-              label: JSON.stringify(labeldata)
+              averageIncome: averageIncome,
+              averageExp: averageExpense,
+              averageSaving: averageIncome - averageExpense,
+              curr_balance: result[2][0].bal
           })
       })
   }
