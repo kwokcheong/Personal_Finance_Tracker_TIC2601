@@ -62,6 +62,7 @@ SELECT current_balance FROM ledger;
 -- Events to validate recurring bool 
 SET GLOBAL event_scheduler = ON;
 SHOW EVENTS;
+-- Income
 DELIMITER |
 CREATE EVENT checkIncomeRecurrenceValue
    ON SCHEDULE 
@@ -73,7 +74,7 @@ CREATE EVENT checkIncomeRecurrenceValue
 	WHERE recurring = TRUE AND CURRENT_DATE NOT BETWEEN recurring_start_date AND recurring_end_date;
   END|
 DELIMITER ;
-
+--Expenses
 DELIMITER |
 CREATE EVENT checkExpensesRecurrenceValue
    ON SCHEDULE 
@@ -86,4 +87,25 @@ CREATE EVENT checkExpensesRecurrenceValue
   END|
 DELIMITER ;
 
+-- Events to insert records monthly
+-- Expenses
+DELIMITER |
+CREATE EVENT insertRecurringExpenses
+   ON SCHEDULE 
+	EVERY 1 MONTH
+   COMMENT 'Check for recurring expenses to be inserted into following months'
+   DO BEGIN
+	CALL crud_express.sp_insertRecurringExpenses();
+  END|
+DELIMITER ;
+-- Income
+DELIMITER |
+CREATE EVENT insertRecurringIncomes
+   ON SCHEDULE 
+	EVERY 1 MONTH
+   COMMENT 'Check for recurring incomes to be inserted into following months'
+   DO BEGIN
+	CALL crud_express.sp_insertRecurringIncomes();
+  END|
+DELIMITER ;
 

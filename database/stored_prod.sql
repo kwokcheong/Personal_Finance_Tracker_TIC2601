@@ -267,3 +267,80 @@ BEGIN
 	END IF; 
 END$$
 DELIMITER;
+
+-- Event for recurring insert
+-- Expenses
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `sp_insertRecurringExpenses` $$
+CREATE PROCEDURE `sp_insertRecurringExpenses`()
+BEGIN
+
+	DROP TABLE IF EXISTS TempRecurringExpensesTable; 
+	CREATE TEMPORARY TABLE TempRecurringExpensesTable
+	(	
+		`userID` INT, 
+		`name` VARCHAR(256), 		
+        `amount` DECIMAL(13,2), 		
+        `category` ENUM('Bills', 'Food', 'Luxury', 'Others', 'Transport', 'Utility'), 		
+        `recurring_start_date` DATE, 		
+        `recurring_end_date` DATE, 
+        `recurring` BOOLEAN, 
+        `created_at` DATETIME
+	); 
+
+    INSERT INTO TempRecurringExpensesTable 
+    SELECT 
+		E.userID, 
+        E.name, 
+        E.amount, 
+        E.category, 
+        E.recurring_start_date, 
+        E.recurring_end_date, 
+        E.recurring, 
+        E.created_at
+	FROM expenses E INNER JOIN (SELECT MIN(E2.expensesID) AS MinID,E2.name FROM expenses E2 WHERE E2.recurring = 1
+								GROUP BY E2.name) AS EarliestRecord ON E.expensesID = EarliestRecord.MinID;
+                                
+	INSERT INTO `crud_express`.`expenses`(`userID`, `name`, `amount`, `category`, `recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`)
+	SELECT TE.userID, TE.name, TE.amount, TE.category, TE.recurring_start_date, TE.recurring_end_date, TE.recurring, NOW()
+	FROM TempRecurringExpensesTable TE;
+END$$
+DELIMITER;
+
+-- Incomes
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `sp_insertRecurringIncomes` $$
+CREATE PROCEDURE `sp_insertRecurringIncomes`()
+BEGIN
+
+	DROP TABLE IF EXISTS TempRecurringIncomesTable; 
+	CREATE TEMPORARY TABLE TempRecurringIncomesTable
+	(	
+		`userID` INT, 
+		`name` VARCHAR(256), 		
+        `amount` DECIMAL(13,2), 		
+        `category` ENUM('Allowance', 'Freelance', 'Others', 'Salary'), 		
+        `recurring_start_date` DATE, 		
+        `recurring_end_date` DATE, 
+        `recurring` BOOLEAN, 
+        `created_at` DATETIME
+	); 
+
+    INSERT INTO TempRecurringIncomesTable 
+    SELECT 
+		I.userID, 
+        I.name, 
+        I.amount, 
+        I.category, 
+        I.recurring_start_date, 
+        I.recurring_end_date, 
+        I.recurring, 
+        I.created_at
+	FROM incomes I INNER JOIN (SELECT MIN(I2.incomeID) AS MinID,I2.name FROM incomes I2 WHERE I2.recurring = 1
+								GROUP BY I2.name) AS EarliestRecord ON I.incomeID = EarliestRecord.MinID;
+	
+	INSERT INTO `crud_express`.`incomes`(`userID`, `name`, `amount`, `category`, `recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`)
+	SELECT TI.userID, TI.name, TI.amount, TI.category, TI.recurring_start_date, TI.recurring_end_date, TI.recurring, NOW()
+	FROM TempRecurringIncomesTable TI;
+END$$
+DELIMITER;
