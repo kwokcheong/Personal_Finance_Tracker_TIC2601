@@ -198,7 +198,7 @@
                         <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; padding: 2%; justify-content: flex-start;">
                             <% for(var i=0; i<result.length; i++) { %>
                                 <div class="goalcard" id="goalcards">
-                                    <% let defaultimg = 'https://image.shutterstock.com/image-photo/stock-photo-duct-taped-banana-on-white-wall-250nw-1584501430.jpg'; %>
+                                    <% let defaultimg = '../../images/banana.jpg'; %>
                                     <div class="bg" style="background-image: url('<%= result[i].image_url !== null ? result[i].image_url : defaultimg  %>')"></div>
                                     <% if (state == "active") { %>
                                         <a href="check/<%= result[i].goalID %>" class="completed"><i class="fa fa-check" style="color: lightgray;" aria-hidden="true"></i></a>
@@ -207,13 +207,6 @@
                                         <div class="name"><%= result[i].name %></div>
                                       <div class="price">$<%= result[i].amount %></div>
                                       <div><p style="font-size: 11px;"><%= result[i].description %></p></div>
-                                      <!-- <div class="sizes">
-                                        <span>38</span>
-                                        <span disabled>39</span>
-                                        <span>40</span>
-                                        <span>41</span>
-                                        <span>42</span>
-                                      </div> -->
                                       <% if(result[i].possible == '1' && state == 'active') { %>
                                             <div class="buy" style="background-color: #2f9211;">Possible</div>
                                       <% } %>
