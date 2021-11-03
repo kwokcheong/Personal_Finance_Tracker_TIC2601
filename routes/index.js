@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
       db.query(sql, (err , result) => {
           if (err) throw err;
           let averageIncome = result[0][0].avg;
-          let averageExpense = result[0][0].avg;
+          let averageExpense = result[1][0].avg;
 
           if(averageIncome == null){
             averageIncome = result[0][0].sum;
