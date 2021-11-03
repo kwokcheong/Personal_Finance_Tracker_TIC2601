@@ -59,19 +59,6 @@ SELECT category, budget_amount_per_month FROM budgets WHERE userID = 1;
 -- Current balance
 SELECT current_balance FROM ledger;
 
--- Pie chart
--- Change userID = 1 to the session's user id
-SELECT E.category, AVG(E.amount) FROM expenses E
-WHERE E.userID = 1
-GROUP BY E.category
-ORDER BY E.category ASC;
-
--- Change userID = 1 to the session's user id
-SELECT I.category, AVG(I.amount) FROM incomes I
-WHERE I.userID = 1
-GROUP BY I.category
-ORDER BY I.category ASC;
-
 -- Events to validate recurring bool 
 SET GLOBAL event_scheduler = ON;
 SHOW EVENTS;
