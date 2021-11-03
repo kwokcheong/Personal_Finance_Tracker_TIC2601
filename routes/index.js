@@ -10,7 +10,8 @@ router.get('/', function(req, res) {
   } else {
       let sql = `SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM incomes;
                  SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM expenses;
-                 SELECT current_balance 'bal' FROM ledger WHERE userID = ${session.userID} LIMIT 1`;
+                 SELECT current_balance 'bal' FROM ledger WHERE userID = ${session.userID} LIMIT 1;
+                 SELECT * FROM v_incomeexpenses;`
       db.query(sql, (err , result) => {
           if (err) throw err;
           let averageIncome = result[0][0].avg;
@@ -22,13 +23,14 @@ router.get('/', function(req, res) {
           if(averageExpense == null){
             averageExpense = result[1][0].sum;
           }
-
+          console.log(result[3])
           res.render('dashboard', {
               name: session.username,
               averageIncome: averageIncome,
               averageExp: averageExpense,
               averageSaving: averageIncome - averageExpense,
-              curr_balance: result[2][0].bal
+              curr_balance: result[2][0].bal,
+              result: result[3]
           })
       })
   }

@@ -14,12 +14,6 @@
     <link rel="stylesheet" href="/stylesheets/dashboard.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
         crossorigin="anonymous"></script>
-    <script>
-        let averageIncome = '<%= averageIncome %>';
-        let averageExp = '<%= averageExp %>';
-        let averageSaving = '<%= averageSaving %>';
-        let averageSaving = '<%= curr_balance %>';
-    </script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -200,23 +194,37 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>DATE</th>
+                                        <th>NAME</th>
                                         <th>CATEGORY</th>
-                                        <th>DESCRIPTION</th>
                                         <th>AMOUNT</th>
-                                        <th>RECURRING</th>
+                                        <th>DATE</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>DATE</th>
+                                        <th>NAME</th>
                                         <th>CATEGORY</th>
-                                        <th>DESCRIPTION</th>
                                         <th>AMOUNT</th>
-                                        <th>RECURRING</th>
+                                        <th>DATE</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
+                                    <% for(var i=0; i<result.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <%= result[i].name %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].category %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].amount %>
+                                            </td>
+                                            <td>
+                                                <%= result[i].createdDt.toISOString().split('T')[0] %>
+                                            </td>
+                                        </tr>
+                                        <% } %>   
                                 </tbody>
                             </table>
                         </div>
