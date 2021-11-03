@@ -117,9 +117,9 @@
                             <div class="card mb-4 avg-income">
                                 <div class="card-body">
                                     <h5 class="card-title">Average Income:</h5>
-                                    <p class="card-text">
-                                        <%= parseFloat(averageIncome).toFixed(2) %>
-                                    </p>
+                                    <h4 class="card-text" style="color: rgb(34, 165, 93); font-weight: 600;">
+                                       <%= parseFloat(averageIncome).toFixed(2) != 0 ? '+' + parseFloat(averageIncome).toFixed(2) : '0.00' %>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -127,29 +127,29 @@
                             <div class="card mb-4 avg-expenses">
                                 <div class="card-body">
                                     <h5 class="card-title">Average Expenses:</h5>
-                                    <p class="card-text">
-                                        <%= parseFloat(averageExp).toFixed(2) %>
-                                    </p>
+                                    <h4 class="card-text" style="color: rgb(206, 46, 46); font-weight: 600;">
+                                        <%= parseFloat(averageExp).toFixed(2) != 0 ? '-' + parseFloat(averageExp).toFixed(2) : '0.00'  %>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h5 class="card-title">Average Saving:</h5>
-                                    <p class="card-text">
+                                    <h5 class="card-title">Average Savings:</h5>
+                                    <h4 class="card-text" style="font-weight: 600;">
                                         <%= parseFloat(averageSaving).toFixed(2) %>
-                                    </p>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h5 class="card-title">Total Balance:</h5>
-                                    <p class="card-text">
+                                    <h5 class="card-title">Current Balance:</h5>
+                                    <h4 class="card-text" style=" font-weight: 600;">
                                         <%= parseFloat(curr_balance).toFixed(2) %>
-                                    </p>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +219,7 @@
                                             </td>
                                             <td>
                                                 <% if(result[i].amount.charAt(0) == '+') { %>
-                                                    <h6 style="color: rgb(75, 202, 75)"><%= result[i].amount %></h6>
+                                                    <h6 style="color: rgb(34, 165, 93);"><%= result[i].amount %></h6>
                                                 <% } else { %>
                                                     <h6 style="color: rgb(228, 40, 40)"><%= result[i].amount %></h6>
                                                 <% } %>

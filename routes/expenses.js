@@ -71,10 +71,8 @@ router.get('/view', (req, res) => {
 
 //INSERT expenses query
 router.post('/save', (req, res) => {
-    let randomNum = Math.random().toString(36).substr(2, 8);
     let today = new Date().toISOString().split('T')[0];
     let data = {
-        expensesID: randomNum,
         userID: req.session.userID,
         name: req.body.name,
         amount: req.body.amount,

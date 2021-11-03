@@ -26,8 +26,8 @@ router.get('/', function(req, res) {
           console.log(result[3])
           res.render('dashboard', {
               name: session.username,
-              averageIncome: averageIncome,
-              averageExp: averageExpense,
+              averageIncome: averageIncome != null ? averageIncome : 0,
+              averageExp: averageExpense != null? averageExpense : 0,
               averageSaving: averageIncome - averageExpense,
               curr_balance: result[2][0].bal,
               result: result[3]

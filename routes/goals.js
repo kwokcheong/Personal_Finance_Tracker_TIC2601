@@ -38,10 +38,8 @@ router.get('/view/completed', (req, res) => {
 
 //INSERT Query
 router.post('/save', (req, res) => {
-    let randomNum = Math.random().toString(36).substr(2, 8);
     let today = new Date().toISOString().split('T')[0];
     let data = {
-        goalID: randomNum,
         userID: req.session.userID,
         name: req.body.name,
         description: req.body.description,
