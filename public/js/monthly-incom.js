@@ -7,7 +7,7 @@ var ctx = document.getElementById("moincomeChart");
 var myPieChart = new Chart(ctx, {
   type: 'pie',
   data: {
-    labels: ['Allowance', 'Freelance', 'Others','Salary'],
+    labels: JSON.parse(incomePieLabel),
     datasets: [{
       data: JSON.parse(incomePie),
       backgroundColor: ['#45B39D', '#76D7C4', '#73C6B6', '#5DADE2'],

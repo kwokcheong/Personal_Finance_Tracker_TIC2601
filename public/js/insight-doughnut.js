@@ -3,6 +3,7 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
 let doughnutDatapoints = JSON.parse(budgetChart);
+console.log(doughnutDatapoints)
 //doughnut data points should be [total expense for latest month , (budget amount - total expense for latest month)]
 
 let ctx3 = document.getElementById('doughnutChart');

@@ -7,7 +7,7 @@ var ctx = document.getElementById("moexpensesChart");
 var myPieChart = new Chart(ctx, {
   type: 'pie',
   data: {
-    labels: ['Bills', 'Food', 'Luxury', 'Others', 'Travel', 'Utility'],
+    labels: JSON.parse(expensePieLabel),
     datasets: [{
       data: JSON.parse(expensePie),
       backgroundColor: ['#E67E22', '#F5B041', '#F4D03F', '#E59866', '#F5CBA7','#D68910'],

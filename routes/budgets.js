@@ -9,10 +9,10 @@ router.get('/view', (req, res) => {
         res.render('loggedout');;
     } else {
         let sql = `SELECT * FROM budgets WHERE userID = ${session.userID} ORDER BY category ASC;
-                   SELECT SUM(amount) AS 'total_exp' from expenses WHERE userID = ${session.userID} GROUP BY MONTH(created_at) ORDER BY MONTH(created_at) DESC LIMIT 1;
+                   SELECT SUM(amount) AS 'total_exp' from expenses WHERE userID = ${session.userID} AND MONTH(created_at) = MONTH(CURRENT_TIMESTAMP) AND YEAR(created_at) = YEAR(CURRENT_TIMESTAMP);
                    SELECT SUM(budget_amount_per_month) AS 'total_budget' FROM budgets WHERE userID = ${session.userID};
                    SELECT fn_daysCounter('${today.getFullYear()}', ${today.getMonth()+1}) AS 'days';
-                   SELECT category, SUM(amount) 'sum' FROM crud_express.expenses WHERE MONTH(created_at) = MONTH(CURRENT_TIMESTAMP) AND YEAR(created_at) = YEAR(CURRENT_TIMESTAMP) GROUP BY category ORDER BY category ASC;`
+                   SELECT category, SUM(amount) 'sum' FROM crud_express.expenses WHERE userID = ${session.userID} AND MONTH(created_at) = MONTH(CURRENT_TIMESTAMP) AND YEAR(created_at) = YEAR(CURRENT_TIMESTAMP) GROUP BY category ORDER BY category ASC;`
         db.query(sql, (err, result) => {
             if (err) throw err;
             let budgetLabel = [];
@@ -31,7 +31,7 @@ router.get('/view', (req, res) => {
                 budgetLabel[i] = result[0][i].category;
                 budgetByCategory[i] = result[0][i].budget_amount_per_month;
             }
-            console.log(result[4][0])
+
             for(let i=0; i<result[4].length; i++){
                 switch(result[4][i].category){
                     case 'Bills': expensesByCat[0] = result[4][i].sum; break;
@@ -44,7 +44,7 @@ router.get('/view', (req, res) => {
                 }
             }
             
-            console.log(expensesByCat);
+
             res.render('budgets/view', {
                 result: result[0],
                 budgetChart: JSON.stringify(budgetChart),
@@ -70,7 +70,6 @@ router.get('/edit/:budgetcategory', (req, res) => {
                WHERE userID = ${userID} AND category = '${budgetcategory}'`;
         db.query(sql, (err, result) => {
             if (err) throw err;
-            console.log(result[0])
             res.render('budgets/edit', {
                 result: result,
                 name: session.username

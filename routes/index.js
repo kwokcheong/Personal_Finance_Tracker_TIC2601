@@ -22,6 +22,7 @@ router.get('/', function(req, res) {
           let averageIncome = result[0][0].avg;
           let averageExpense = result[1][0].avg;
           let curr_bal = result[2][0] != null? result[2][0].bal : 0;
+          let moIncomeLabel = [];
           let moIncomeData = [];
           let viewtable = result[3];
           let count = 0;
@@ -37,6 +38,7 @@ router.get('/', function(req, res) {
           }
 
           for(let i=0; i<result[6].length ; i++){
+            moIncomeLabel[i] = result[6][i].category;
             moIncomeData[i] = parseFloat(result[6][i].amount).toFixed(2)
           }
 
@@ -49,12 +51,13 @@ router.get('/', function(req, res) {
             moneyflowExpenses[count] = parseFloat(result[5][i].exp_sum).toFixed(2);
             count++;
           }
-
+          let moExpenseLabel = [];
           let moExpenseData = [];
           db.query(sql2, (err, result) => {
             if(err) throw err;
             for(let i=0; i<result[0].length ; i++){
-              moExpenseData[i] =  parseFloat(result[0][i].amount).toFixed(2);
+              moExpenseLabel[i] = result[0][i].category; 
+              moExpenseData[i] = parseFloat(result[0][i].amount).toFixed(2);
             }
 
             res.render('dashboard', {
@@ -64,7 +67,9 @@ router.get('/', function(req, res) {
               averageSaving: averageIncome - averageExpense,
               curr_balance: curr_bal,
               result: viewtable,
+              incomePieLabel: JSON.stringify(moIncomeLabel),
               incomePie: JSON.stringify(moIncomeData),
+              expensePieLabel: JSON.stringify(moExpenseLabel),
               expensePie: JSON.stringify(moExpenseData),
               moneyflow_income: JSON.stringify(moneyflowIncome),
               moneyflow_expenses: JSON.stringify(moneyflowExpenses)

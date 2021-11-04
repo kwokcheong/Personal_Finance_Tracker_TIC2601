@@ -54,7 +54,6 @@ router.get('/view', (req, res) => {
                 amount[i] = freelance[i] + allowance[i] + salary[i] + others[i];
             }
             
-            console.log(result[1])
             res.render('income/view', {
                 result: result[0],
                 freelance: JSON.stringify(freelance),

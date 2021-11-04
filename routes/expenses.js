@@ -116,7 +116,6 @@ router.get('/edit/:expensesID', (req, res) => {
                WHERE userID = ${userID} AND expensesID = '${expensesID}';`;
         db.query(sql, (err, result) => {
             if (err) throw err;
-            console.log(result[0])
             res.render('expenses/edit', {
                 result: result[0],
                 start_date: result[1][0].start_date.toISOString().split('T')[0],
