@@ -96,6 +96,7 @@ BEGIN
 	-- Expenses amount will be within range from 500 - 1000 dec
 	INSERT INTO `crud_express`.`expenses` (`expensesID`, `userID`, `name`, `amount`, `category`,`recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`) VALUES 
 	(COUNTER,'1', CONCAT('Expense',COUNTER), RAND()*(1000-500)+500, CATEGORY_EXPENSE, EXPENSES_START_DATE, EXPENSES_END_DATE, EXPENSES_RECURRING, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 250) DAY, INTERVAL 100 DAY));
+	
 END$$
 DELIMITER;
 
@@ -120,6 +121,7 @@ BEGIN
 	-- Goals amount will be within range from 500 - 1000 int
 	INSERT INTO `crud_express`.`goals` (`goalID`,`userID`, `name`, `amount`, `description`, `possible`, `done`, `start_date`, `end_date`, `created_at`) VALUES 
 	(GOALS_COUNTER,'1', CONCAT('Goal',GOALS_COUNTER),FLOOR(RAND()*(1000-500+1)+500), GOALS_DESCRIPTION, FLOOR(RAND()*(1-0+1))+0, DONE, START_DATE, END_DATE, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 250) DAY, INTERVAL 100 DAY));
+
 END$$
 DELIMITER;
 
@@ -168,6 +170,7 @@ BEGIN
 		FROM TempIncomeTable TI
 		GROUP BY TI.record_month, TI.record_year
 		ORDER BY TI.record_month, TI.record_year ASC);
+
     END IF; 
 END$$
 DELIMITER;

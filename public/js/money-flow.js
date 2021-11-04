@@ -15,9 +15,9 @@ var myLineChart = new Chart(ctx, {
       data: [4215, 5312, 6251, 7841, 9821,3023],
     },
     {
-        label: "Expenses",
-        backgroundColor: '#EC7063',
-        data: [800, 3200, 3476, 2390, 6500,8013],
+      label: "Expenses",
+      backgroundColor: '#EC7063',
+      data: [800, 3200, 3476, 2390, 6500,8013]
       }
     ],
   },
