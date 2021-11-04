@@ -166,3 +166,15 @@ CREATE TRIGGER update_balance
     END IF;
     END;|
 DELIMITER ;
+
+DELIMITER |
+CREATE TRIGGER setupaccount
+ AFTER INSERT
+    ON users FOR EACH ROW
+    BEGIN
+    INSERT INTO ledger 
+    SET
+    userID = NEW.userID,
+    current_balance = 0;
+    END|
+DELIMITER 
