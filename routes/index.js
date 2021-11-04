@@ -103,4 +103,10 @@ router.get('/invalid', function(req, res) {
   res.send('Invalid User');
 });
 
+router.get('/team', function(req, res) {
+  res.render('team',{
+    name: req.session.username
+  });
+});
+
 module.exports = router;
