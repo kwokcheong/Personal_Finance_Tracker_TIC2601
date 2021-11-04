@@ -49,8 +49,6 @@ router.get('/', function(req, res) {
             moneyflowExpenses[count] = parseFloat(result[5][i].exp_sum).toFixed(2);
             count++;
           }
-          console.log(moneyflowIncome)
-          console.log(moneyflowExpenses)
 
           let moExpenseData = [];
           db.query(sql2, (err, result) => {

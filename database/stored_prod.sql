@@ -8,7 +8,7 @@ DECLARE COUNTER INT DEFAULT 1;
 DECLARE GOALS_COUNTER INT DEFAULT 1;
 
 INSERT INTO ledger VALUES (1, 0);
-INSERT INTO `crud_express`.`budgets` (`userID`, `category`, `budget_amount_per_month`) VALUES ('1', 'Food', FLOOR(RAND()*(1000-500+1)+500)), ('1', 'Luxury', FLOOR(RAND()*(1000-500+1)+500)),('1', 'Transport', FLOOR(RAND()*(1000-500+1)+500)), ('1', 'Bills', FLOOR(RAND()*(1000-500+1)+500)),('1', 'Others', FLOOR(RAND()*(1000-500+1)+500));
+INSERT INTO `crud_express`.`budgets` (`userID`, `category`, `budget_amount_per_month`) VALUES ('1', 'Utility', FLOOR(RAND()*(1000-500+1)+500)),('1', 'Food', FLOOR(RAND()*(1000-500+1)+500)), ('1', 'Luxury', FLOOR(RAND()*(1000-500+1)+500)),('1', 'Transport', FLOOR(RAND()*(1000-500+1)+500)), ('1', 'Bills', FLOOR(RAND()*(1000-500+1)+500)),('1', 'Others', FLOOR(RAND()*(1000-500+1)+500));
 
 DROP TABLE IF EXISTS TempIncomeTableCategory; 
 CREATE TEMPORARY TABLE TempIncomeTableCategory

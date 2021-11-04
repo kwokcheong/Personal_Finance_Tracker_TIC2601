@@ -164,45 +164,6 @@
                             </table>
                         </div>
                     </div>
-
-                    <!-- <div>
-                        <h1 style='color: gray;'> Budgets table </b> </h1>
-                    </div>
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Amount</th>
-                                    <th>Controls</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Amount</th>
-                                    <th>Controls</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <% for(var i=0; i<result.length; i++) { %>
-                                    <tr>
-                                        <td>
-                                            <%= result[i].category %>
-                                        </td>
-                                        <td>
-                                            <%= result[i].budget_amount_per_month %>
-                                        </td>
-                                        <td>
-                                            <a href="/budgets/edit/<%= result[i].category %>"><i
-                                                    class="fas fa-edit"></i></a>
-                                        </td>
-                                    </tr>
-                                    <% } %>
-                            </tbody>
-                        </table>
-                    </div> -->
-                    <!-- ends here -->
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -223,6 +184,9 @@
     <script>
         let budgetChart =  '<%- budgetChart %>';
         let daysLeft = '<%- daysLeft %>';
+        let budgetDatapoints = '<%- budgetByCategory %>';
+        let budgetLabel = '<%- budgetLabel %>';
+        let expensesByCat = '<%- expensesByCat %>'
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>

@@ -3,9 +3,9 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Bar Chart: Insert data here
-const categoryDatapoints = ['Allowance', 'Freelance', 'Salary', 'Others'];
-const budgetDatapoints = [1000, 200, 200, 100];
-const expensesDatapoints = [800, 59.94, 53, 30];
+const categoryDatapoints = JSON.parse(budgetLabel);
+const budgetDatapoint = JSON.parse(budgetDatapoints);
+const expensesDatapoints = JSON.parse(expensesByCat);
 
 var ctx = document.getElementById("barChart");
 var barChart = new Chart(ctx, {
@@ -14,7 +14,7 @@ var barChart = new Chart(ctx, {
     labels: categoryDatapoints,
     datasets: [{
       label: 'Budget',
-      data: budgetDatapoints,
+      data: budgetDatapoint,
       hoverBackgroundColor: 'rgb(1, 87, 155)',
       backgroundColor: 'rgb(2, 119, 189)'
     }, {
