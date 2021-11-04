@@ -37,7 +37,7 @@ router.get('/', function(req, res) {
           }
 
           for(let i=0; i<result[6].length ; i++){
-            moIncomeData[i] = parseFloat(result[6][i]['(SUM(I.amount)/ MONTH_DIFF)']).toFixed(2)
+            moIncomeData[i] = parseFloat(result[6][i].amount).toFixed(2)
           }
 
           for(let i=result[4].length-1; i>=0; i--){
@@ -56,7 +56,7 @@ router.get('/', function(req, res) {
           db.query(sql2, (err, result) => {
             if(err) throw err;
             for(let i=0; i<result[0].length ; i++){
-              moExpenseData[i] =  parseFloat(result[0][i]['(SUM(E.amount)/ MONTH_DIFF)']).toFixed(2);
+              moExpenseData[i] =  parseFloat(result[0][i].amount).toFixed(2);
             }
 
             res.render('dashboard', {
