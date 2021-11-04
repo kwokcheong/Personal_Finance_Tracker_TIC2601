@@ -7,17 +7,17 @@ var ctx = document.getElementById("moneyflowChart");
 var myLineChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['May', 'June', 'July', 'Aug', 'Sep', 'Oct'],
+    labels: ['June', 'July', 'Aug', 'Sep', 'Oct', 'Nov'],
     datasets: [
     {
       label: "Income",
       backgroundColor: '#3498DB',
-      data: [4215, 5312, 6251, 7841, 9821,3023],
+      data: JSON.parse(moneyflow_income),
     },
     {
-      label: "Expenses",
-      backgroundColor: '#EC7063',
-      data: [800, 3200, 3476, 2390, 6500,8013]
+        label: "Expenses",
+        backgroundColor: '#EC7063',
+        data: JSON.parse(moneyflow_expenses),
       }
     ],
   },
@@ -49,8 +49,6 @@ var myLineChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 15000,
-          maxTicksLimit: 5
         },
         gridLines: {
           display: true

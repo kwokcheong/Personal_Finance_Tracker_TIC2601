@@ -9,7 +9,7 @@ var myPieChart = new Chart(ctx, {
   data: {
     labels: ['Bills', 'Food', 'Luxury', 'Others', 'Travel', 'Utility'],
     datasets: [{
-      data: [900, 70, 100, 670,402, 812],
+      data: JSON.parse(expensePie),
       backgroundColor: ['#E67E22', '#F5B041', '#F4D03F', '#E59866', '#F5CBA7','#D68910'],
     }]
   },
