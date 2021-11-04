@@ -2,7 +2,8 @@
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
-const doughnutDatapoints = [10, 90];
+//doughnut data points should be [total expense for latest month , (budget amount - total expense for latest month)]
+const doughnutDatapoints = [6920, 0];
 const daysLeft = [29];
 
 let ctx3 = document.getElementById('doughnutChart');
@@ -17,17 +18,17 @@ let doughnutChart = new Chart(ctx3, {
             label: 'info',
             data: doughnutDatapoints,
             backgroundColor: [
-                'rgb(255, 138, 101)',
+                '#dc3545',
                 'rgb(224, 224, 224)'
             ],
             borderColor:[
-                'rgb(255, 138, 101)',
+                '#dc3545',
                 'rgb(224, 224, 224)'
             ]
         }]
     },
     options: {
-        cutoutPercentage: 65,
+        cutoutPercentage: 87,
         reponsive: true,
         tooltips: {
             callbacks: {
@@ -83,7 +84,7 @@ Chart.pluginService.register({
         var wrapText = false;
 
         if (minFontSize === undefined) {
-            minFontSize = 20;
+            minFontSize = 109;
         }
 
         if (minFontSize && fontSizeToUse < minFontSize) {

@@ -8,12 +8,12 @@ router.get('/', function(req, res) {
   if (!session.userID){
       res.render('welcome');
   } else {
-      let sql = `SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM incomes;
-                 SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM expenses;
+      let sql = `SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM incomes WHERE userID = ${session.userID};
+                 SELECT SUM(amount) 'sum', SUM(amount) / TIMESTAMPDIFF(MONTH, MIN(created_at), MAX(created_at)) 'avg' FROM expenses WHERE userID = ${session.userID};
                  SELECT current_balance 'bal' FROM ledger WHERE userID = ${session.userID} LIMIT 1;
-                 SELECT * FROM v_incomeexpenses ORDER BY createdDt DESC;
-                 SELECT SUM(amount) 'income_sum' FROM incomes GROUP BY MONTH(created_at) ORDER BY MONTH(created_at) DESC LIMIT 6;
-                 SELECT SUM(amount) 'exp_sum' FROM expenses GROUP BY MONTH(created_at) ORDER BY MONTH(created_at) DESC LIMIT 6;
+                 SELECT * FROM v_incomeexpenses WHERE userID = ${session.userID} ORDER BY createdDt DESC;
+                 SELECT SUM(amount) 'income_sum' FROM incomes WHERE userID = ${session.userID} GROUP BY MONTH(created_at) ORDER BY MONTH(created_at) DESC LIMIT 6;
+                 SELECT SUM(amount) 'exp_sum' FROM expenses WHERE userID = ${session.userID} GROUP BY MONTH(created_at) ORDER BY MONTH(created_at) DESC LIMIT 6;
                  CALL sp_calculateAverageIncomeCategory(${session.userID});`
 
       let sql2 = ` CALL crud_express.sp_calculateAverageExpensesCategory(${session.userID});`

@@ -7,7 +7,8 @@ router.get('/view', (req, res) => {
     if (!session.userID) {
         res.render('loggedout');;
     } else {
-        let sql = `SELECT * FROM budgets WHERE userID = ${session.userID} ORDER BY created_at ASC`;
+        let sql = `SELECT * FROM budgets WHERE userID = ${session.userID} ORDER BY created_at ASC;
+                   SELECT SUM(amount) from expenses WHERE userID = ${session.userID} `;
         db.query(sql, (err, result) => {
             if (err) throw err;
             res.render('budgets/view', {
