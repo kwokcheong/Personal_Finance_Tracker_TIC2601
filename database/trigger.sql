@@ -176,5 +176,35 @@ CREATE TRIGGER setupaccount
     SET
     userID = NEW.userID,
     current_balance = 0;
+    INSERT INTO budgets
+    SET
+    userID = NEW.userID,
+    category = "Bills",
+    budget_amount_per_month = 0;
+    INSERT INTO budgets
+    SET
+    userID = NEW.userID,
+    category = "Food",
+    budget_amount_per_month = 0;
+    INSERT INTO budgets
+    SET
+    userID = NEW.userID,
+    category = "Luxury",
+    budget_amount_per_month = 0;
+    INSERT INTO budgets
+    SET
+    userID = NEW.userID,
+    category = "Others",
+    budget_amount_per_month = 0;
+    INSERT INTO budgets
+    SET
+    userID = NEW.userID,
+    category = "Transport",
+    budget_amount_per_month = 0;
+        INSERT INTO budgets
+    SET
+    userID = NEW.userID,
+    category = "Utility",
+    budget_amount_per_month = 0;
     END|
 DELIMITER 
