@@ -104,6 +104,7 @@ router.post('/update/:goalID', (req, res) => {
     let today = new Date().toISOString().split('T')[0];
     let data = {
         name: req.body.name,
+        image_url: req.body.image_url,
         description: req.body.description,
         amount: req.body.amount,
         start_date: req.body.start_date == null ? today : req.body.start_date,
