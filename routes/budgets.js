@@ -18,13 +18,13 @@ router.get('/view', (req, res) => {
             let budgetLabel = [];
             let budgetChart = [];
             let expensesByCat = ['0','0','0','0','0','0'];
-            let total_expense = result[1][0].total_exp;
+            let total_expense = parseFloat(result[1][0].total_exp);
             let remaining_budget = parseFloat(result[2][0].total_budget) - parseFloat(result[1][0].total_exp);
             if(remaining_budget < 0){
                 remaining_budget = 0.00;
             }
-            budgetChart[0] = total_expense;
-            budgetChart[1] = remaining_budget;
+            budgetChart[0] = total_expense.toFixed(2);
+            budgetChart[1] = remaining_budget.toFixed(2);
 
             let budgetByCategory = [];
             for (let i=0; i<result[0].length; i++){

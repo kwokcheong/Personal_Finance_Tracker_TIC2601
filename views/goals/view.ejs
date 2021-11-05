@@ -195,9 +195,9 @@
                                 <h5 style="justify-content: center; text-align: center;">No completed goals yet.</h5>
                             </div>
                         <% } %>
-                        <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; padding: 2%; justify-content: flex-start;">
+                        <div class="card-body" style="text-align: center; display: flex; flex-direction: row; flex-wrap: wrap; padding: 2%; justify-content: flex-start;">
                             <% for(var i=0; i<result.length; i++) { %>
-                                <div class="goalcard" id="goalcards">
+                                <div class="goalcard flex-item" id="goalcards">
                                     <% let defaultimg = '../../images/banana.jpg'; %>
                                     <div class="bg" style="background-image: url('<%= result[i].image_url !== null ? result[i].image_url : defaultimg  %>')"></div>
                                     <% if (state == "active") { %>
