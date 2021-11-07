@@ -109,3 +109,15 @@ CREATE EVENT insertRecurringIncomes
   END|
 DELIMITER ;
 
+-- Events to check on goals done status
+DELIMITER |
+CREATE EVENT checkGoalsDoneValue
+   ON SCHEDULE 
+	EVERY 1 DAY
+   COMMENT 'To mark as done if goals period is over'
+   DO BEGIN
+	UPDATE goals
+	SET done = TRUE
+	WHERE done = FALSE AND CURRENT_DATE NOT BETWEEN start_date AND end_date;
+  END|
+DELIMITER ;

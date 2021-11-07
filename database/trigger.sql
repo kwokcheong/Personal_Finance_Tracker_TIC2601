@@ -208,3 +208,12 @@ CREATE TRIGGER setupaccount
     budget_amount_per_month = 0;
     END|
 DELIMITER 
+
+DELIMITER |
+CREATE TRIGGER goals_BEFORE_INSERT 
+	BEFORE INSERT 
+		ON goals FOR EACH ROW
+	BEGIN
+		CALL sp_calculateGoalPossibility(TIMESTAMPDIFF(MONTH, NEW.start_date, NEW.end_date), NEW.amount, NEW.userID, NEW.possible);
+  END;|
+DELIMITER ;
