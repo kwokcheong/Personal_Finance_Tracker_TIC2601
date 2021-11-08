@@ -4,6 +4,10 @@ DROP TRIGGER IF EXISTS expenses_AFTER_INSERT;
 DROP TRIGGER IF EXISTS expenses_AFTER_UPDATE;
 DROP TRIGGER IF EXISTS incomes_AFTER_DELETE;
 DROP TRIGGER IF EXISTS expenses_AFTER_DELETE;
+DROP TRIGGER IF EXISTS goals_BEFORE_INSERT; 
+DROP TRIGGER IF EXISTS setupaccount;
+DROP TRIGGER IF EXISTS complete_goal;
+DROP TRIGGER IF EXISTS update_balance;
 
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS incomes;
@@ -138,16 +142,6 @@ CREATE TRIGGER complete_goal
     IF (getDate() = end_date)
     THEN SET done = 1
     END;| 
-DELIMITER ;
-
-DELIMITER
-CREATE TRIGGER close to limit
- AFTER INSERT
-    ON expenses FOR EACH ROW
-    bh = budgethead, e = expenses; 
-    BEGIN
-    IF bh.category = e.category AND bh.amount = e.amount
-    END; |
 DELIMITER ;
 
 DELIMITER 
