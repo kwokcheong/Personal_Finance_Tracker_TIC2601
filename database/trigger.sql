@@ -200,8 +200,8 @@ CREATE TRIGGER setupaccount
     userID = NEW.userID,
     category = "Utility",
     budget_amount_per_month = 0;
-    END|
-DELIMITER 
+    END;|
+DELIMITER; 
 
 DELIMITER |
 CREATE TRIGGER goals_BEFORE_INSERT 
