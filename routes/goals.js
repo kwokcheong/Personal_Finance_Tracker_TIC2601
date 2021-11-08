@@ -7,7 +7,7 @@ router.get('/view', (req, res) => {
     if (!session.userID) {
         res.render('loggedout');;
     } else {
-        let sql = `SELECT * FROM goals WHERE userID = ${session.userID} AND done = 0 ORDER BY created_at ASC`;
+        let sql = `SELECT * FROM goals WHERE userID = ${session.userID} AND done = 0 ORDER BY created_at DESC`;
         db.query(sql, (err, result) => {
             if (err) throw err;
             res.render('goals/view', {
@@ -57,6 +57,27 @@ router.post('/save', (req, res) => {
     });
 });
 
+// UPDATE goal Query
+router.post('/update/:goalID', (req, res) => {
+    let today = new Date().toISOString().split('T')[0];
+    let data = {
+        name: req.body.name,
+        image_url: req.body.image_url,
+        description: req.body.description,
+        amount: req.body.amount,
+        start_date: req.body.start_date == null ? today : req.body.start_date,
+        end_date: req.body.end_date == null ? today : req.body.end_date, 
+    }
+    let session = req.session;
+    const userID = session.userID;
+    const goalID = req.params.goalID;
+    let sql = `UPDATE goals SET ? WHERE userID = ${userID} AND goalID = ${goalID}`
+    db.query(sql, data, (err, result) => {
+        if (err) throw err;
+        res.redirect('/goals/view');
+    })
+});
+
 //DELETE goal query
 router.get('/delete/:goalID', (req, res) => {
     const userID = req.session.userID;
@@ -99,25 +120,6 @@ router.get('/check/:goalID', (req, res) => {
     })
 });
 
-// UPDATE goal Query
-router.post('/update/:goalID', (req, res) => {
-    let today = new Date().toISOString().split('T')[0];
-    let data = {
-        name: req.body.name,
-        image_url: req.body.image_url,
-        description: req.body.description,
-        amount: req.body.amount,
-        start_date: req.body.start_date == null ? today : req.body.start_date,
-        end_date: req.body.end_date == null ? today : req.body.end_date, 
-    }
-    let session = req.session;
-    const userID = session.userID;
-    const goalID = req.params.goalID;
-    let sql = `UPDATE goals SET ? WHERE userID = ${userID} AND goalID = ${goalID}`
-    db.query(sql, data, (err, result) => {
-        if (err) throw err;
-        res.redirect('/goals/view');
-    })
-})
+
 
 module.exports = router;

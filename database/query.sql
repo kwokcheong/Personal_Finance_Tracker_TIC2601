@@ -121,3 +121,15 @@ CREATE EVENT checkGoalsDoneValue
 	WHERE done = FALSE AND CURRENT_DATE NOT BETWEEN start_date AND end_date;
   END|
 DELIMITER ;
+
+-- Change userID = 1 to the session's user id
+SELECT category, budget_amount_per_month FROM budgets
+WHERE userID = 1;
+
+
+-- Change userID = 1 to the session's user id
+SELECT category, SUM(amount) AS 'total_exp' from expenses 
+WHERE userID = 1 AND MONTH(created_at) = MONTH(CURRENT_TIMESTAMP) AND YEAR(created_at) = YEAR(CURRENT_TIMESTAMP)
+GROUP BY category
+ORDER BY category ASC;
+
