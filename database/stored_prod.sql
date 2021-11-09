@@ -91,11 +91,11 @@ BEGIN
 
 	-- Income amount will be within range from 1500 - 2000 int
 	INSERT INTO `crud_express`.`incomes` (`incomeID`,`userID`, `name`, `amount`, `category`, `recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`) VALUES 
-	(COUNTER,'1', CONCAT('Income',COUNTER), FLOOR(RAND()*(2000-1500+1)+1500), CATEGORY_INCOME, INCOME_START_DATE, INCOME_END_DATE, INCOME_RECURRING, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 250) DAY, INTERVAL 100 DAY));
+	(COUNTER,'1', CONCAT('Income',COUNTER), FLOOR(RAND()*(2000-1500+1)+1500), CATEGORY_INCOME, INCOME_START_DATE, INCOME_END_DATE, INCOME_RECURRING, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 180) DAY, INTERVAL 10 DAY));
 	
-	-- Expenses amount will be within range from 500 - 1000 dec
+	-- Expenses amount will be within range from 50 - 100 dec
 	INSERT INTO `crud_express`.`expenses` (`expensesID`, `userID`, `name`, `amount`, `category`,`recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`) VALUES 
-	(COUNTER,'1', CONCAT('Expense',COUNTER), RAND()*(1000-500)+500, CATEGORY_EXPENSE, EXPENSES_START_DATE, EXPENSES_END_DATE, EXPENSES_RECURRING, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 250) DAY, INTERVAL 100 DAY));
+	(COUNTER,'1', CONCAT('Expense',COUNTER), RAND()*(100-50)+50, CATEGORY_EXPENSE, EXPENSES_START_DATE, EXPENSES_END_DATE, EXPENSES_RECURRING, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 180) DAY, INTERVAL 10 DAY));
 	
 END$$
 DELIMITER;
@@ -120,7 +120,7 @@ BEGIN
     
 	-- Goals amount will be within range from 500 - 1000 int
 	INSERT INTO `crud_express`.`goals` (`goalID`,`userID`, `name`, `amount`, `description`, `possible`, `done`, `start_date`, `end_date`, `created_at`) VALUES 
-	(GOALS_COUNTER,'1', CONCAT('Goal',GOALS_COUNTER),FLOOR(RAND()*(1000-500+1)+500), GOALS_DESCRIPTION, FLOOR(RAND()*(1-0+1))+0, DONE, START_DATE, END_DATE, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 250) DAY, INTERVAL 100 DAY));
+	(GOALS_COUNTER,'1', CONCAT('Goal',GOALS_COUNTER),FLOOR(RAND()*(1000-500+1)+500), GOALS_DESCRIPTION, FLOOR(RAND()*(1-0+1))+0, DONE, START_DATE, END_DATE, DATE_ADD(CURRENT_DATE - INTERVAL FLOOR(RAND() * 180) DAY, INTERVAL 10 DAY));
 
 END$$
 DELIMITER;
@@ -345,5 +345,31 @@ BEGIN
 	INSERT INTO `crud_express`.`incomes`(`userID`, `name`, `amount`, `category`, `recurring_start_date`, `recurring_end_date`, `recurring`, `created_at`)
 	SELECT TI.userID, TI.name, TI.amount, TI.category, TI.recurring_start_date, TI.recurring_end_date, TI.recurring, NOW()
 	FROM TempRecurringIncomesTable TI;
+END$$
+DELIMITER;
+
+-- Goal possibility
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `sp_calculateGoalPossibility` $$
+CREATE PROCEDURE `sp_calculateGoalPossibility`(IN MONTH_DIFF INT, IN GOAL_AMOUNT DECIMAL(13,2), IN USER_ID INT, OUT POSSIBLE BOOLEAN)
+BEGIN
+
+	DECLARE AVERAGE_SAVING DECIMAL(13,2); 
+    DECLARE INPUT_MONTH_DIFF INT;
+
+	SET AVERAGE_SAVING = (SELECT fn_calculateAverageSavings(USER_ID));
+    
+    IF MONTH_DIFF = 0 THEN 
+		SET INPUT_MONTH_DIFF = 1;
+	ELSE 
+		SET INPUT_MONTH_DIFF = MONTH_DIFF;
+	END IF; 
+	
+    IF ((AVERAGE_SAVING * INPUT_MONTH_DIFF) > GOAL_AMOUNT) THEN 
+		SET POSSIBLE = TRUE; 
+	ELSE 
+		SET POSSIBLE = FALSE; 
+    END IF; 
+    
 END$$
 DELIMITER;

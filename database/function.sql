@@ -105,7 +105,7 @@ RETURN FINAL_OUTPUT;
 END$$
 DELIMITER;
 
--- Static value for av savings
+-- Static value for avg savings
 DELIMITER $$
 DROP FUNCTION IF EXISTS `fn_calculateAverageSavings`$$
 CREATE FUNCTION `fn_calculateAverageSavings`(ip_user TEXT) RETURNS decimal(13,2)
@@ -120,5 +120,28 @@ BEGIN
     
     SET FINAL_OUTPUT = INCOME - EXPENSES;
 	RETURN (FINAL_OUTPUT);
+END$$
+DELIMITER;
+
+-- Remaining budget
+DELIMITER $$
+DROP FUNCTION IF EXISTS `fn_calculateRemainingBudget`$$
+CREATE FUNCTION `fn_calculateRemainingBudget`(ip_user TEXT) RETURNS decimal(13,2)
+BEGIN
+
+	DECLARE SUM_AMOUNT DECIMAL(13,2);
+    DECLARE SUM_BUDGET_AMOUNT DECIMAL(13,2);
+    DECLARE FINAL_OUTPUT DECIMAL(13,2);
+
+    SET SUM_AMOUNT = (SELECT SUM(amount) FROM expenses WHERE userID = ip_user AND MONTH(created_at) = MONTH(CURRENT_TIMESTAMP) AND YEAR(created_at) = YEAR(CURRENT_TIMESTAMP)); 
+    SET SUM_BUDGET_AMOUNT = (SELECT SUM(budget_amount_per_month) FROM budgets WHERE userID = ip_user); 
+    
+    IF SUM_AMOUNT >=  SUM_BUDGET_AMOUNT THEN 
+		SET FINAL_OUTPUT = 0;
+	ELSE 
+        SET FINAL_OUTPUT = SUM_BUDGET_AMOUNT - SUM_AMOUNT;
+	END IF; 
+RETURN FINAL_OUTPUT;
+
 END$$
 DELIMITER;
