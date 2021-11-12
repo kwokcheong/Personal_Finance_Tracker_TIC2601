@@ -20,7 +20,7 @@ router.post('/auth',(req,res) => {
         res.redirect('../')
       } else {
         res.render('login',{
-          error : 'User does not exist.'
+          error : 'Invalid login. Please enter the correct email or password.'
         })
       }
     });
