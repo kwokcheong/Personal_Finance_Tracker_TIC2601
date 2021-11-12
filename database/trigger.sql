@@ -49,7 +49,7 @@ CREATE TRIGGER expenses_AFTER_INSERT AFTER INSERT ON expenses
 DELIMITER ;
 
 DELIMITER |
-CREATE TRIGGER expense_AFTER_DELETE AFTER DELETE ON expenses
+CREATE TRIGGER expenses_AFTER_DELETE AFTER DELETE ON expenses
   FOR EACH ROW
   BEGIN
     UPDATE ledger SET current_balance = current_balance + old.amount
